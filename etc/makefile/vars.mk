@@ -23,7 +23,7 @@
 # ########################################################### &basic ###
 
 DESTDIR		=
-prefix		= /usr
+prefix		= /usr/local
 exec_prefix	= $(prefix)
 
 BINDIR		= $(DESTDIR)$(exec_prefix)/bin
