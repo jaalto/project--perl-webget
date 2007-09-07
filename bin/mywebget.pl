@@ -90,7 +90,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2007.0907.1118';
+    $VERSION = '2007.0907.1149';
 
 # ****************************************************************************
 #
@@ -1106,9 +1106,9 @@ $VERSION
 
 =head1 AUTHOR
 
-Copyright (C) 1996-2006 Jari Aalto. All rights reserved. This program is
-free software; you can redistribute it and/or modify it under the same
-terms as Perl itself or in terms of Gnu General Public License v2 or later.
+Copyright (C) 1996-2006 Jari Aalto. This program is free software; you
+can redistribute it and/or modify it under the same terms of Gnu
+General Public License v2 or any later version.
 
 =cut
 
