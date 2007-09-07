@@ -1,8 +1,10 @@
+<?xml version="1.0" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>mywebget.pl - Perl Web URL fetch program</title>
-<link rev="made" href="mailto:gerrit@familiehaase.de" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:rurban@x-ray.at" />
 </head>
 
 <body style="background-color: white">
@@ -76,10 +78,10 @@
 </p>
 <h2><a name="general_options">General options</a></h2>
 <dl>
-<dt><strong><a name="item__2d_2dcreate_2dpaths__2dc"><strong>--Create-paths -C</strong></a></strong><br />
-</dt>
+<dt><strong><a name="item__2d_2dcreate_2dpaths__2dc"><strong>--Create-paths -C</strong></a></strong>
+
 <dd>
-Create paths that do not exist in <code>lcd:</code> directives.
+<p>Create paths that do not exist in <code>lcd:</code> directives.</p>
 </dd>
 <dd>
 <p>By default, any LCD directive to non-existing directory will interrupt
@@ -87,11 +89,11 @@ program. With this option, local directories are created as needed making
 it possible to re-create the exact structure as it is in configuration
 file.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dconfig_file"><strong>--config FILE</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dconfig_file"><strong>--config FILE</strong></a></strong>
+
 <dd>
-This option can be given multiple times. All configurations are read.
+<p>This option can be given multiple times. All configurations are read.</p>
 </dd>
 <dd>
 <p>Read URLs from configuration file. If no configuration file is given, file
@@ -100,26 +102,26 @@ pointed by environment variable is read. See ENVIRONMENT.</p>
 <dd>
 <p>The configuration file layout is envlained in section CONFIGURATION FILE</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dchdir_directory"><strong>--chdir DIRECTORY</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dchdir_directory"><strong>--chdir DIRECTORY</strong></a></strong>
+
 <dd>
-Do a <code>chdir()</code> to DIRECTORY before any URL download starts. This is
-like doing:
+<p>Do a <code>chdir()</code> to DIRECTORY before any URL download starts. This is
+like doing:</p>
 </dd>
 <dd>
 <pre>
     % cd DIRECTORY
     % mywebget.pl <a href="http://example.com/index.html">http://example.com/index.html</a></pre>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dextract__2de"><strong>--extract -e</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dextract__2de"><strong>--extract -e</strong></a></strong>
+
 <dd>
-Unpack any files after retrieving them. The command to unpack typical
+<p>Unpack any files after retrieving them. The command to unpack typical
 archive files are defined in a program. Make sure these programs are
 along path. Win32 users are encouraged to install the Cygwin utilities
-where these programs come standard. Refer to section SEE ALSO.
+where these programs come standard. Refer to section SEE ALSO.</p>
 </dd>
 <dd>
 <pre>
@@ -129,89 +131,89 @@ where these programs come standard. Refer to section SEE ALSO.
   .bz2 =&gt; bzip2
   .zip =&gt; unzip</pre>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dfirewall_firewall"><strong>--Firewall FIREWALL</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dfirewall_firewall"><strong>--Firewall FIREWALL</strong></a></strong>
+
 <dd>
-Use FIREWALL when accessing files via ftp:// protocol.
+<p>Use FIREWALL when accessing files via ftp:// protocol.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dmirror_site"><strong>--mirror SITE</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dmirror_site"><strong>--mirror SITE</strong></a></strong>
+
 <dd>
-If URL points to Sourcefoge download area, use mirror SITE for downloading.
+<p>If URL points to Sourcefoge download area, use mirror SITE for downloading.
 Alternatively the full full URL can include the mirror information. And
-example:
+example:</p>
 </dd>
 <dd>
 <pre>
     --mirror kent ... <a href="http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz">http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz</a></pre>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dnew__2dn"><strong>--new -n</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dnew__2dn"><strong>--new -n</strong></a></strong>
+
 <dd>
-Get newest file. This applies to datafiles, which do not have extension
+<p>Get newest file. This applies to datafiles, which do not have extension
 .asp or .html. When new releases are announced, the version
 number in filename usually tells which is the current one so getting
-harcoded file with:
+harcoded file with:</p>
 </dd>
 <dd>
 <pre>
     mywebget.pl -o -v <a href="http://example.com/dir/program-1.3.tar.gz">http://example.com/dir/program-1.3.tar.gz</a></pre>
 </dd>
 <dd>
-<p>is not usually practical from automation point of view. Adding <strong>--new</strong>
-option to the command line causes double pass: a) the whole
-<a href="http://example.com/dir/">http://example.com/dir/</a> is examined for all files. b) files matching
-approximately filename program-1.3.tar.gz are examined, heuristically
-sorted and file with latest version number is retrieved.</p>
+<p>is not usually practical from automation point of view. Adding
+<strong>--new</strong> option to the command line causes double pass: a) the whole
+<a href="http://example.com/dir/">http://example.com/dir/</a> is examined for all files and b) files
+matching approximately filename program-1.3.tar.gz are examined,
+heuristically sorted and file with latest version number is retrieved.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dno_2dlcd"><strong>--no-lcd</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dno_2dlcd"><strong>--no-lcd</strong></a></strong>
+
 <dd>
-Ignore <code>lcd:</code> directives in configuration file.
+<p>Ignore <code>lcd:</code> directives in configuration file.</p>
 </dd>
 <dd>
-<p>In the configuration file, any <code>lcd:</code> directives are obeyed as they are seen.
-But if you do want to retrieve URL to your current directory, be sure to
-supply this option. Otherwise the file will end to the directory pointer by
-<code>lcd:</code>.</p>
+<p>In the configuration file, any <code>lcd:</code> directives are obeyed as they
+are seen. But if you do want to retrieve URL to your current
+directory, be sure to supply this option. Otherwise the file will end
+to the directory pointer by <code>lcd:</code>.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dno_2dsave"><strong>--no-save</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dno_2dsave"><strong>--no-save</strong></a></strong>
+
 <dd>
-Ignore <code>save:</code> directives in configuration file. If the URLs have
+<p>Ignore <code>save:</code> directives in configuration file. If the URLs have
 <code>save:</code> options, they are ignored during fetch. You usually want to
-combine <strong>--no-lcd</strong> with <strong>--no-save</strong>
+combine <strong>--no-lcd</strong> with <strong>--no-save</strong></p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dno_2dextract"><strong>--no-extract</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dno_2dextract"><strong>--no-extract</strong></a></strong>
+
 <dd>
-Ignore <a href="#item_x_3a"><code>x:</code></a> directives in configuration file.
+<p>Ignore <a href="#item_x_3a"><code>x:</code></a> directives in configuration file.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2doutput_dir"><strong>--Output DIR</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2doutput_dir"><strong>--Output DIR</strong></a></strong>
+
 <dd>
-Before retrieving any files, chdir to DIR.
+<p>Before retrieving any files, chdir to DIR.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2doverwrite__2do"><strong>--overwrite -o</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2doverwrite__2do"><strong>--overwrite -o</strong></a></strong>
+
 <dd>
-Allow overwriting existing files when retrieving URLs.
-Combine this with <strong>--skip-version</strong> if you periodically update files.
+<p>Allow overwriting existing files when retrieving URLs.
+Combine this with <strong>--skip-version</strong> if you periodically update files.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dproxy_proxy"><strong>--Proxy PROXY</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dproxy_proxy"><strong>--Proxy PROXY</strong></a></strong>
+
 <dd>
-Use PROXY server for HTTP. (See <strong>--Firewall</strong> for FTP.). The port number is
-optional in the call:
+<p>Use PROXY server for HTTP. (See <strong>--Firewall</strong> for FTP.). The port number is
+optional in the call:</p>
 </dd>
 <dd>
 <pre>
@@ -220,87 +222,87 @@ optional in the call:
     --Proxy example.com.proxy.com:8080
     --Proxy example.com.proxy.com:8080/</pre>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dprefix_prefix"><strong>--prefix PREFIX</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dprefix_prefix"><strong>--prefix PREFIX</strong></a></strong>
+
 <dd>
-Add PREFIX to all retrieved files.
+<p>Add PREFIX to all retrieved files.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dpostfix_postfix"><strong>--Postfix POSTFIX </strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dpostfix_postfix"><strong>--Postfix POSTFIX </strong></a></strong>
+
 <dd>
-Add POSTFIX to all retrieved files.
+<p>Add POSTFIX to all retrieved files.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dprefix_2ddate__2dd"><strong>--prefix-date -D</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dprefix_2ddate__2dd"><strong>--prefix-date -D</strong></a></strong>
+
 <dd>
-Add iso8601 ``:YYYY-MM-DD'' prefix to all retrived files.
-This is added before possible <strong>--prefix-www</strong> or <strong>--prefix</strong>.
+<p>Add iso8601 ``:YYYY-MM-DD'' prefix to all retrived files.
+This is added before possible <strong>--prefix-www</strong> or <strong>--prefix</strong>.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dprefix_2dwww__2dw"><strong>--prefix-www -W</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dprefix_2dwww__2dw"><strong>--prefix-www -W</strong></a></strong>
+
 <dd>
-Usually the files are stored with the same name as in the URL dir, but
+<p>Usually the files are stored with the same name as in the URL dir, but
 if you retrieve files that have identical names you can store each
-page separately so that the file name is prefixed by the site name.
+page separately so that the file name is prefixed by the site name.</p>
 </dd>
 <dd>
 <pre>
     <a href="http://example.com/page.html">http://example.com/page.html</a>    --&gt; example.com::page.html
     <a href="http://example2.com/page.html">http://example2.com/page.html</a>   --&gt; example2.com::page.html</pre>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dregexp__2dr_regexp"><strong>--regexp -r REGEXP</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dregexp__2dr_regexp"><strong>--regexp -r REGEXP</strong></a></strong>
+
 <dd>
-Retrieve URLs matching REGEXP from configuration file. This cancels
-<strong>--Tag</strong> options in the command line.
+<p>Retrieve URLs matching REGEXP from configuration file. This cancels
+<strong>--Tag</strong> options in the command line.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dregexp__2dr_regexp"><strong>--Regexp -R REGEXP</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dregexp__2dr_regexp"><strong>--Regexp -R REGEXP</strong></a></strong>
+
 <dd>
-Retrieve file matching at the destination URL site. This is like ``Connect
+<p>Retrieve file matching at the destination URL site. This is like ``Connect
 to the URL and get all files matching REGEXP''. Here all gzip compressed
-files are found form HTTP server directory:
+files are found form HTTP server directory:</p>
 </dd>
 <dd>
 <pre>
     mywebget.pl -v -R &quot;\.gz&quot; <a href="http://example.com/archive/">http://example.com/archive/</a></pre>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dregexp_2dcontent__2da_regexp"><strong>--Regexp-content -A REGEXP</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dregexp_2dcontent__2da_regexp"><strong>--Regexp-content -A REGEXP</strong></a></strong>
+
 <dd>
-Analyze the content of the file matching the REGEXP. Only it that matches
-accept the download. This option will slown download, because the file
-is read into memory as a single line and then a match is searched from
-the content.
+<p>Analyze the content of the file and match REGEXP. Only if the regexp
+matches the file content, then download file. This option will make
+downloads slow, because the file is read into memory as a single line
+and then a match is searched against the content.</p>
 </dd>
 <dd>
-<p>For example to download Emacs lisp file (.el) written by Mr. Foo.
-The case is ignored during match:</p>
+<p>For example to download Emacs lisp file (.el) written by Mr. Foo in
+case insesiteve manner:</p>
 </dd>
 <dd>
 <pre>
     mywebget.pl -v -R '\.el$' -A &quot;(?i)Author: Mr. Foo&quot; \
       <a href="http://www.emacswiki.org/elisp/index.html">http://www.emacswiki.org/elisp/index.html</a></pre>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dstdout"><strong>--stdout</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dstdout"><strong>--stdout</strong></a></strong>
+
 <dd>
-Retrieve URL and write it to stdout.
+<p>Retrieve URL and write it to stdout.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dskip_2dversion"><strong>--skip-version</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dskip_2dversion"><strong>--skip-version</strong></a></strong>
+
 <dd>
-Do not download files that have version number and which already exists on
-disk. Suppose you have these files and you use option <strong>--skip-version</strong>:
+<p>Do not download files that have version number and which already exists on
+disk. Suppose you have these files and you use option <strong>--skip-version</strong>:</p>
 </dd>
 <dd>
 <pre>
@@ -318,73 +320,75 @@ This option does not make much sense without additional option <strong>--new</st
 <dd>
 <p>If you want to reload versioned file again, add option <strong>--overwrite</strong>.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dtag__2dt_name__5bname_5d__2e_2e_2e"><strong>--Tag -T NAME [NAME] ...</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dtag__2dt_name__5bname_5d__2e_2e_2e"><strong>--Tag -T NAME [NAME] ...</strong></a></strong>
+
 <dd>
-Search tag NAME from the config file and download only entries defined
+<p>Search tag NAME from the config file and download only entries defined
 under that tag. Refer to <strong>--config FILE</strong> option description. You can give
 Multiple <strong>--Tag</strong> switches. Combining this option with <strong>--regexp</strong>
-does not make sense and the concequencies are undefined.
+does not make sense and the concequencies are undefined.</p>
 </dd>
-<p></p></dl>
+</li>
+</dl>
 <p>
 </p>
 <h2><a name="miscellaneous_options">Miscellaneous options</a></h2>
 <dl>
-<dt><strong><a name="item__2d_2ddebug__2dd__5blevel_5d"><strong>--debug -d [LEVEL]</strong></a></strong><br />
-</dt>
+<dt><strong><a name="item__2d_2ddebug__2dd__5blevel_5d"><strong>--debug -d [LEVEL]</strong></a></strong>
+
 <dd>
-Turn on debug with positive LEVEL number. Zero means no debug.
-This option turns on <strong>--verbose</strong> too.
+<p>Turn on debug with positive LEVEL number. Zero means no debug.
+This option turns on <strong>--verbose</strong> too.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dhelp__2dh"><strong>--help -h</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dhelp__2dh"><strong>--help -h</strong></a></strong>
+
 <dd>
-Print help page in text.
+<p>Print help page in text.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dhelp_2dhtml"><strong>--help-html</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dhelp_2dhtml"><strong>--help-html</strong></a></strong>
+
 <dd>
-Print help page in HTML.
+<p>Print help page in HTML.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dhelp_2dman"><strong>--help-man</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dhelp_2dman"><strong>--help-man</strong></a></strong>
+
 <dd>
-Print help page in Unix manual page format. You want to feed this output to
-c&lt;nroff -man&gt; in order to read it.
+<p>Print help page in Unix manual page format. You want to feed this output to
+c&lt;nroff -man&gt; in order to read it.</p>
 </dd>
 <dd>
 <p>Print help page.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dselftest"><strong>--selftest</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dselftest"><strong>--selftest</strong></a></strong>
+
 <dd>
-Run some internal tests. For maintainer or developer only.
+<p>Run some internal tests. For maintainer or developer only.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dtest__2dt"><strong>--test -t</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dtest__2dt"><strong>--test -t</strong></a></strong>
+
 <dd>
-Run in test mode.
+<p>Run in test mode.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dverbose__2dv__5bnumber_5d"><strong>--verbose -v [NUMBER]</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dverbose__2dv__5bnumber_5d"><strong>--verbose -v [NUMBER]</strong></a></strong>
+
 <dd>
-Print verbose messages.
+<p>Print verbose messages.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item__2d_2dversion__2dv"><strong>--Version -V</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item__2d_2dversion__2dv"><strong>--Version -V</strong></a></strong>
+
 <dd>
-Print version information.
+<p>Print version information.</p>
 </dd>
-<p></p></dl>
+</li>
+</dl>
 <p>
 </p>
 <hr />
@@ -607,10 +611,10 @@ near each directive.</p>
 scans lines and determines all options given in line for the URL.
 Directives can be overriden by command line options.</p>
 <dl>
-<dt><strong><a name="item_cnv_3aconversion"><strong>cnv:CONVERSION</strong></a></strong><br />
-</dt>
+<dt><strong><a name="item_cnv_3aconversion"><strong>cnv:CONVERSION</strong></a></strong>
+
 <dd>
-Currently only <strong>conv:text</strong> is available.
+<p>Currently only <strong>conv:text</strong> is available.</p>
 </dd>
 <dd>
 <p>Convert downloaded page to text. This option always needs either <strong>save:</strong>
@@ -625,42 +629,42 @@ an example:</p>
 <dd>
 <p>A <strong>text:</strong> shorthand directive can be used instead of <strong>cnv:text</strong>.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_cregexp_3aregexp"><strong>cregexp:REGEXP</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_cregexp_3aregexp"><strong>cregexp:REGEXP</strong></a></strong>
+
 <dd>
-Download file only if the content matches REGEXP. This is same as option
+<p>Download file only if the content matches REGEXP. This is same as option
 <strong>--Regexp-content</strong>. In this example directory listing Emacs lisp packages
 (.el) are downloaded but only if their content indicates that the Author is
-Mr. Foo:
+Mr. Foo:</p>
 </dd>
 <dd>
 <pre>
     <a href="http://example.com/index.html">http://example.com/index.html</a> cregexp:(?i)author:.*Foo pregexp:\.el$</pre>
 </dd>
-<p></p>
-<dt><strong><a name="item_lcd_3adirectory"><strong>lcd:DIRECTORY</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_lcd_3adirectory"><strong>lcd:DIRECTORY</strong></a></strong>
+
 <dd>
-Set local download directory to DIRECTORY (chdir to it). Any environment
+<p>Set local download directory to DIRECTORY (chdir to it). Any environment
 variables are substituted in path name. If this tag is found, it replaces
 setting of <strong>--Output</strong>. If path is not a directory, terminate with error.
-See also <strong>--Create-paths</strong> and <strong>--no-lcd</strong>.
+See also <strong>--Create-paths</strong> and <strong>--no-lcd</strong>.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_login_3alogin_2dname"><strong>login:LOGIN-NAME</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_login_3alogin_2dname"><strong>login:LOGIN-NAME</strong></a></strong>
+
 <dd>
-Ftp login name. Default value is ``anonymous''.
+<p>Ftp login name. Default value is ``anonymous''.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_mirror_3asite"><strong>mirror:SITE</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_mirror_3asite"><strong>mirror:SITE</strong></a></strong>
+
 <dd>
-This is relevant to sourceforge, which does not allow direct downloads with
+<p>This is relevant to sourceforge, which does not allow direct downloads with
 links like <a href="http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz">http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz</a> Visit
 the page and selct the announced mirror that can be seen from the URL
-which includes string ``use_mirror=site''
+which includes string ``use_mirror=site''</p>
 </dd>
 <dd>
 <p>An example:</p>
@@ -669,17 +673,17 @@ which includes string ``use_mirror=site''
 <pre>
   <a href="http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz">http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz</a> new: mirror:kent</pre>
 </dd>
-<p></p>
-<dt><strong><a name="item_new_3a"><strong>new:</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_new_3a"><strong>new:</strong></a></strong>
+
 <dd>
-Get newest file. This variable is reset to the value of <strong>--new</strong> after the
+<p>Get newest file. This variable is reset to the value of <strong>--new</strong> after the
 line has been processed. Newest means, that an <code>ls()</code> command is run in the
 ftp, and something equivalent in HTTP ``ftp directories'', and any files that
 resemble the filename is examined, sorted and heurestically determined
 according to version number of file which one is the latest. For example
 files that have version information in YYYYMMDD format will most likely to
-be retrieved right.
+be retrieved right.</p>
 </dd>
 <dd>
 <p>Time stamps of the files are not checked.</p>
@@ -708,18 +712,18 @@ numbering standard for released kits:</p>
 are not handled correctly. Bitch the developer and persuade him to stick
 to the de facto standard so that files can be retrieved intelligently.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_overwrite_3a_o_3a"><strong>overwrite:</strong> <strong>o:</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_overwrite_3a_o_3a"><strong>overwrite:</strong> <strong>o:</strong></a></strong>
+
 <dd>
-Same as turning on <strong>--overwrite</strong>
+<p>Same as turning on <strong>--overwrite</strong></p>
 </dd>
-<p></p>
-<dt><strong><a name="item_page_3a"><strong>page:</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_page_3a"><strong>page:</strong></a></strong>
+
 <dd>
-Download the HTTP page or apply command to it. A simple example, the
-contact page name ``index.html'', ``welcome.html'' etc. is not known:
+<p>Download the HTTP page or apply command to it. A simple example, the
+contact page name ``index.html'', ``welcome.html'' etc. is not known:</p>
 </dd>
 <dd>
 <pre>
@@ -867,11 +871,11 @@ for legibility:</p>
 looks like file.el-1.1 and save it under name file.el by deleting the extra
 version number at the end of original filename''.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_page_3afind"><strong>page:find</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_page_3afind"><strong>page:find</strong></a></strong>
+
 <dd>
-THIS IS NOT FOR FTP directories. Use directive <strong>regexp:</strong> for FTP.
+<p>THIS IS NOT FOR FTP directories. Use directive <strong>regexp:</strong> for FTP.</p>
 </dd>
 <dd>
 <p>This is more general instruction than the <strong>page:</strong> and <strong>vregexp:</strong>
@@ -896,18 +900,18 @@ files after the <strong>pregexp:</strong> has matched a link.</p>
 <pre>
     <a href="http://www.example.com/index.html">http://www.example.com/index.html</a> page:find pregexp:\.tar.gz$ regexp-no:this-packet</pre>
 </dd>
-<p></p>
-<dt><strong><a name="item_pass_3apassword"><strong>pass:PASSWORD</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_pass_3apassword"><strong>pass:PASSWORD</strong></a></strong>
+
 <dd>
-For FTP logins. Default value is <code>nobody@example.com</code>.
+<p>For FTP logins. Default value is <code>nobody@example.com</code>.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_print_3amessage"><strong>print:MESSAGE</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_print_3amessage"><strong>print:MESSAGE</strong></a></strong>
+
 <dd>
-Print associated message to user requesting matching tag name.
-This directive must in separate line inside tag.
+<p>Print associated message to user requesting matching tag name.
+This directive must in separate line inside tag.</p>
 </dd>
 <dd>
 <pre>
@@ -926,13 +930,13 @@ mode:</p>
 <pre>
     mywebget.pl -v -T linux</pre>
 </dd>
-<p></p>
-<dt><strong><a name="item_rename_3aperl_2dcode"><strong>rename:PERL-CODE</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_rename_3aperl_2dcode"><strong>rename:PERL-CODE</strong></a></strong>
+
 <dd>
-Rename each file using PERL-CODE. The PERL-CODE must be full perl program
+<p>Rename each file using PERL-CODE. The PERL-CODE must be full perl program
 with no spaces anywhere. Following variables are available during the
-<code>eval()</code> of code:
+<code>eval()</code> of code:</p>
 </dd>
 <dd>
 <pre>
@@ -994,37 +998,37 @@ the possiblilities are limitless.</p>
 <p>Just remember, that there <strong>must</strong> not be any spaces in the code that
 follows <code>rename:</code> directive.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_regexp_3aregexp"><strong>regexp:REGEXP</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_regexp_3aregexp"><strong>regexp:REGEXP</strong></a></strong>
+
 <dd>
-Get all files in ftp directory matching regexp. Directive <strong>save:</strong> is ignored.
+<p>Get all files in ftp directory matching regexp. Directive <strong>save:</strong> is ignored.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_regexp_2dno_3aregexp"><strong>regexp-no:REGEXP</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_regexp_2dno_3aregexp"><strong>regexp-no:REGEXP</strong></a></strong>
+
 <dd>
-After the regexp: directive has matched, explude files that match
-directive <strong>regexp-no:</strong>
+<p>After the regexp: directive has matched, explude files that match
+directive <strong>regexp-no:</strong></p>
 </dd>
-<p></p>
-<dt><strong><a name="item_regexp_3aregexp"><strong>Regexp:REGEXP</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_regexp_3aregexp"><strong>Regexp:REGEXP</strong></a></strong>
+
 <dd>
-This option is for interactive use. Retrieve all files from HTTP or FTP
-site which match REGEXP.
+<p>This option is for interactive use. Retrieve all files from HTTP or FTP
+site which match REGEXP.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_save_3alocal_2dfile_2dname"><strong>save:LOCAL-FILE-NAME</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_save_3alocal_2dfile_2dname"><strong>save:LOCAL-FILE-NAME</strong></a></strong>
+
 <dd>
-Save file under this name to local disk.
+<p>Save file under this name to local disk.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_tagn_3aname"><strong>tagN:NAME</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_tagn_3aname"><strong>tagN:NAME</strong></a></strong>
+
 <dd>
-Downloads can be grouped under <code>tagN</code> so that e.g. option <strong>--Tag1</strong> would
+<p>Downloads can be grouped under <code>tagN</code> so that e.g. option <strong>--Tag1</strong> would
 start downloading files from that point on until next <code>tag1</code> is found.
 There are currently unlimited number of tag levels: tag1, tag2 and tag3, so
 that you can arrange your downlods hierarchially in the configuration file.
@@ -1032,7 +1036,7 @@ For example to download all Linux files rhat you monitor, you would give
 option <strong>--Tag linux</strong>. To download only the NT Emacs latest binary, you
 would give option <strong>--Tag emacs-nt</strong>. Notice that you do not give the
 <code>level</code> in the option, program will find it out from the configuration
-file after the tag name matches.
+file after the tag name matches.</p>
 </dd>
 <dd>
 <p>The downloading stops at next tag of the <code>same level</code>. That is, tag2 stops
@@ -1079,13 +1083,13 @@ file.</p>
 <pre>
         tag2: xemacs</pre>
 </dd>
-<p></p>
-<dt><strong><a name="item_x_3a"><strong>x:</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_x_3a"><strong>x:</strong></a></strong>
+
 <dd>
-Extract (unpack) file after download. See also option <strong>--unpack</strong> and
+<p>Extract (unpack) file after download. See also option <strong>--unpack</strong> and
 <strong>--no-extract</strong> The archive file, say .tar.gz will be extracted the file in
-current download location. (see directive <strong>lcd:</strong>)
+current download location. (see directive <strong>lcd:</strong>)</p>
 </dd>
 <dd>
 <p>The unpack procedure checks the contents of the archive to see if
@@ -1124,20 +1128,20 @@ the created directory will be constructed from it, instead of current date.</p>
 <pre>
     package-1.43.tar.gz    =&gt;  package-1.43</pre>
 </dd>
-<p></p>
-<dt><strong><a name="item_xx_3a"><strong>xx:</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_xx_3a"><strong>xx:</strong></a></strong>
+
 <dd>
-Like directive <strong>x:</strong> but extract the archive <code>as is</code>, without
+<p>Like directive <strong>x:</strong> but extract the archive <code>as is</code>, without
 checking content of the archive. If you know that it is ok for the archive
 not to include any subdirectories, use this option to suppress creation
-of an artificial root package-YYYY.MMDD.
+of an artificial root package-YYYY.MMDD.</p>
 </dd>
-<p></p>
-<dt><strong><a name="item_xopt_3arm"><strong>xopt:rm</strong></a></strong><br />
-</dt>
+</li>
+<dt><strong><a name="item_xopt_3arm"><strong>xopt:rm</strong></a></strong>
+
 <dd>
-This options tells to remove any previous unpack directory.
+<p>This options tells to remove any previous unpack directory.</p>
 </dd>
 <dd>
 <p>Sometimes the files in the archive are all read-only and unpacking the
@@ -1154,7 +1158,8 @@ tar did not overwrite previous files. It might be good to inform the
 archive maintainer, that the files have wrong permissions. It is customary
 to expect that distributed kits have writable flag set for all files.</p>
 </dd>
-<p></p></dl>
+</li>
+</dl>
 <p>
 </p>
 <hr />
@@ -1165,13 +1170,14 @@ interpreted the configuration file or command line options. Pay close
 attention to the generated output, because it may reveal that
 a regexp for a site is too lose or too tight.</p>
 <dl>
-<dt><strong><a name="item_error__7burl_2dhere_7d_bad_file_descriptor"><strong>ERROR {URL-HERE} Bad file descriptor</strong></a></strong><br />
-</dt>
+<dt><strong><a name="item_error__7burl_2dhere_7d_bad_file_descriptor"><strong>ERROR {URL-HERE} Bad file descriptor</strong></a></strong>
+
 <dd>
-This is ``file not found error''. You have written the filename incorrectly.
-Double check the configuration file's line.
+<p>This is ``file not found error''. You have written the filename incorrectly.
+Double check the configuration file's line.</p>
 </dd>
-<p></p></dl>
+</li>
+</dl>
 <p>
 </p>
 <hr />
@@ -1195,7 +1201,7 @@ lwp-download(1) lwp-mirror(1) lwp-request(1) lwp-rget(1)</p>
 <hr />
 <h1><a name="availability">AVAILABILITY</a></h1>
 <p>Latest version of this file is at Project homepage at
-<a href="http://perl-webget.sourceforge.net/">http://perl-webget.sourceforge.net/</a></p>
+<a href="http://freshmeat.net/projects/perl-webget">http://freshmeat.net/projects/perl-webget</a></p>
 <p>
 </p>
 <hr />
@@ -1228,7 +1234,7 @@ This module is loaded only if HTTPS scheme is encountered.</p>
 </p>
 <hr />
 <h1><a name="version">VERSION</a></h1>
-<p>$Id: mywebget.html,v 1.18 2006/02/19 14:57:13 jaalto Exp $</p>
+<p>$Id: mywebget.pl,v 1.94 2006/03/09 21:47:19 jaalto Exp $</p>
 <p>
 </p>
 <hr />

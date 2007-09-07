@@ -69,8 +69,8 @@ OPTIONS
 
         is not usually practical from automation point of view. Adding --new
         option to the command line causes double pass: a) the whole
-        http://example.com/dir/ is examined for all files. b) files matching
-        approximately filename program-1.3.tar.gz are examined,
+        http://example.com/dir/ is examined for all files and b) files
+        matching approximately filename program-1.3.tar.gz are examined,
         heuristically sorted and file with latest version number is
         retrieved.
 
@@ -137,13 +137,13 @@ OPTIONS
             mywebget.pl -v -R "\.gz" http://example.com/archive/
 
     --Regexp-content -A REGEXP
-        Analyze the content of the file matching the REGEXP. Only it that
-        matches accept the download. This option will slown download,
-        because the file is read into memory as a single line and then a
-        match is searched from the content.
+        Analyze the content of the file and match REGEXP. Only if the regexp
+        matches the file content, then download file. This option will make
+        downloads slow, because the file is read into memory as a single
+        line and then a match is searched against the content.
 
-        For example to download Emacs lisp file (.el) written by Mr. Foo.
-        The case is ignored during match:
+        For example to download Emacs lisp file (.el) written by Mr. Foo in
+        case insesiteve manner:
 
             mywebget.pl -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
               http://www.emacswiki.org/elisp/index.html
@@ -825,7 +825,7 @@ SEE ALSO
 
 AVAILABILITY
     Latest version of this file is at Project homepage at
-    http://perl-webget.sourceforge.net/
+    http://freshmeat.net/projects/perl-webget
 
 SCRIPT CATEGORIES
     CPAN/Administrative CPAN/Web
@@ -846,7 +846,7 @@ OSNAMES
     "any"
 
 VERSION
-    $Id: mywebget.txt,v 1.11 2006/02/19 14:57:13 jaalto Exp $
+    $Id: mywebget.pl,v 1.94 2006/03/09 21:47:19 jaalto Exp $
 
 AUTHOR
     Copyright (C) 1996-2006 Jari Aalto. All rights reserved. This program is

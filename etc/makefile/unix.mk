@@ -52,7 +52,9 @@ install-bin:
 	$(INSTALL) -d $(BINDIR)
 	@for file in  $(SRCS);						\
 	do								\
-	    $(INSTALL) $(INSTALL_BIN) $$file $(BINDIR);			\
+	    name=$$(echo $$file|					\
+		 sed 's/.*\///; s/.pl$$// ; s/.sh$$//');		\
+	    $(INSTALL) $(INSTALL_BIN) $$file $(BINDIR)/$$name;		\
 	done;
 
 install-bin-symlink:
