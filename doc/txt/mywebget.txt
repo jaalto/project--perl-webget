@@ -1,0 +1,856 @@
+NAME
+    mywebget.pl - Perl Web URL fetch program
+
+SYNOPSIS
+        mywebget.pl http://example.com/ [URL ...]
+        mywebget.pl --config $HOME/config/mywebget.conf --Tag linux --Tag emacs ..
+        mywebget.pl --verbose --overwrite http://example.com/
+        mywebget.pl --verbose --overwrite --Output ~/dir/ http://example.com/
+        mywebget.pl --new --overwrite http://example.com/kit-1.1.tar.gz
+
+OPTIONS
+  General options
+    --Create-paths -C
+        Create paths that do not exist in "lcd:" directives.
+
+        By default, any LCD directive to non-existing directory will
+        interrupt program. With this option, local directories are created
+        as needed making it possible to re-create the exact structure as it
+        is in configuration file.
+
+    --config FILE
+        This option can be given multiple times. All configurations are
+        read.
+
+        Read URLs from configuration file. If no configuration file is
+        given, file pointed by environment variable is read. See
+        ENVIRONMENT.
+
+        The configuration file layout is envlained in section CONFIGURATION
+        FILE
+
+    --chdir DIRECTORY
+        Do a chdir() to DIRECTORY before any URL download starts. This is
+        like doing:
+
+            % cd DIRECTORY
+            % mywebget.pl http://example.com/index.html
+
+    --extract -e
+        Unpack any files after retrieving them. The command to unpack
+        typical archive files are defined in a program. Make sure these
+        programs are along path. Win32 users are encouraged to install the
+        Cygwin utilities where these programs come standard. Refer to
+        section SEE ALSO.
+
+          .tar => tar
+          .tgz => tar + gzip
+          .gz  => gzip
+          .bz2 => bzip2
+          .zip => unzip
+
+    --Firewall FIREWALL
+        Use FIREWALL when accessing files via ftp:// protocol.
+
+    --mirror SITE
+        If URL points to Sourcefoge download area, use mirror SITE for
+        downloading. Alternatively the full full URL can include the mirror
+        information. And example:
+
+            --mirror kent ... http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz
+
+    --new -n
+        Get newest file. This applies to datafiles, which do not have
+        extension .asp or .html. When new releases are announced, the
+        version number in filename usually tells which is the current one so
+        getting harcoded file with:
+
+            mywebget.pl -o -v http://example.com/dir/program-1.3.tar.gz
+
+        is not usually practical from automation point of view. Adding --new
+        option to the command line causes double pass: a) the whole
+        http://example.com/dir/ is examined for all files. b) files matching
+        approximately filename program-1.3.tar.gz are examined,
+        heuristically sorted and file with latest version number is
+        retrieved.
+
+    --no-lcd
+        Ignore "lcd:" directives in configuration file.
+
+        In the configuration file, any "lcd:" directives are obeyed as they
+        are seen. But if you do want to retrieve URL to your current
+        directory, be sure to supply this option. Otherwise the file will
+        end to the directory pointer by "lcd:".
+
+    --no-save
+        Ignore "save:" directives in configuration file. If the URLs have
+        "save:" options, they are ignored during fetch. You usually want to
+        combine --no-lcd with --no-save
+
+    --no-extract
+        Ignore "x:" directives in configuration file.
+
+    --Output DIR
+        Before retrieving any files, chdir to DIR.
+
+    --overwrite -o
+        Allow overwriting existing files when retrieving URLs. Combine this
+        with --skip-version if you periodically update files.
+
+    --Proxy PROXY
+        Use PROXY server for HTTP. (See --Firewall for FTP.). The port
+        number is optional in the call:
+
+            --Proxy example.com.proxy.com
+            --Proxy http://example.com.proxy.com
+            --Proxy example.com.proxy.com:8080
+            --Proxy example.com.proxy.com:8080/
+
+    --prefix PREFIX
+        Add PREFIX to all retrieved files.
+
+    --Postfix POSTFIX
+        Add POSTFIX to all retrieved files.
+
+    --prefix-date -D
+        Add iso8601 ":YYYY-MM-DD" prefix to all retrived files. This is
+        added before possible --prefix-www or --prefix.
+
+    --prefix-www -W
+        Usually the files are stored with the same name as in the URL dir,
+        but if you retrieve files that have identical names you can store
+        each page separately so that the file name is prefixed by the site
+        name.
+
+            http://example.com/page.html    --> example.com::page.html
+            http://example2.com/page.html   --> example2.com::page.html
+
+    --regexp -r REGEXP
+        Retrieve URLs matching REGEXP from configuration file. This cancels
+        --Tag options in the command line.
+
+    --Regexp -R REGEXP
+        Retrieve file matching at the destination URL site. This is like
+        "Connect to the URL and get all files matching REGEXP". Here all
+        gzip compressed files are found form HTTP server directory:
+
+            mywebget.pl -v -R "\.gz" http://example.com/archive/
+
+    --Regexp-content -A REGEXP
+        Analyze the content of the file matching the REGEXP. Only it that
+        matches accept the download. This option will slown download,
+        because the file is read into memory as a single line and then a
+        match is searched from the content.
+
+        For example to download Emacs lisp file (.el) written by Mr. Foo.
+        The case is ignored during match:
+
+            mywebget.pl -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
+              http://www.emacswiki.org/elisp/index.html
+
+    --stdout
+        Retrieve URL and write it to stdout.
+
+    --skip-version
+        Do not download files that have version number and which already
+        exists on disk. Suppose you have these files and you use option
+        --skip-version:
+
+            kit.tar.gz
+            file-1.1.tar.gz
+
+        Only file.txt is retrieved, because file-1.1.tar.gz contains version
+        number and the file has not changed since last retrieval. The idea
+        is, that in every release the number in in distribution increases,
+        but there may be distributions which do not contain version number.
+        In regular intervals you may want to load those kits again, but skip
+        versioned files. In short: This option does not make much sense
+        without additional option --new
+
+        If you want to reload versioned file again, add option --overwrite.
+
+    --Tag -T NAME [NAME] ...
+        Search tag NAME from the config file and download only entries
+        defined under that tag. Refer to --config FILE option description.
+        You can give Multiple --Tag switches. Combining this option with
+        --regexp does not make sense and the concequencies are undefined.
+
+  Miscellaneous options
+    --debug -d [LEVEL]
+        Turn on debug with positive LEVEL number. Zero means no debug. This
+        option turns on --verbose too.
+
+    --help -h
+        Print help page in text.
+
+    --help-html
+        Print help page in HTML.
+
+    --help-man
+        Print help page in Unix manual page format. You want to feed this
+        output to c<nroff -man> in order to read it.
+
+        Print help page.
+
+    --selftest
+        Run some internal tests. For maintainer or developer only.
+
+    --test -t
+        Run in test mode.
+
+    --verbose -v [NUMBER]
+        Print verbose messages.
+
+    --Version -V
+        Print version information.
+
+README
+    Automate periodic downloads of files and packages.
+
+  Wget and this program
+    At this point you may wonder, where would you need this perl program
+    when wget(1) C-program has been the standard for ages. Well, 1) Perl is
+    cross platform and more easily extendable 2) You can record file
+    download criterias to configuration files and use perl regular
+    epxressions to select downloads 3) the program can anlyze web-pages and
+    "search" for the download only links as instructed 4) last but not
+    least, it can track newest packages whose name has changed since last
+    downlaod. There is heuristics to determine the newest file or package
+    according to file name skeleton defined in configuration.
+
+    This program does not replace mywebget(1) because it does not offer as
+    many options as wget, like recursive downloads. Use wget for ad hoc
+    downloads and this utility for files that you monitor periodically.
+
+  Short introduction
+    This small utility makes it possible to keep a list of URLs in a
+    configuration file and periodically retrieve those pages or files with
+    simple commands. This utility is best suited for small batch jobs to
+    download e.g. most recent versions of software files. If you use an URL
+    that is already on disk, be sure to supply option --overwrite to allow
+    overwriting existing files.
+
+    While you can run this program from command line to retrieve individual
+    files, program has been designed to use separate configuration file via
+    --config option. In the configuration file you can control the
+    downloading with separate directives like "save:" which tells to save
+    the file under different name. The simplest way to retreive the latest
+    version of a kit from FTP site is:
+
+        mywebget.pl --new --overwite --verbose \
+           http://www.example.com/kit-1.00.tar.gz
+
+    Do not worry about the filename "kit-1.00.tar.gz". The latest version,
+    say, kit-3.08.tar.gz will be retrieved. The option --new instructs to
+    find newer version than the provided URL.
+
+    If the URL ends to slash, then directory list at the remote machine is
+    stored to file:
+
+        !path!000root-file
+
+    The content of this file can be either index.html or the directory
+    listing depending on the used http or ftp protocol.
+
+EXAMPLES
+    Get files from site:
+
+        mywebget.pl http://www.example.com/dir/package.tar.gz ..
+
+    Get all mailing list archive files that match "gz":
+
+        mywebget.pl -R gz  http://example.com/mailing-list/archive/download/
+
+    Read a directory and store it to filename YYYY-MM-DD::!dir!000root-file.
+
+        mywebget.pl --prefix-date --overwrite --verbose http://www.example.com/dir/
+
+    To update newest version of the kit, but only if there is none at disk
+    already. The --new option instructs to find newer packages and the
+    filename is only used as a skeleton for files to look for:
+
+        mywebget.pl --overwrite --skip-version --new --verbose \
+            ftp://ftp.example.com/dir/packet-1.23.tar.gz
+
+    To overwrite file and add a date prefix to the file name:
+
+        mywebget.pl --prefix-date --overwrite --verbose \
+           http://www.example.com/file.pl
+
+        --> YYYY-MM-DD::file.pl
+
+    To add date and WWW site prefix to the filenames:
+
+        mywebget.pl --prefix-date --prefix-www --overwrite --verbose \
+           http://www.example.com/file.pl
+
+        --> YYYY-MM-DD::www.example.com::file.pl
+
+    Get all updated files under default cnfiguration file's tag KITS:
+
+        mywebget.pl --verbose --overwrite --skip-version --new --Tag kits
+        mywebget.pl -v -o -s -n -T kits
+
+    Get files as they read in the configuration file to the current
+    directory, ignoring any "lcd:" and "save:" directives:
+
+        mywebget.pl --config $HOME/config/mywebget.conf /
+            --no-lcd --no-save --overwrite --verbose \
+            http://www.example.com/file.pl
+
+    To check configuration file, run the program with non-matching regexp
+    and it parses the file and checks the "lcd:" directives on the way:
+
+        mywebget.pl -v -r dummy-regexp
+
+        -->
+
+        mywebget.pl.DirectiveLcd: LCD [$EUSR/directory ...]
+        is not a directory at /users/foo/bin/mywebget.pl line 889.
+
+CONFIGURATION FILE
+  Comments
+    The configuration file is NOT Perl code. Comments start with hash
+    character (#).
+
+  Variables
+    At this point, variable expansions happen only in lcd:. Do not try to
+    use them anywhere else, like in URLs.
+
+    Path variables for lcd: are defined using following notation, spaces are
+    not allowed in VALUE part (no directory names with spaces). Varaible
+    names are case sensitive. Variables substitute environment variabales
+    with the same name. Environment variables are immediately available.
+
+        VARIABLE = /home/my/dir         # define variable
+        VARIABLE = $dir/some/file       # Use previously defined variable
+        FTP      = $HOME/ftp            # Use environment variable
+
+    The right hand can refer to previously defined variables or existing
+    environment variables. Repeat, this is not Perl code although it may
+    look like one, but just an allowed syntax in the configuration file.
+    Notice that there is dollar to the right hand> when variable is
+    referred, but no dollar to the left hand side when variable is defined.
+    Here is example of a possible configuration file contant. The tags are
+    hierarchically ordered without a limit.
+
+    Warning: remember to use different variables names in separate include
+    files. All variables are global.
+
+  Include files
+    It is possible to include more configuration files with statement
+
+        INCLUDE <path-to-file-name>
+
+    Variable expansions are possible in the file name. There is no limit how
+    many or how deep include structure is used. Every file is included only
+    once, so it is safe to to have multiple includes to the same file. Every
+    include is read, so put the most importat override includes last:
+
+        INCLUDE <etc/mywebget.conf>             # Global
+        INCLUDE <$HOME/config/mywebget.conf>    # HOME overrides it
+
+    A special "THIS" tag means relative path of the current include file,
+    which makes it possible to include several files form the same directory
+    where a initial include file resides
+
+        # Start of config at /etc/mywebget.conf
+
+        # THIS = /etc, current location
+        include <THIS/mywebget-others.conf>
+
+        # Refers to directory where current user is: the pwd
+        include <mywebget-others.conf>
+
+        # end
+
+  Configuraton file example
+    The configuration file can contain many <directoves:>, where each
+    directive end to a colon. The usage of each directory is best explained
+    by examining the configuration file below and reading the commentary
+    near each directive.
+
+        #   $HOME/config/mywebget.conf F- Perl mywebget.pl configuration file
+
+        ROOT   = $HOME                      # define variables
+        CONF   = $HOME/config
+        UPDATE = $ROOT/updates
+        DOWNL  = $ROOT/download
+
+        #   Include more configuration files. It is possible to
+        #   split a huge file in pieces and have "linux",
+        #   "win32", "debian", "emacs" configurations in separate
+        #   and manageable files.
+
+        INCLUDE <$CONF/mywebget-other.conf>
+        INCLUDE <$CONF/mywebget-more.conf>
+
+        tag1: local-copies tag1: local      # multiple names to this category
+
+            lcd:  $UPDATE                   # chdir directive
+
+            #  This is show to user with option --verbose
+            print: Notice, this site moved YYYY-MM-DD, update your bookmarks
+
+            file://absolute/dir/file-1.23.tar.gz
+
+        tag1: external
+
+          lcd:  $DOWNL
+
+          tag2: external-http
+
+            http://www.example.com/page.html
+            http://www.example.com/page.html save:/dir/dir/page.html
+
+          tag2: external-ftp
+
+            ftp://ftp.com/dir/file.txt.gz save:xx-file.txt.gz login:foo pass:passwd x:
+
+            lcd: $HOME/download-kit
+
+            ftp://ftp.com/dir/kit-1.1.tar.gz new:
+
+          tag2: package-x
+
+            lcd: $DOWNL/package-x
+
+            #  Person announces new files in his homepage, download all
+            #  announced files. Unpack everything (x:) and remove any
+            #  existing directories (xopt:rm)
+
+            http://example.com/~foo pregexp:\.tar\.gz$ x: xopt:rm
+
+        # End of configuration file mywebget.conf
+
+LIST OF DIRECTIVES IN CONFIGURATION FILE
+    All the directives must in the same line where the URL is. The programs
+    scans lines and determines all options given in line for the URL.
+    Directives can be overriden by command line options.
+
+    cnv:CONVERSION
+        Currently only conv:text is available.
+
+        Convert downloaded page to text. This option always needs either
+        save: or rename:, because only those directives change filename.
+        Here is an example:
+
+            http://example.com/dir/file.html cnv:text save:file.txt
+            http://example.com/dir/ pregexp:\.html cnv:text rename:s/html/txt/
+
+        A text: shorthand directive can be used instead of cnv:text.
+
+    cregexp:REGEXP
+        Download file only if the content matches REGEXP. This is same as
+        option --Regexp-content. In this example directory listing Emacs
+        lisp packages (.el) are downloaded but only if their content
+        indicates that the Author is Mr. Foo:
+
+            http://example.com/index.html cregexp:(?i)author:.*Foo pregexp:\.el$
+
+    lcd:DIRECTORY
+        Set local download directory to DIRECTORY (chdir to it). Any
+        environment variables are substituted in path name. If this tag is
+        found, it replaces setting of --Output. If path is not a directory,
+        terminate with error. See also --Create-paths and --no-lcd.
+
+    login:LOGIN-NAME
+        Ftp login name. Default value is "anonymous".
+
+    mirror:SITE
+        This is relevant to sourceforge, which does not allow direct
+        downloads with links like
+        http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz Visit the
+        page and selct the announced mirror that can be seen from the URL
+        which includes string "use_mirror=site"
+
+        An example:
+
+          http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz new: mirror:kent
+
+    new:
+        Get newest file. This variable is reset to the value of --new after
+        the line has been processed. Newest means, that an ls() command is
+        run in the ftp, and something equivalent in HTTP "ftp directories",
+        and any files that resemble the filename is examined, sorted and
+        heurestically determined according to version number of file which
+        one is the latest. For example files that have version information
+        in YYYYMMDD format will most likely to be retrieved right.
+
+        Time stamps of the files are not checked.
+
+        The only requirement is that filename "must" follow the universal
+        version numbering standard for released kits:
+
+            FILE-VERSION.extension      # de facto VERSION is defined as [\d.]+
+
+            file-19990101.tar.gz        # ok
+            file-1999.0101.tar.gz       # ok
+            file-1.2.3.5.tar.gz         # ok
+
+            file1234.txt                # not recognized. Must have "-"
+            file-0.23d.tar.gz           # warning ! No letters allowed 0.23d
+
+        Files that have some alphabetic version indicator at the end of
+        VERSION are not handled correctly. Bitch the developer and persuade
+        him to stick to the de facto standard so that files can be retrieved
+        intelligently.
+
+    overwrite: o:
+        Same as turning on --overwrite
+
+    page:
+        Download the HTTP page or apply command to it. A simple example, the
+        contact page name "index.html", "welcome.html" etc. is not known:
+
+           http://example.com/~foo page: save:foo-homepage.html
+
+        "More about" page: "directive and downloading difficult packages"
+
+        REMEMBER: All the regular epxression used in the configuration file
+        have a limitation of keeping together. This means that there must be
+        no space characters in the regular expressions, because it will
+        terminate reading the item. Like if you write
+
+            pregexp:(this regexp )
+
+        It must be written:
+
+            pregexp:(this\s+regexp\s)
+
+        Read the HTTP url page "as is" and parse page content. You need this
+        directive if the archive is not stored in HTTP server directory
+        (similar to ftp dir), but the maintainer has set up a separate HTML
+        page where the details how to get archive is explained.
+
+        In order to find the information from the page, you must also supply
+        some other directives to guide searching and constructing the
+        correct file name:
+
+        1) A page regexp directive "pregexp:ARCHIVE-REGEXP" matches the A
+        HREF filename location in the page.
+
+        2) Directive "file:DOWNLOAD-FILE" tells what is the template to use
+        to construct the downloadable file (for the "new:" directive).
+
+        3) Directive "vregexp:VERSION-REGEXP" matches the exact location in
+        the page from where the version information is extracted. The
+        default regexp looks for line that says "The latest version ...is..
+        1.4.2". The regexp must return submatch 2 for the version number.
+
+        To put all together, an example shows more this in action. The
+        following example should all be PUT ON ONE LINE, while it has been
+        splitted to separate lines for legibility. The presented
+        configuration line is explaind in next paragraphs.
+
+        Contact absolute page: at http://www.example.com/package.html and
+        search A HREF urls in the page that match pregexp:. In addition, do
+        another scan and search the version number in the page from thw
+        position that match vregexp: (submatch 2).
+
+        After all the pieces have been found, use template file: to make the
+        retrievable file using the version number found from vregexp:. The
+        actual download location is combination of page: and A HREF pregexp:
+        location. Here is the whole "one line" definition in the
+        configuration file:
+
+            http://www.example.com/~foo/package.html
+            page:
+            pregexp: package.tar.gz
+            vregexp: ((?i)latest.*?version.*?\b([\d][\d.]+).*)
+            file: package-1.3.tar.gz
+            new:
+            x:
+
+        Still not clear? Look at this complete HTML page where the above
+        directives apply:
+
+            <HTML>
+            <BODY>
+
+            The latest version of package is <B>2.4.1</B> It can be
+            downloaded in several forms:
+
+                <A HREF="download/files/package.tar.gz">Tar file</A>
+                <A HREF="download/files/package.zip">ZIP file
+
+            </BODY>
+            </HTML>
+
+        For this example it is assumed that package.tar.gz is actually a
+        symbolic link to the latest standard release file
+        package-2.4.1.tar.gz. From this page the actual download location
+        would have been
+        http://www.example.com/~foo/download/files/package-2.4.1.tar.gz So
+        why not simply download package.tar.gz? Because then the program
+        can't decide if the version at the page is newer than one stored on
+        disk from the previous download. With version numbers in the file
+        names, it can.
+
+        ANOTHER EXAMPLE
+
+        It is possible to add rename: directive to change the final name of
+        the saved file to the above cases. Sometimes people put version
+        number to "plain" files, that are not archives, like
+
+            file.el-1.1
+            file.el-1.2
+
+        the .el files are Emacs editor packages files and it would be very
+        inconvenient for Emacs users to refer to those with any other name
+        than plain "file.el". To write a complete line to find such files
+        from a page and save them in plain name, see below. Lines have been
+        broken for legibility:
+
+            http://example.com/files/
+            page:
+            pregexp:\.el-\d
+            vregexp:(file.el-([\d.]+))
+            file:file.el-1.1
+            new:
+            rename:s/-[\d.]+//
+
+        It effectively says "See if there is new version of something that
+        looks like file.el-1.1 and save it under name file.el by deleting
+        the extra version number at the end of original filename".
+
+    page:find
+        THIS IS NOT FOR FTP directories. Use directive regexp: for FTP.
+
+        This is more general instruction than the page: and vregexp:
+        explained above.
+
+        Instruct to download every URL on HTML page matching pregexp:RE. In
+        typical situation the page maintainer lists his software in the
+        development page. This example would download every tar.gz file
+        mentined in a page. Note, that the REGEXP is matched against the A
+        HREF link content, not the actual text that you see on the page:
+
+            http://www.example.com/index.html page:find pregexp:\.tar.gz$
+
+        You can also use additional regexp-no: directive if you want to
+        exclude files after the pregexp: has matched a link.
+
+            http://www.example.com/index.html page:find pregexp:\.tar.gz$ regexp-no:this-packet
+
+    pass:PASSWORD
+        For FTP logins. Default value is "nobody@example.com".
+
+    print:MESSAGE
+        Print associated message to user requesting matching tag name. This
+        directive must in separate line inside tag.
+
+            tag1: linux
+
+              print: this download site moved 2002-02-02, check your bookmarks.
+              http://new.site.com/dir/file-1.1.tar.gz new:
+
+        The "print:" directive for tag is shown only if user turns on
+        --verbose mode:
+
+            mywebget.pl -v -T linux
+
+    rename:PERL-CODE
+        Rename each file using PERL-CODE. The PERL-CODE must be full perl
+        program with no spaces anywhere. Following variables are available
+        during the eval() of code:
+
+            $ARG = current file name
+            $url = complete url for the file
+            The code must return $ARG which is used for file name
+
+        For example, if page contains links to .html files that are in fact
+        text files, following statement would chnage the file extensions:
+
+            http://example.com/dir/ page:find pregexp:\.html rename:s/html/txt/
+
+        You can also call function "MonthToNumber($string)" if the filename
+        contains written month name, like <2005-February.mbox>.The function
+        will convert the name into number. Many mailing list archives can be
+        donwloaded cleanly this way.
+
+            #  This will download SA-Exim Mailing list archives:
+            http://lists.merlins.org/archives/sa-exim/ pregexp:\.txt$ rename:$ARG=MonthToNumber($ARG)
+
+        Here is a more complicated example:
+
+            http://www.contactor.se/~dast/svnusers/mbox.cgi pregexp:mbox.*\d$ rename:my($y,$m)=($url=~/year=(\d+).*month=(\d+)/);$ARG="$y-$m.mbox"
+
+        Let's break that one apart. You may spend some time with this
+        example since the possiblilities are limitless.
+
+            1. Connect to page http://www.contactor.se/~dast/svnusers/mbox.cgi
+            2. Search page for URLs matching regexp 'mbox.*\d$'. A found link would
+               could be
+               http://svn.haxx.se/users/mbox.cgi?year=2004&month=12
+            3. The found link is put to $ARG, which can be used to extract suitable
+               mailbox name with perl code that is evaluated. The resulting name must
+               apear in $ARG. Thus the code effectively extract two items from the
+               link to form a mailbox name:
+
+                my ($y, $m) = ( $url =~ /year=(\d+).*month=(\d+)/ )
+                $ARG = "$y-$m.mbox"
+
+                => 2004-12.mbox
+
+        Just remember, that there must not be any spaces in the code that
+        follows "rename:" directive.
+
+    regexp:REGEXP
+        Get all files in ftp directory matching regexp. Directive save: is
+        ignored.
+
+    regexp-no:REGEXP
+        After the regexp: directive has matched, explude files that match
+        directive regexp-no:
+
+    Regexp:REGEXP
+        This option is for interactive use. Retrieve all files from HTTP or
+        FTP site which match REGEXP.
+
+    save:LOCAL-FILE-NAME
+        Save file under this name to local disk.
+
+    tagN:NAME
+        Downloads can be grouped under "tagN" so that e.g. option --Tag1
+        would start downloading files from that point on until next "tag1"
+        is found. There are currently unlimited number of tag levels: tag1,
+        tag2 and tag3, so that you can arrange your downlods hierarchially
+        in the configuration file. For example to download all Linux files
+        rhat you monitor, you would give option --Tag linux. To download
+        only the NT Emacs latest binary, you would give option --Tag
+        emacs-nt. Notice that you do not give the "level" in the option,
+        program will find it out from the configuration file after the tag
+        name matches.
+
+        The downloading stops at next tag of the "same level". That is, tag2
+        stops only at next tag2, or when upper level tag is found (tag1) or
+        or until end of file.
+
+            tag1: linux             # All Linux downlods under this category
+
+                tag2: sunsite    tag2: another-name-for-this-spot
+
+                #   List of files to download from here
+
+                tag2: ftp.funet.fi
+
+                #   List of files to download from here
+
+            tag1: emacs-binary
+
+                tag2: emacs-nt
+
+                tag2: xemacs-nt
+
+                tag2: emacs
+
+                tag2: xemacs
+
+    x:  Extract (unpack) file after download. See also option --unpack and
+        --no-extract The archive file, say .tar.gz will be extracted the
+        file in current download location. (see directive lcd:)
+
+        The unpack procedure checks the contents of the archive to see if
+        the package is correctly formed. The de facto archive format is
+
+            package-N.NN.tar.gz
+
+        In the archive, all files are supposed to be stored under the proper
+        subdirectory with version information:
+
+            package-N.NN/doc/README
+            package-N.NN/doc/INSTALL
+            package-N.NN/src/Makefile
+            package-N.NN/src/some-code.java
+
+        "IMPORTANT:" If the archive does not have a subdirectory for all
+        files, a subdirectory is created and all items are unpacked under
+        it. The defualt subdirectory name in constructed from the archive
+        name with currect date stamp in format:
+
+            package-YYYY.MMDD
+
+        If the archive name contains something that looks like a version
+        number, the created directory will be constructed from it, instead
+        of current date.
+
+            package-1.43.tar.gz    =>  package-1.43
+
+    xx: Like directive x: but extract the archive "as is", without checking
+        content of the archive. If you know that it is ok for the archive
+        not to include any subdirectories, use this option to suppress
+        creation of an artificial root package-YYYY.MMDD.
+
+    xopt:rm
+        This options tells to remove any previous unpack directory.
+
+        Sometimes the files in the archive are all read-only and unpacking
+        the archive second time, after some period of time, would display
+
+            tar: package-3.9.5/.cvsignore: Could not create file: Permission denied
+            tar: package-3.9.5/BUGS: Could not create file: Permission denied
+
+        This is not a serious error, because the archive was already on disk
+        and tar did not overwrite previous files. It might be good to inform
+        the archive maintainer, that the files have wrong permissions. It is
+        customary to expect that distributed kits have writable flag set for
+        all files.
+
+ERRORS
+    Here is list of possible error messages and how to deal with them.
+    Turning on --debug will help to understand how program has interpreted
+    the configuration file or command line options. Pay close attention to
+    the generated output, because it may reveal that a regexp for a site is
+    too lose or too tight.
+
+    ERROR {URL-HERE} Bad file descriptor
+        This is "file not found error". You have written the filename
+        incorrectly. Double check the configuration file's line.
+
+ENVIRONMENT
+    Variable "MYWEBGET_PL_CFG" can point to the root configuration file in
+    which you can use include directives to read more configuration files.
+    The configuration file is read at startup if it exists.
+
+        export MYWEBGET_PL_CFG=$HOME/conf/mywebget.conf     # /bin/hash syntax
+        setenv MYWEBGET_PL_CFG $HOME/conf/mywebget.conf     # /bin/csh syntax
+
+SEE ALSO
+    C program wget(1) http://www.ccp14.ac.uk/mirror/wget.htm and from the
+    the Libwww Perl library you find scripts lwp-download(1) lwp-mirror(1)
+    lwp-request(1) lwp-rget(1)
+
+    Win32 Cygwin unix utilities at http://www.cygwin.com/
+
+AVAILABILITY
+    Latest version of this file is at Project homepage at
+    http://perl-webget.sourceforge.net/
+
+SCRIPT CATEGORIES
+    CPAN/Administrative CPAN/Web
+
+PREREQUISITES
+    "LWP::UserAgent" "Net::FTP"
+
+COREQUISITES
+    "HTML::Parse" "HTML::TextFormat" "HTML::FormatText"
+
+    These modules are dynamically loaded only if directive cnv:text is used.
+    Otherwise these modules are not loaded.
+
+    "Crypt::SSLeay" This module is loaded only if HTTPS scheme is
+    encountered.
+
+OSNAMES
+    "any"
+
+VERSION
+    $Id: mywebget.txt,v 1.11 2006/02/19 14:57:13 jaalto Exp $
+
+AUTHOR
+    Copyright (C) 1996-2006 Jari Aalto. All rights reserved. This program is
+    free software; you can redistribute it and/or modify it under the same
+    terms as Perl itself or in terms of Gnu General Public License v2 or
+    later.
+

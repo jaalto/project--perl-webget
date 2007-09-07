@@ -1,0 +1,679 @@
+2006-03-09  Jari Aalto  <jari dot aalto A T cante dot net>
+
+	* mywebget.pl (UrlHttpSearchNewest): Impreved --Regexp
+	  search option.
+
+2006-02-21  Jari Aalto  <jari dot aalto A T cante dot net>
+
+	* mywebget.pl (HandleCommandLineArgs): Missing =s spec from
+	--mirror (did not accept an argument). Fixed.
+
+2006-02-09 Thu  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget-emacs.conf: 1.52 (mackall-matt): New.
+        quilt mode.
+        (widhopf-fenk-robert): New.
+
+2006-01-22 Sun  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget.pl (sub FileListFilter): 1.90 Files in sites using ftp procol
+        were not scrutinized to new: file test. Added $getFile test after
+        regexp test.
+        (sub Main): 1.90 Use $fileName (new: tag content) for $origFile when
+        passing it to UrlFtp(). This makes scanning new files take into effect.
+
+2005-12-01 Thu  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget.pl (sub FileDeCompressedCmd): 1.85 incorrect
+        $decompress binary 'bzip' => 'bzip2.
+        Check ERRNO after external shell call. Changed backquotes
+        to more reable qx().
+        (sub Unpack): 1.85 Changed backquotes
+        to more reable qx().
+        (sub UrlSfMirrorParse): 1.85 New.
+        (sub TestDriverSfMirror): 1.85 New.
+        (Help::LIST OF DIRECTIVES IN CONFIGURATION FILE): Added new
+        directive 'mirror:'.
+        (Help::General options): Added option --mirrir SITE.
+        for sourceforge downloads.
+        (sub UrlHttpManipulate): 1.85 New. Handle Sourceforge's
+        project downloads correctly.
+
+2005-11-29 Tue  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget-emacs.conf: 1.51 (warsaw-barry): URLs updated.
+        (python-mode): New tag. Point people to sourceforge.
+
+2005-10-16 Sun  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget.pl (LatestVersion): 1.84 Increased
+        debug messages so that level 2 is needed.
+
+2005-09-29 Thu  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget.pl (sub LatestVersion): 1.84 Added `tbz2' to
+        variable $ext.
+
+        * mywebget-emacs.conf: 1.50 Chnaged all `belnet' sourceforge
+        download URLS to prdownloads.sourceforge.net
+        (emacs-jabber):G New.
+        (mitchell-lawrence): Added lisppaste.el
+
+2005-08-13 Sat  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget.pl (sub ConfigVariableParse): 1.81
+        Ignore some URLS, that look like variable assignments:
+        print http://example.com/viewcvs/vc-svn.el?rev=HEAD
+        (sub Boot): 1.81 Raised debug from 2 => 4 before printing
+        configuration file contents.
+        (sub ConfigRead): 1.81 Fixed 'already flag' debug output.
+
+2005-04-06 Wed  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget-emacs.conf: 1.49 (corneli-joe): New.
+
+2005-02-16  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        Update Copright year in all files
+
+2005-02-06 Sun  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget-emacs.conf: 1.47 (two-mode): New.
+
+2005-02-07  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget-emacs.conf: (buhl-josh): Tag corrected. Due
+        to misunderstanding the tag was named 'ahlfeld-jorg'. Bug reported
+        by jbuhl users sourceforgenet.
+
+2005-02-04  Jari Aalto  <jari dot aalto A T cante dot net>
+
+        * mywebget-emacs.conf (svn):  1.45 Subversion tag disabled. Point
+        people to use Stefan's tag reichor-stefan.
+
+2005-02-02 Wed  Jari Aalto <jari dot aalto A T cante dot net>
+
+        * mywebget.pl
+        - There were serious problems with <rename:>. Now accepts
+          full perl code.
+        (sub ExpandVars): 1.77 Commented out `PrintHash',
+        so that environemtn varibales are not listed any more on error
+        (too long listing).
+        (sub ExpandVars): 1.77 Added new parameter 'origline'.
+        (sub ConfigVariableParse): 1.77 Added 'next' to skip 'rename:'
+        directive.
+        (sub EvalCode): 1.77 Added debug.
+        (Help::LIST OF DIRECTIVES IN CONFIGURATION FILE): 1.77 Added
+        much more complicated example to <rename:> directive.
+        (sub EvalCode): 1.77 Added private block.
+        (sub MonthToNumber): 1.77 New.
+        (UrlHttpDownload): Moved saveFile setting further up, because
+        'on disk' checking was too early.
+        (sub FileExists): 1.77 Missing -e check added.
+
+2005-01-30 Sun  Jari  Aalto <jari dot aalto A T cante dot net>
+
+        * mywebget-emacs.conf: 1.45 (dyke-neil): Added quake.el
+
+2005-01-18 Tue  Jari  <jari dot aalto A T cante dot net>
+
+        * mywebget-emacs.conf (hughes-graham): 1.44 New. Added rc4.el
+        which implements encrypt in pure elisp.
+
+2005-01-04 Tue  Jari Aalto <jari dot aalto A T cante dot net>
+
+        * mywebget.pl (sub UrlHttpFileCheck): 1.77 Removed unnecessary
+        development line: 'debug=5'.
+        (sub UrlHttp): 1.77 Added input ARG $overwrite.
+        (sub UrlFtp): 1.77 Added input ARG $overwrite.
+        (sub UrlHttpFileCheck): 1.77 Converted input arguments to HASH
+        notation. Added input ARG $overwrite.
+        (sub UrlHttpDownload): 1.77 Added input ARG $overwrite.
+        (sub UrlFile): 1.77 Converted input arguments to HASH
+        notation. Added input ARG $overwrite.
+
+        * mywebget-emacs.conf: 1.44 (elmes-damien): New
+        (chua-sandra): New; remember.el.
+
+2004-11-19 Fri  Jari Aalto  <jari dot aalto A T cante dt net>
+
+        * mywebget-emacs.conf (arch): 1.43 download disabled.
+        Instruct to use CVS instead.
+
+2004-11-07 Sun  Jari Aalto  <jari dot aalto A T cante dt net>
+
+        * mywebget.pl (sub UrlHttpParseHref): 1.75 HREF can also
+        use single quote. Added.
+
+        * mywebget-emacs.conf: 1.41 (mitchell-lawrence): New.
+
+2004-11-06 Sat  Jari Aalto  <jari dot aalto A T cante dt net>
+
+        * mywebget-emacs.conf: 1.41 (kruse-peter): New.
+        (oconnor-edward): Renamed. Was `oconor-edward'
+
+2004-10-13  Jari Aalto  <jari.aalto@poboxes.com>
+
+        * mywebget.pl (DirectiveLcd): Changer input parameter to
+        HASH.
+        (HandleCommandLineArgs): Incorrect option name
+        skip--version => skip-version.
+        (Boot): Removed global $ARG, and used for-loop local
+        my $arg.
+        (HandleCommandLineArgs): New global $CFG_FILE_NEEDED.
+        If the re is no --Tag or --regexp options, there is
+        no need to read and parse configuration file. This will
+        noticeably make program start faster to retrieve URLs.
+
+2004-09-29 Wed  Jari Aalto  <jari dot aalto A T cante dt net>
+
+        * mywebget-emacs.conf: 1.40 (yuji-minejima): New.
+
+2004-08-27 Fri  Jari Aalto  <jari dot aalto A T cante dt net>
+
+        * mywebget-emacs.conf: 1.39 (brown-jeremy): New.
+
+2004-08-25 Wed  Jari Aalto  <jari dot aalto A T cante dt net>
+
+        * mywebget-emacs.conf: 1.37 Removed all 'include' statements.
+        They conflick different setups.
+
+        * mywebget-emacs.conf: 1.37 (wiegley-john): URL updated.
+
+2004-08-24 Tue  Jari Aalto  <jari dot aalto A T cante dt net>
+
+        * mywebget.pl (Getopt::Long): 1.72 Set verbose to 5 if debug
+        is on.
+        (sub ConfigRead): 1.72 Lowered $verb check to print a warning
+        if configuration file cannot be read.
+
+2004-08-19 Thu  Jari Aalto  <jari dot aalto A T cante dt net>
+
+        * mywebget-emacs-vars.conf: 1.7 Changed wording in comments.
+
+        * mywebget-emacs.conf: (The overall recommended site-lisp structure)
+        1.35 Movex xemacs to separate hierarchy: /usr/share/xemacs/site-lisp/
+
+2004-04-10 Sat  Jari Aalto  <jari dot aalto A T cante dt net>
+
+        * mywebget-emacs.conf: 1.33 (triggs-mark): New.
+
+2004-04-01 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl (sub LatestVersion): 1.67 Didn't parse packages
+        names with embedded numbers. like4this-1.1.tar.gz; Fixed.
+
+        * mywebget-emacs.conf:
+        (jabber): Added emacs-jabber from Sourceforge.
+        (mp3): Added emacsmp3player from Sourceforge.
+        (docbook-xml): Added docbookxml from Sourceforge.
+        (svn): Added vc-svn.el
+        (italk): Added from Sourceforge.
+        (bibletools): Added from Sourceforge.
+        (elisp-other): jtags, jdc-el added from sourceforge.
+
+2004-03-31 Wed  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl: 1.64 (top level): REmoved extra newlines.
+        Code beatifying session.
+        (sub LatestVersion): 1.64 Correct version detecton bug,
+        when the version used leading zeroes: treat foo-1.002 as
+        foo-1.0.0.2
+        (sub UrlHttpDownload): 1.66 Didn't respect user giver save:
+        directive. Fixed.
+
+        * mywebget-emacs.conf: (arneson-erik) 1.29 New. Includes
+        mixmacter.el.
+        (elisp-other): Added SF project 'table' by Takaaki Ota.
+
+2004-02-08 Sun  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.28 (matsushita-akihisa): Added
+        URL http://www.bookshelf.jp/elc/
+
+2004-02-03 Tue  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: (berndl-klaus) 1.28 Added alternative tag
+        `cygwin-mount'.
+        (wright-francis): Added alternative tag `w32-symlinks'.
+
+2004-01-25 Sun  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.27 (monnier-stefan): Removed /rum.cs.yale.edu
+        FTP URL link. Not accessible.
+
+2004-01-24 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.27 (elisp-other): Removed NTEmacs faq
+        downloads epop and gnuserv. They are obsolete.
+        Added clearcase.el download.
+        (schroeder-alex) Wrong regexp-no, didn't filter out sql.el which
+        is included in Emacs. Fixed.
+        (pearson-dave): URL updated.
+
+2003-09-01 Mon  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        [RELEASED 2003.0901 to sourceforge]
+
+        * mywebget.pl: 1.60 Use !/bin/perl, not
+        !/usr/local/bin/perl
+        (HandleCommandLineArgs): 1.60 --help-html and --help-man
+        are now --Help-html and --Help-man
+        (Help): 1.60 Exit 0, not 1. Needed for Makefile.
+
+2003-08-11 Mon  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.26 (php-mode): Added sourceforge project.
+        It does not use CVS.
+
+2003-08-10 Sun  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.26 (zenirc): New
+
+2003-08-09  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: (breton-peter): Added tag3 'pbreton'
+        (oconnor-edward): New.
+        (linkov-juri): New.
+
+2003-08-08  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        Copyright statement year updated to all files.
+
+        * mywebget-emacs.conf: (goel-deepak): added additional
+        tag3 'deego'.
+        (schroeder-alex): additional tag3 'kensanata'
+
+2003-08-04 Mon  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl (Getopt::Long): 1.59 Corrected --verbose and --debug
+        option to accept no arguments and still activating the
+        option.
+
+2003-08-01 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.22 (mccrossan-fraser): New.
+
+2003-07-03 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.21 (sepulveda-rafael): New.
+        (kapur-nevin): regexp-no:gnus-grepmail|msn.el, too old.
+
+2003-06-26 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.21 do not download `bibfind', It's not
+        Kyle's.
+        (bini-michele): Do not download diff.el
+        (ponce-david): commented out, the files are at sourceforge `emacshacks'.
+        (grigni-michelangelo): Added noregexp `ff-path'. It's a file
+        from galbraith-peter.
+        (lopez-emilio): regexp-no `prosper'. It's Phillip Lord's
+        (jump-theodore):  regexp-no `prosper|nnir
+        (zundel-detlev): rpm.el conflicts with
+        cvs-packages/sourceforge/cedet/speedbar/rpm.el. Renamed to rpm2.el
+        (rush-david): regexp-no:surl
+
+2003-06-17 Tue  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl (sub UrlHttpDownload): 1.56 Added debug calls.
+        (LWP::UserAgent;): 1.56 Incorrectly passed $file if <new:> was
+        given. Now respect @list with <new:>. That it, it dindät download
+        the test file because the savefilename as wrong.
+        (sub ConfigRead):
+        1.56 Changed few calls from $debug to $debug > 1 and $debu > 2 to
+        reduce debug display in lower settings.
+
+2003-06-10 Tue  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.19
+        (englen-stephen): Added ell.el download. Was at section
+        theberge-jean.
+        (theberge-jean): updated hachette.el according
+        Jean-Philippe's recent comments
+
+        * mywebget.pl (UrlHttp): Parameter passing error
+        in callt o `UrlHttpSearchNewest'. Fixed.
+        (UrlHttpSearchNewest): Added $ua `die' check.
+        (UrlHttpSearchPage): Added $ua `die' check.
+
+2003-06-08 Sun  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.18
+        (akimichi-tatsukawa): New. EmacsWiki download
+        (hodgson-kahlil): New. EmacsWiki download
+        (alcorn-doug):New. EmacsWiki download
+        (grossjohan-kai): Adde dlonglines.el from EmacsWiki
+        (lang-mario): New. EmacsWiki download
+        (matsushita-akihisa): New. EmacsWiki download
+        (hodges-matthew): New. EmacsWiki download
+        (bini-michele): New. EmacsWiki download
+        (scholz-oliver): New. EmacsWiki download
+        (anderson-patrick): New. EmacsWiki download
+        (josefsson-simon): New link to AES. Rijndael implementation in
+        Emacs Lisp
+        (oconor-edward); O'Connor. New. EmacsWiki download
+        (corcoran-travis): New. EmacsWiki download
+        (koomen-hans): New. EmacsWiki download
+        (zajcev-evgeny): New. EmacsWiki download
+
+        * mywebget.pl (Help):
+        -- NEW FEATURE: Download according to content
+           match. Added option --Regexp-content
+        -- Massive code logic rewrite of function `UrlHttpFile'.
+        (FileContentAnalyze): New.
+        (UrlHttpFileCheck): New. Excerpted from `UrlHttpFile'
+        (UrlHttpSearchNewest): New. Excerpted from `UrlHttpFile'
+        (UrlHttpSearchPage): New. Excerpted from `UrlHttpFile'
+        (Help): 1.52 Added <cregexp:> directive documentation.
+        (Main): Code logic fixes. Separate my-definitions moved to the
+        point of usage.
+
+2003-06-07 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl (UrlHttp): 1.52 Added filtering out
+        duplicate files in FILE LIST with temporary hash.
+        (UrlHttpParseHref): Added support for HTML tag BASE.
+
+2003-06-06 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.15 (gorrell-harley): footnote.el clashes
+        with Emacs and XEmacs footnote.el. Is now saved as jhg-footnotee.el
+        (tramp): Update print: to direct people to GNU savannah project.
+
+        * mywebget.pl (UrlHttp): 1.51 Incorrect test for if-statement
+        in `Clearing FILE:'. Was @list > 0, is now @list > 1. This bug
+        caused save: directive never to take place.
+
+2003-06-04 Wed  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.15
+        -- All `elisp-users' URLs checked.
+        (belanger-jay): Fixed changed link
+        (berndl-klaus): URL to cygwin-mount.el updated.
+        (blaak-ray): Uncommented all and added 'print' to say that
+        delphi.el is included in latest Emacs.
+        (breton-peter): Disabled invalid homepage ULR
+        (davidson-kevin): Disabled invalid homepage ULR
+        (galbraith-peter): rule updated, do not download word-help.el, it
+        is not Peter's
+        (goel-deepak): Updated all URLs
+        (kemp-steve): URLs No longer available. Commented out.
+
+2003-06-03 Tue  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.14 (gorrell-harley). Harley Gorrell
+        <harley@panix.com> sent url update OLD:
+        http://www.hgsc.bcm.tmc.edu/~harley/elisp/ NEW:
+        http://www.mahalito.net/~harley/elisp/
+
+2003-05-23 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.14 (ponce-david): Added print
+        statement that the the files are available at SF project 'emhacks'
+
+2003-05-18  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: (wright-francis) Commented out
+        downloading package woman.el. Included in Emacs.
+
+2003-02-08 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl (sub Main): 1.50 Added https support. Needs
+        to load module Crypt::SSLeay dynamically.
+
+2002-12-22  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl (FileExists): Added check for complex URLs
+        download.php?file=this.tar.gz => file=this.tar.gz
+        * mywebget.pl (FileNameFix): Smarter filename fix code.
+
+2002-12-13  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf (jde): Changed
+        jde.sunsite.dk => jdee.sunsite.dk. Changed
+        jde-beta.zip => jde-latest.zip.
+
+2002-12-11  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl (UrlHttp): Added extra check for `not $new'.
+        must not clear the $file variable model.
+
+2002-08-31 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * admin.bashrc (function sfperlwebget_ask ()): 1.3 New.
+        (function sfperlwebget_release_check ()): 1.3 New.
+        (function sfperlwebget_release ()): 1.3 Call
+        `sfperlwebget_release_check'
+        (function sfperlwebgetdoc ()): 1.3 Generate mywebget.1
+        and not mywebget.pl.1 unix manual page.
+
+2002-08-29 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        mywebget-emacs.conf: (rodgers-kevin):
+        Added `print' commands to direct people to search igrep.el
+        wtih google. The gnu.emacs.sources carries the latest version.
+
+2002-08-22 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.11
+        Massive cleanup. Run Emacs tinypath.el
+        tinypath-cache-problem-report to find offending packages.
+        (wright-francis): woman.el is in Emacs 21.2
+        (vaidheeswarran-rajesh): whitespace is in Emacs 21.2
+        (jde-contrib): Ignore jsee - see `ponce-david'.
+        Ognore jserial - see `lord-philip'.
+        (ponce-david): jjar.zip moved to net/packages directory.
+        (belanger-jay): ignore httpd.el
+        (zimmermann-reto): vhdl commented. In Emacs.
+        (Foreword): Added new topic about Emacs and tinypath.el
+        (guess-lang): Removed. See tag `drieu-benjamin'
+        (schwenke-martin): Removed mms.tgz due to conflicting packages.
+        todo-mode is in Emacs 21.2
+        (blaak-ray): regexp-no:delphi.el
+        (breton-peter): Ignored find-lisp, generic, locate, net-utils;
+        in Emacs 21.2
+        (wiegley-john): elign.el, timeclock are in Emacs 21.2.
+        Ignore httpd.el - see `marsden-eric'
+        (belanger-jay): Ignore httpd.el, in `marsden-eric'
+        (shulman-michael): Ignore fortune.el, in Emacs 21.2
+        (antlr-mode): Removed. In Emacs 21.2
+        (schroeder-alex): regexp-no:ansi-color, in Emacs 21.2
+        (dampel-herbert): regexp-no:battery, info-look; in Emacs 21.2
+        (shinn-alex): regexp-no:battery, in Emacs 21.2. Ignore
+        lynx - see `sebold-charles'
+        (jones-kyle): ignore nnir - see `grossjohan-kai'
+        (bbdb-expire): Removed. Included in BBDB.
+        (sylvester-olaf): regexp-no:bs\.e, in Emacs 21.2
+        (barzilay-eli): regexp-no:calculator, in Emacs 21.2
+        (cperl): Removed CPAN load, Emacs 21.2 ships newer.
+        (monnier-stefan): exclude diff-mode.el, newcomment, in Emacs 21.2
+        (eshell): Removed. Included in Emacs 21.2
+        (ttn): Removed ttn-pers-elisp tar.gz because it includes too
+        many files that alreay come in other packages, like
+        eval-expr.el
+        (galbraith-peter): Ignore ffap and ff-paths, in Emacs 21.2
+        (hirose-yuuji): Ignore id3.el
+        (idlwave): Removed, included in latest Emacs.
+
+2002-08-14 ke  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs-vars.conf: 1.2 Fixes.
+
+2002-08-14  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.10 Documentation cleaned in
+        comments.
+
+        * mywebget-emacs-vars.conf: 1.2  Documentation cleaned in
+        comments.
+
+2002-08-13  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf:
+        (waider-ronan): New.
+        ($EUSR/friedman-noah): Emacs 21.2 already has packages
+        whitespace, type-break. Added to no-regexp.
+
+2002-08-12  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: (barzilay-eli): Fixed URL.
+        (curtin-matt): New. Added <print:>
+        (pedersen-jesper): URL updated.
+        (waldman-charles): New.
+        (wiborg-espen): New.
+        (zimmermann-reto): New.
+
+        * mywebget.pl (Main): Ignore <directive:> look-a-like
+        words in print: commands. like if you suggest connecting
+        to a "cvs -d :pserver:..." that looked like a directive
+        <pserver:>, when it wasn't.
+
+        * mywebget-emacs.conf: (lord-philip): URL Updated.
+
+2002-08-06  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf:
+        (galbraith-peter): Debian URL renowed. Temporary problem
+        as Peter explained in email.
+        Removed old site
+        ftp://ftp.phys.ocean.dal.ca/users/rhogee/elisp/
+        which no longer contains Peter's files.
+
+2002-08-04 Sun  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * admin.bashrc (function sfperlwebgetdoc ()): New.
+        (function sfperlwebgetcmd ()): New.
+
+        * mywebget.pl (Help): Added <print:> directive.
+        (UrlHttp): Correcte dbug where @LIST was ('') triggering
+        `multiple file noticed' -check. This set directive save:
+        to empty and no fiel was saved anywhere.
+
+        * mywebget-emacs.conf: (antlr-mode): New.
+        (cparse): Removed. This is replaced by semantic.el
+        (ede): Removed. Replaced by CEDET sourceforge project.
+        (eieio): Removed. Replaced by CEDET sourceforge project.
+        (semantic): Removed. Replaced by CEDET sourceforge project.
+        (speedbar): Removed. Replaced by CEDET sourceforge project.
+        (x-pkg): This file does not exist any more.
+        Removed
+        ftp://ftp.ultranet.com/pub/zappo/public_html/download/X-0.1a.tar.gz
+        (gnus-junk): Site does not exist. Removed.
+        http://stud2.tuwien.ac.at/~e9426626/gnus-junk.el
+        (breton-tom): Removed. URL invalid.
+        http://world.std.com/~tob/resume.html
+        (drieu-benjamin): URL updated. New module
+        guess-lang.el. Ignore pong.el, in Emacs 21.2
+        (pearson-dave): Ignore quickurl, 5x5; in Emacs 21.2
+        (fouts-martin): URL invalid.
+        Removed ftp://ftp.fogey.com/fouts/elisp/
+        (galbraith-peter): URL invalid.
+        Removed http://people.debian.org/~psg/elisp/
+        (wiborg-espen): Removed. No known addresses.
+        (lauri-gian): Removed. No known addresses: visual-basic-mode.el.gz
+        (lord-philip): Removed. No known addresses.
+        http://bioinf.man.ac.uk/~lord/applications/emacs/emacs-packages.html
+        (jde-contrib): NEW.
+        (marsden-eric): URL updated.
+        (moody-ray): removed. No known addresses: rmime.el
+        (perry-william): URLs deactivated, not valid. email sent.
+        (riebel-rob): Removed. Files are include din Emacs: tpu-edt and
+        sql-mode.
+        (socha-robin): removed. No known addresses.
+        (theberge-jean): Removed multiple HTTP calls with only one.
+        Made regexp more smarter to find the files.
+        (tziperman-eli): use <pregexp:> to find .el file instead
+        of direct link.
+        (urban-reini): removed. No known addresses.
+        (vaidheeswarran-rajesh): P4 project moved to sourceforge.
+
+2002-08-03 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl (LatestVersion): Support CDex packaging
+        numbers: cdex_150b6_enu.exe. Didn't recognize `b6' ending.
+        Rearranged debugging. The -d does not turn on full debug
+        any more, but -d 10 does.
+        (Main): Expand URL variables too. Now you can say
+        $HTTP_URL/directory/file.html
+
+        * mywebget-emacs.conf:
+        TAG html-helper is no longer active. The site has disappeared.
+        (breton-peter): URL corrected.
+        (minar-nelson): Added downloading html-helper.mode
+        (idlwave): Site has moved.
+        (template): Site moved to sourceforge project ´emacs-template'
+        but code is not in CVS.
+        (x-symbol): Site moved to sourceforge project ´x-symbol'
+        (w3): Removed. latest code is in GNU savannah CVS.
+
+2002-07-22  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl (UrlHttp):
+        Filter out FRAGMENTs that are not part of the file names. This
+        fixes bug, where you retrieved URLS from page using -R (regexp)
+        iption.
+        http://localhost/index.html#section1
+        =>
+        http://localhost/index.html
+
+2002-07-12  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: (hirose-yuuji): URLs updated.
+        (theberge-jean): All URLs fixed.
+        (yavner-jonathan): All URLs fixed.
+        (dirson-yann): All URLs fixed.
+
+2002-07-06  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: (galbraith-peter)
+        Added DEbian development packages.
+        (ramakrishnan) New member added.
+
+2002-02-13 Wed  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.4 (zundel-detlev)
+        URL address updated.
+
+2002-01-19 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 1.2 (walters-colin): Added checkout for
+        `ibuf-macs.el' hat is required by latest ibuffer.
+        (jde-docindex): New. by Kevin Burton.
+
+2002-01-14 Mon  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl: (sub FileExists): 1.41 New. If you download
+        a file.txt.gz  and instruct to extract it, it will become
+        file.txt. We can't therefore check the existence of
+        file.txt.gz, but file.txt as well.
+        (sub Main): 1.41 Send `unpack' information to HTTP and
+        FTP handlers.
+        (Getopt::Long): 1.41 set $verb to 10 if DEBUG on.
+        (sub FileSimpleCompressed): 1.41 New.
+        (sub UrlHttp): 1.41 Better overwrite checking with
+        FileExists() and FileSimpleCompressed().
+        (Net::FTP->new): 1.41 Better overwrite checking with
+        FileExists() and FileSimpleCompressed().
+
+2002-01-12 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 2.31
+        (volker-franz): New files.
+        (yamaoka-katsumi): New files and packages.
+        (mmm-mode): Removed. project is now at sourceforge under
+        the same name.
+
+        * mywebget.pl (Filter): 1.39 Added Pre-Filter
+        Which removes unwanted files before the LatestVersion
+        is called.
+        (Getopt::Long): 1.40 Added --chdir option.
+
+2002-01-11 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget-emacs.conf: 2.31 (eudc): Rmeoved.
+        Available from sourceforge.
+
+2002-01-04 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
+
+        * mywebget.pl (Initialize): 1.36 Change incorrect environment
+        variable MYMYWEBGET_PL_CFG into MYWEBGET_PL_CFG

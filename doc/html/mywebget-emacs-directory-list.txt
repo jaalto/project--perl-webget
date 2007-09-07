@@ -1,0 +1,766 @@
+Generated directories after running tag "elisp" in
+mywebget-emacs.conf. The directory structure is typically
+stored under /usr/share/site-lisp/net (you have to change
+variable ROOT, which points in default installation to /tmp)
+
+The command used was:
+
+    perl -S mywebget.pl --verbose --Create-paths --Tag elisp
+
+
+.
++--cvs-packages/
+|  +--gnus/
+|  |  +--contrib/
+|  |  +--etc/
+|  |  |  +--gnus/
+|  |  |  +--smilies/
+|  |  +--lisp/
+|  |  +--texi/
+|  |  |  +--ps/
+|  |  |  +--etc/
+|  |  |  +--herds/
+|  |  |  +--misc/
+|  |  |  +--picons/
+|  |  |  +--screen/
+|  |  |  +--smilies/
+|  |  |  +--xface/
+|  +--bbdb/
+|  |  +--bits/
+|  |  |  +--bbdb-filters/
+|  |  |  |  +--doc/
+|  |  |  |     +--formatted/
+|  |  +--html/
+|  |  |  +--images/
+|  |  |  +--patches/
+|  |  +--lisp/
+|  |  +--misc/
+|  |  +--tex/
+|  |  +--texinfo/
+|  |  +--utils/
+|  +--mailcrypt/
+|  +--gnu/
+|  |  +--url/
+|  |  |  +--lisp/
+|  |  |  +--texi/
+|  +--cc-mode/
+|  |  +--admin/
+|  |  +--tests/
+|  +--tnt/
+|  |  +--sounds/
+|  +--emacro/
+|  |  +--contrib/
+|  |  +--doc/
+|  |  +--i18n/
+|  |  +--packages/
+|  |  +--programmer/
+|  +--devel/
+|  +--jess-mode/
+|  |  +--jess-mode/
+|  +--ILISP/
+|  |  +--docs/
+|  |  +--extra/
+|  |  +--pictures/
+|  |  +--debian/
+|  +--lookup/
+|  |  +--lisp/
+|  |  +--texi/
+|  |  +--web/
+|  |  |  +--images/
+|  |  |  +--info/
+|  |  |  +--ja/
+|  |  |  |  +--howto/
+|  |  |  |  +--images/
+|  |  |  |  +--info/
+|  |  |  |  +--lists/
+|  |  +--fonts/
+|  +--liece/
+|  |  +--contrib/
+|  |  +--dcc/
+|  |  +--doc/
+|  |  +--etc/
+|  |  |  +--icons/
+|  |  |  +--po/
+|  |  |  +--styles/
+|  |  +--lisp/
+|  +--cedet/
+|  |  +--ede/
+|  |  +--eieio/
+|  |  +--quickpeek/
+|  |  +--semantic/
+|  |  |  +--tests/
+|  |  |  +--wisent/
+|  |  +--speedbar/
+|  |  +--cogre/
+|  |  +--www/
+|  +--eicq/
+|  |  +--etc/
+|  |  |  +--eicq/
+|  +--ecb/
+|  |  +--html/
+|  |  +--ecb2/
+|  +--w3/
+|  |  +--contrib/
+|  |  +--etc/
+|  |  |  +--w3/
+|  |  |  |  +--pixmaps/
+|  |  +--lisp/
+|  |  +--tests/
+|  |  +--texi/
+|  +--jde/
+|  |  +--doc/
+|  |  |  +--jdebug/
+|  |  |  |  +--ug/
+|  |  |  |     +--images/
+|  |  |  +--src/
+|  |  |  |  +--css/
+|  |  |  |  +--jde-ug/
+|  |  |  |  |  +--images/
+|  |  |  |  +--styles/
+|  |  |  |  |  +--html/
+|  |  |  |  +--ug/
+|  |  |  |     +--images/
+|  |  |  +--tli_rbl/
+|  |  |  |  +--au/
+|  |  |  |  +--img/
+|  |  |  |  +--txt/
+|  |  |  +--ug/
+|  |  |     +--images/
+|  |  +--java/
+|  |  |  +--bsh-commands/
+|  |  |  |  +--bsh/
+|  |  |  |     +--commands/
+|  |  |  +--src/
+|  |  |     +--jde/
+|  |  |        +--debugger/
+|  |  |        |  +--command/
+|  |  |        |  +--expr/
+|  |  |        |  +--spec/
+|  |  |        +--parser/
+|  |  |        |  +--syntaxtree/
+|  |  |        |  +--visitor/
+|  |  |        +--util/
+|  |  |        +--wizards/
+|  |  +--lisp/
+|  +--xslt-process/
+|  |  +--bin/
+|  |  +--doc/
+|  |  +--etc/
+|  |  +--java/
+|  |  |  +--xslt/
+|  |  |     +--debugger/
+|  |  |        +--cmdline/
+|  |  |        +--saxon/
+|  |  |        +--xalan/
+|  |  +--lisp/
+|  |  +--samples/
+|  |  +--tests/
+|  |     +--fo/
+|  +--xslide/
+|  +--tramp/
+|  |  +--lisp/
+|  |  +--test/
+|  |  +--texi/
+|  |  +--contrib/
+|  |  +--tramp2/
+|  +--jtags/
+|  |  +--lisp/
+|  |  +--test/
+|  |     +--pkg/
+|  |        +--hupp/
+|  +--pcl-cvs/
+|  |  +--releases/
+|  +--erc/
+|  |  +--debian/
+|  |  |  +--maint/
+|  |  |  +--scripts/
+|  +--records/
+|     +--distributions/
+|     +--mailcrypt/
+|     +--proposals/
+|        +--nextgen/
++--packages/
+|  +--tmp-eicq-0.2.5/
+|  |  +--etc/
+|  +--tmp-eicq-0.2.2/
+|  +--crapstation-0.0.19/
+|  |  +--Data/
+|  |  +--video/
+|  |  +--font/
+|  |  +--gui/
+|  |  +--pixeler/
+|  |  +--system/
+|  |  +--main/
+|  +--dired-dd-0.9.1.19/
+|  |  +--spinout/
+|  |  +--non-dired-drop/
+|  +--template/
+|  |  +--templates/
+|  |  +--lisp/
+|  |  +--examples/
+|  +--eudc-1.30b/
+|  +--X/
+|  +--gnyognyo2.1.tar/
+|  +--artist-1.2.3/
+|  +--dcsh-mode-1.2/
+|  +--eshell/
+|  |  +--tmp-pcomplete-1.1.6/
+|  |  +--eshell-2.4.2/
+|  |  +--pcomplete-1.1.7/
+|  |  +--tmp-eshell-2.4.1/
+|  +--records-1.4.8/
+|  +--notes-mode-1.16/
+|  |  +--HTML/
+|  +--tmp-irchat-20001203/
+|  +--elib-1.0/
+|  +--vera-mode-2.6/
+|  +--index-2000.1218/
+|  +--mirror.tar.gz-2001.0104/
+|  +--lout-mode/
+|  +--tmp-jde-beta-2001.0303/
+|  |  +--jde-2.2.7beta2/
+|  |     +--lisp/
+|  |     +--doc/
+|  |     |  +--src/
+|  |     |  |  +--jde-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--css/
+|  |     |  |  +--styles/
+|  |     |  |     +--html/
+|  |     |  +--html/
+|  |     |  |  +--css/
+|  |     |  |  +--jde-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--jdb-ug/
+|  |     |  |  +--bsh-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--jdebug-ug/
+|  |     |  |     +--images/
+|  |     |  +--tli_rbl/
+|  |     |     +--au/
+|  |     |     +--img/
+|  |     |     +--txt/
+|  |     +--java/
+|  |        +--classes/
+|  |        |  +--jde/
+|  |        |     +--wizards/
+|  |        |     +--parser/
+|  |        |     +--util/
+|  |        +--lib/
+|  |        +--src/
+|  |        |  +--jde/
+|  |        |     +--wizards/
+|  |        |     +--debugger/
+|  |        |     |  +--command/
+|  |        |     |  +--expr/
+|  |        |     |  +--spec/
+|  |        |     +--parser/
+|  |        |     |  +--syntaxtree/
+|  |        |     |  +--visitor/
+|  |        |     +--util/
+|  |        +--bsh-commands/
+|  |           +--bsh/
+|  |              +--commands/
+|  +--mmm-mode-0.4.7/
+|  +--sml-mode-3.9.5/
+|  +--x-symbol-beta/
+|  |  +--etc/
+|  |  +--fonts/
+|  |  +--man/
+|  |  +--www/
+|  |  +--lisp/
+|  |  +--origfonts/
+|  |  +--info/
+|  |  +--staging/
+|  +--ep-2.0/
+|  +--basic4e/
+|  |  +--readmes/
+|  +--marche-1.12/
+|  +--gnuplot-mode/
+|  |  +--Win9x/
+|  +--hm--html-menus/
+|  |  +--doc/
+|  +--view-process-mode/
+|  +--vm-folder/
+|  +--auto-insert-tkld-1.23/
+|  |  +--insert/
+|  +--mmm-mode-0.4.6/
+|  +--tmp-ttn-pers-elisp-1.36/
+|  |  +--info/
+|  |  +--lisp/
+|  |  |  +--bofh/
+|  |  |  +--import/
+|  |  |  +--low-stress/
+|  |  |  +--editing/
+|  |  |  +--core/
+|  |  |  +--term/
+|  |  |  +--prog-env/
+|  |  |  +--mail-n-news/
+|  |  |  +--diversions/
+|  |  +--doc/
+|  +--c-mode-addons-0.1/
+|  +--esheet/
+|  +--html-helper-mode.tar-2001.0303/
+|  +--tmp-jde-2.2.6beta7/
+|  |  +--lisp/
+|  |  +--doc/
+|  |  |  +--ug/
+|  |  |  |  +--images/
+|  |  |  +--src/
+|  |  |  |  +--ug/
+|  |  |  |     +--images/
+|  |  |  +--jdebug/
+|  |  |  |  +--ug/
+|  |  |  |     +--images/
+|  |  |  +--tli_rbl/
+|  |  |     +--au/
+|  |  |     +--img/
+|  |  |     +--txt/
+|  |  +--java/
+|  |     +--classes/
+|  |     |  +--jde/
+|  |     |     +--wizards/
+|  |     |     +--parser/
+|  |     |     +--util/
+|  |     +--lib/
+|  |     +--doc/
+|  |     |  +--jde/
+|  |     |     +--debugger/
+|  |     |        +--command/
+|  |     |        +--expr/
+|  |     |        +--spec/
+|  |     +--src/
+|  |     |  +--jde/
+|  |     |     +--wizards/
+|  |     |     +--debugger/
+|  |     |     |  +--expr/
+|  |     |     |  +--spec/
+|  |     |     |  +--interpret/
+|  |     |     |  |  +--syntaxtree/
+|  |     |     |  |  +--visitor/
+|  |     |     |  +--command/
+|  |     |     +--parser/
+|  |     |     |  +--syntaxtree/
+|  |     |     |  +--visitor/
+|  |     |     +--util/
+|  |     +--bsh-commands/
+|  |        +--bsh/
+|  |           +--commands/
+|  +--psgml-1.2.2/
+|  +--xslt-process-1.2.1/
+|  |  +--doc/
+|  |  +--java/
+|  |  |  +--xslt/
+|  |  +--lisp/
+|  +--color-mate-10.3/
+|  |  +--kanakan-cursor/
+|  |  |  +--org-doc/
+|  |  +--contrib/
+|  |  +--theme/
+|  +--tmp-jde-2.2.8beta4/
+|  |  +--lisp/
+|  |  +--doc/
+|  |  |  +--src/
+|  |  |  |  +--jde-ug/
+|  |  |  |  |  +--images/
+|  |  |  |  +--css/
+|  |  |  |  +--styles/
+|  |  |  |     +--html/
+|  |  |  +--html/
+|  |  |  |  +--jde-ug/
+|  |  |  |  |  +--images/
+|  |  |  |  +--jdebug-ug/
+|  |  |  |  |  +--images/
+|  |  |  |  +--bsh-ug/
+|  |  |  |  |  +--images/
+|  |  |  |  +--css/
+|  |  |  +--tli_rbl/
+|  |  |     +--au/
+|  |  |     +--img/
+|  |  |     +--txt/
+|  |  +--java/
+|  |     +--src/
+|  |     |  +--jde/
+|  |     |     +--debugger/
+|  |     |     |  +--command/
+|  |     |     |  +--expr/
+|  |     |     |  +--spec/
+|  |     |     +--util/
+|  |     |     +--wizards/
+|  |     +--lib/
+|  |     +--classes/
+|  |     +--bsh-commands/
+|  |        +--bsh/
+|  |           +--commands/
+|  +--bbdb-expire-1.4/
+|  +--tmp-irchat-20010608/
+|  +--color-mate-10.5/
+|  |  +--contrib/
+|  |  +--theme/
+|  |  +--kanakan-cursor/
+|  |  |  +--org-doc/
+|  +--tmp-jde-2.2.8/
+|  |  +--lisp/
+|  |  +--doc/
+|  |     +--src/
+|  |     |  +--jde-ug/
+|  |     |  |  +--images/
+|  |     |  +--css/
+|  |     |  +--styles/
+|  |     |     +--html/
+|  |     +--html/
+|  |        +--jde-ug/
+|  +--bugtrack-1.3.1/
+|  +--ttn-pers-elisp-1.37/
+|  |  +--info/
+|  |  +--lisp/
+|  |  |  +--bofh/
+|  |  |  +--import/
+|  |  |  +--low-stress/
+|  |  |  +--editing/
+|  |  |  +--core/
+|  |  |  +--term/
+|  |  |  +--prog-env/
+|  |  |  +--mail-n-news/
+|  |  |  +--diversions/
+|  |  +--doc/
+|  +--jde-beta--2.2.9beta6-2001.1127/
+|  |  +--jde-2.2.9beta6/
+|  |     +--lisp/
+|  |     +--doc/
+|  |     |  +--src/
+|  |     |  |  +--jde-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--css/
+|  |     |  |  +--styles/
+|  |     |  |     +--html/
+|  |     |  +--html/
+|  |     |  |  +--jde-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--jdebug-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--bsh-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--css/
+|  |     |  +--tli_rbl/
+|  |     |     +--au/
+|  |     |     +--img/
+|  |     |     +--txt/
+|  |     +--java/
+|  |        +--src/
+|  |        |  +--jde/
+|  |        |     +--debugger/
+|  |        |     |  +--command/
+|  |        |     |  +--expr/
+|  |        |     |  +--spec/
+|  |        |     +--util/
+|  |        |     +--wizards/
+|  |        +--lib/
+|  |        +--classes/
+|  |        +--bsh-commands/
+|  |           +--bsh/
+|  |              +--commands/
+|  +--mkhtml-1.7a/
+|  +--tmp-mkhtml-1.7/
+|  +--id3el-0.05/
+|  +--artist-1.2.4/
+|  +--dired-dd-0.9.1.23/
+|  |  +--spinout/
+|  |  +--non-dired-drop/
+|  +--html-helper-mode.tar-2001.1226/
+|  +--idlwave.info.tar-2001.1226/
+|  +--idlwave-4.9/
+|  +--irchat-20011104-2/
+|  +--jde-beta-2001.1226/
+|  |  +--jde-2.2.9beta7/
+|  |     +--lisp/
+|  |     +--doc/
+|  |     |  +--src/
+|  |     |  |  +--jde-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--css/
+|  |     |  |  +--styles/
+|  |     |  |     +--html/
+|  |     |  +--html/
+|  |     |  |  +--jde-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--jdebug-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--bsh-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--css/
+|  |     |  +--tli_rbl/
+|  |     |     +--au/
+|  |     |     +--img/
+|  |     |     +--txt/
+|  |     +--java/
+|  |        +--src/
+|  |        |  +--jde/
+|  |        |     +--debugger/
+|  |        |     |  +--command/
+|  |        |     |  +--expr/
+|  |        |     |  +--spec/
+|  |        |     +--util/
+|  |        |     +--wizards/
+|  |        +--lib/
+|  |        +--classes/
+|  |        +--bsh-commands/
+|  |           +--bsh/
+|  |              +--commands/
+|  +--mirror.tar-2001.1226/
+|  +--ssl-hacks-v2.tar/
+|  +--tenson-20010411/
+|  +--notes-mode-1.21/
+|  |  +--HTML/
+|  +--mkhtml-1.7/
+|  +--ttn-pers-elisp-1.38/
+|  |  +--doc/
+|  |  +--info/
+|  |  +--lisp/
+|  |  |  +--bofh/
+|  |  |  +--core/
+|  |  |  +--diversions/
+|  |  |  +--editing/
+|  |  |  +--import/
+|  |  |  +--low-stress/
+|  |  |  +--mail-n-news/
+|  |  |  +--prog-env/
+|  |  |  +--term/
+|  +--basic4d.tar/
+|  |  +--readmes/
+|  +--html-helper-mode.tar-2001.1230/
+|  +--idlwave.info.tar-2001.1230/
+|  +--jde-beta-2001.1230/
+|  |  +--jde-2.2.9beta7/
+|  |     +--lisp/
+|  |     +--doc/
+|  |     |  +--src/
+|  |     |  |  +--jde-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--css/
+|  |     |  |  +--styles/
+|  |     |  |     +--html/
+|  |     |  +--html/
+|  |     |  |  +--jde-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--jdebug-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--bsh-ug/
+|  |     |  |  |  +--images/
+|  |     |  |  +--css/
+|  |     |  +--tli_rbl/
+|  |     |     +--au/
+|  |     |     +--img/
+|  |     |     +--txt/
+|  |     +--java/
+|  |        +--src/
+|  |        |  +--jde/
+|  |        |     +--debugger/
+|  |        |     |  +--command/
+|  |        |     |  +--expr/
+|  |        |     |  +--spec/
+|  |        |     +--util/
+|  |        |     +--wizards/
+|  |        +--lib/
+|  |        +--classes/
+|  |        +--bsh-commands/
+|  |           +--bsh/
+|  |              +--commands/
+|  +--mirror.tar-2001.1230/
+|  +--rcpp-mode/
++--users/
+   +--riebel-rob/
+   +--sjodin-mikael/
+   |  +--RCS/
+   +--owen-gareth/
+   +--heideman-john/
+   +--howe-dennis/
+   +--ludlam-eric/
+   +--walters-colin/
+   |  +--RCS/
+   +--fouts-martin/
+   +--theberge-jean/
+   +--lauri-gian/
+   +--niksic-hrvoje/
+   +--warsaw-barry/
+   +--blaak-ray/
+   +--000-misc/
+   +--johnson-bryan/
+   +--hirose-yuuji/
+   +--moshin-ahmed/
+   +--zundel-detlev/
+   +--marsden-eric/
+   +--bakhash-david/
+   +--jones-kyle/
+   +--dirson-yann/
+   +--schwenke-martin/
+   |  +--desire/
+   |  |  +--appt/
+   |  |  +--bbdb/
+   |  |  +--browse-url/
+   |  |  +--calendar/
+   |  |  +--diary/
+   |  |  +--gnus/
+   |  |  +--gnuserv/
+   |  |  +--html-helper-mode/
+   |  |  +--hugs-mode/
+   |  |  +--latex/
+   |  |  +--lispdir/
+   |  |  +--message/
+   |  |  +--sendmail/
+   |  |  +--shell/
+   |  |  +--sqlplus-mode/
+   |  |  +--supercite/
+   |  |  +--tex/
+   |  |  +--todo-mode/
+   |  |  +--vm/
+   |  |  +--w3/
+   |  |  +--mailcrypt/
+   |  |  +--haskell-mode/
+   |  |  +--psgml/
+   |  +--mms/
+   |  +--gnuserv-3.12.4/
+   +--serrano-manuel/
+   +--jump-theodore/
+   |  +--bin/
+   |  +--VisEmacs-2.1.1/
+   |  |  +--Debug/
+   |  |  +--Release/
+   |  |  +--res/
+   |  +--regsetup.zip-2000.1225/
+   |  +--w32-dev-env-0.zip/
+   |  |  +--w32hhelp/
+   |  |  +--samples/
+   |  +--w32-print-1-13-4/
+   |  |  +--bin/
+   |  |  +--samples/
+   |  +--w32-winmsg-1-6-3.zip/
+   |  |  +--mingw32/
+   |  |  +--nmake/
+   +--wiegley-john/
+   +--burton-brent/
+   +--barzilay-eli/
+   +--friedman-noah/
+   +--ravel-bruce/
+   +--lord-philip/
+   +--muenkel-heiko/
+   +--lopez-emilio/
+   +--casadonte-joe/
+   +--pearson-dave/
+   +--clausen-lars/
+   +--grossjohan-kai/
+   +--bihlmeyer-robert/
+   +--tziperman-eli/
+   +--dyke-neil/
+   +--jackson-trey/
+   +--moody-ray/
+   +--garshol-lars/
+   +--breton-tom/
+   +--lepied-frederick/
+   +--knuth-don/
+   +--predescu-ovidiu/
+   +--zakharevich-ilya/
+   +--latorre-vinicius/
+   +--englen-stephen/
+   +--wright-francis/
+   +--milliken-peter/
+   +--dominik-carsten/
+   +--ponce-david/
+   |  +--jjar.zip-2001.0303/
+   |  +--jjar-1.7/
+   +--manning-carl/
+   +--dickow-ulrik/
+   +--minar-nelson/
+   +--monnier-stefan/
+   +--karunakaran-rajeev/
+   +--chen-gongquan/
+   +--burton-kevin/
+   +--shulman-michael/
+   +--yankowski-fred/
+   +--konerding-david/
+   +--goel-deepak/
+   |  +--2.7.1release/
+   |  |  +--help/
+   |  |  |  +--ex_article/
+   |  |  |  +--usrguide/
+   |  +--RCS/
+   |  +--lisp-mine-2001.1223/
+   |  +--lisp-mine-2001.1226/
+   |  +--lisp-mine-2001.1230/
+   +--minejima-yuji/
+   +--sebold-charles/
+   +--kemp-steve/
+   +--glickstein-bob/
+   +--hodges-matt/
+   +--zhu-shenghuo/
+   +--youngs-steve/
+   +--galbraith-peter/
+   +--osterlund-peter/
+   +--wedler-cristoph/
+   +--mengarini-will/
+   +--davidson-kevin/
+   +--lindgren-anders/
+   +--sharman-richard/
+   +--teixeira-roberto/
+   +--storm-kim/
+   +--pedersen-jesper/
+   +--grigni-michelangelo/
+   +--staats-michael/
+   +--broubaker-heddy/
+   +--berry-karl/
+   +--kleinpaste-karl/
+   +--carpenter-bill/
+   +--conrad-christoph/
+   +--edmonds-brian/
+   +--sylvester-olaf/
+   +--vaidheeswarran-rajesh/
+   +--perry-william/
+   +--kadlec-albrecht/
+   +--lannerback-anders/
+   +--liljenberg-peter/
+   +--boukanov-igor/
+   +--burgett-steve/
+   +--steverud-jonas/
+   +--gorrell-harley/
+   +--seiichi-namba/
+   +--nickelsen-jorgen/
+   +--sasser-dewey/
+   +--schroeder-alex/
+   +--breton-peter/
+   +--deleuze-christophe/
+   +--bjorlykke-stig/
+   +--wiborg-espen/
+   +--sprenger-karel/
+   +--buhl-josh/
+   +--padioleau-yoann/
+   +--brodie-bill/
+   +--drieu-benjamin/
+   +--belanger-jay/
+   +--ingrand-francois/
+   +--josefsson-simon/
+   +--rush-david/
+   +--rodgers-kevin/
+   +--urban-reini/
+   +--ernst-michael/
+   |  +--doc/
+   |  +--edb-1.21/
+   |  +--examples/
+   |     +--btxdb-0.6/
+   |     |  +--examples/
+   +--tse-stephen/
+   +--naess-rolf/
+   +--brillant-alexandre/
+   +--reichor-stefan/
+   +--riel-joe/
+   +--eide-eric/
+   +--schaeffer-timothy/
+   +--lundin-daniel/
+   +--pinard-francois/
+   +--yavner-jonathan/
+   +--berndl-klaus/
+   +--chen-jerry/
+   +--dampel-herbert/
+   +--shinn-alex/
+   +--keane-joe/
+   +--socha-robin/
+   +--ellison-gary/
