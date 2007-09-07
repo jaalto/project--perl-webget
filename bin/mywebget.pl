@@ -90,7 +90,7 @@ use Net::FTP;
     #   The following variable is updated by my Emacs setup whenever
     #   this file is saved
 
-    $VERSION = '2007.0907.0933';
+    $VERSION = '2007.0907.0947';
 
 # ****************************************************************************
 #
@@ -129,7 +129,7 @@ sub Initialize ()
     $RCS_ID      = '$Id: mywebget.pl,v 1.94 2006/03/09 21:47:19 jaalto Exp $'; #'
     $VERSION_VC  = (split ' ', $RCS_ID)[2];     # Version Control number
     $CONTACT     = "";
-    $URL         = "http://perl-webget.sourceforge.net/";
+    $URL         = "http://freshmeat.net/projects/perl-webget";
 
     $WIN32    = 1   if  $OSNAME =~ /win32/i;
 
@@ -1077,7 +1077,7 @@ Win32 Cygwin unix utilities at http://www.cygwin.com/
 =head1 AVAILABILITY
 
 Latest version of this file is at Project homepage at
-http://perl-webget.sourceforge.net/
+http://freshmeat.net/projects/perl-webget
 
 =head1 SCRIPT CATEGORIES
 
