@@ -40,7 +40,7 @@ include $(MAKE_INCLUDEDIR)/id.mk
 include $(MAKE_INCLUDEDIR)/vars.mk
 include $(MAKE_INCLUDEDIR)/cygwin.mk
 include $(MAKE_INCLUDEDIR)/unix.mk
-include $(MAKE_INCLUDEDIR)/net.mk
+include $(MAKE_INCLUDEDIR)/net-sf.mk
 
 # ######################################################## &suffixes ###
 
