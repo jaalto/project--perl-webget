@@ -28,18 +28,6 @@ Where is the list used?
 
         http://tiny-tools.sourceforge.net/mywebget.html
 
-Where is the list and code now?
-
-    The latest and much improved Perl code and configuration file is in the
-    CVS under /bin directory:
-
-    cvs -d :pserver:anonymous@cvs.tiny-tools.sourceforge.net:/cvsroot/tiny-tools login
-    cvs -d :pserver:anonymous@cvs.tiny-tools.sourceforge.net:/cvsroot/tiny-tools co tiny-tools
-
-    Old list is available at
-
-        http://tiny-tools.sourceforge.net/mywebget-emacs.conf
-
 Who are in the list?
 
     Here are the current Emacs lisp developers known to the configuration
