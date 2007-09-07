@@ -1,0 +1,16 @@
+mywebget.pl - A Perl derivation of famous wget
+----------------------------------------------
+
+System wide install
+
+        Run makefile with appropriate parameters
+
+            make help
+            make DESTDIR=/usr/local
+
+Manual install:
+
+        1. Copy bin/mywebget.pl somewhere along $PATH
+        2. Look at bin/*conf and apply ideas there and write your
+           own configuration file (optional; not required)
+
