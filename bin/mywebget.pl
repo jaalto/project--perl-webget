@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # -*- mode: perl; -*-
 #
-#  mywebget.pl -- batch download files possibly with configuration file
+#  mywebget -- batch download files possibly with configuration file
 #
 #  File id
 #
@@ -87,10 +87,10 @@ use Net::FTP;
     #   So that it puts the tardist number in format YYYY.MMDD
     #   The REAL version number is defined later
 
-    #   The following variable is updated by my Emacs setup whenever
-    #   this file is saved
+    #   The following variable is updated by developer's Emacs setup
+    #   whenever this file is saved
 
-    $VERSION = '2007.0907.0947';
+    $VERSION = '2007.0907.1118';
 
 # ****************************************************************************
 #
@@ -114,9 +114,6 @@ sub Initialize ()
     (
         $PROGNAME
         $LIB
-
-        $RCS_ID
-        $VERSION_VC
         $CONTACT
         $URL
         $WIN32
@@ -126,8 +123,6 @@ sub Initialize ()
     $LIB        = basename $PROGRAM_NAME;
     $PROGNAME   = $LIB;
 
-    $RCS_ID      = '$Id: mywebget.pl,v 1.94 2006/03/09 21:47:19 jaalto Exp $'; #'
-    $VERSION_VC  = (split ' ', $RCS_ID)[2];     # Version Control number
     $CONTACT     = "";
     $URL         = "http://freshmeat.net/projects/perl-webget";
 
@@ -175,15 +170,15 @@ sub Initialize ()
 
 =head1 NAME
 
-mywebget.pl - Perl Web URL fetch program
+mywebget - Perl Web URL fetch program
 
 =head1 SYNOPSIS
 
-    mywebget.pl http://example.com/ [URL ...]
-    mywebget.pl --config $HOME/config/mywebget.conf --Tag linux --Tag emacs ..
-    mywebget.pl --verbose --overwrite http://example.com/
-    mywebget.pl --verbose --overwrite --Output ~/dir/ http://example.com/
-    mywebget.pl --new --overwrite http://example.com/kit-1.1.tar.gz
+    mywebget http://example.com/ [URL ...]
+    mywebget --config $HOME/config/mywebget.conf --Tag linux --Tag emacs ..
+    mywebget --verbose --overwrite http://example.com/
+    mywebget --verbose --overwrite --Output ~/dir/ http://example.com/
+    mywebget --new --overwrite http://example.com/kit-1.1.tar.gz
 
 =head1 OPTIONS
 
@@ -214,8 +209,8 @@ The configuration file layout is envlained in section CONFIGURATION FILE
 Do a chdir() to DIRECTORY before any URL download starts. This is
 like doing:
 
-    % cd DIRECTORY
-    % mywebget.pl http://example.com/index.html
+    cd DIRECTORY
+    mywebget http://example.com/index.html
 
 =item B<--extract -e>
 
@@ -249,7 +244,7 @@ Get newest file. This applies to datafiles, which do not have extension
 number in filename usually tells which is the current one so getting
 harcoded file with:
 
-    mywebget.pl -o -v http://example.com/dir/program-1.3.tar.gz
+    mywebget -o -v http://example.com/dir/program-1.3.tar.gz
 
 is not usually practical from automation point of view. Adding
 B<--new> option to the command line causes double pass: a) the whole
@@ -328,7 +323,7 @@ Retrieve file matching at the destination URL site. This is like "Connect
 to the URL and get all files matching REGEXP". Here all gzip compressed
 files are found form HTTP server directory:
 
-    mywebget.pl -v -R "\.gz" http://example.com/archive/
+    mywebget -v -R "\.gz" http://example.com/archive/
 
 =item B<--Regexp-content -A REGEXP>
 
@@ -340,7 +335,7 @@ and then a match is searched against the content.
 For example to download Emacs lisp file (.el) written by Mr. Foo in
 case insesiteve manner:
 
-    mywebget.pl -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
+    mywebget -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
       http://www.emacswiki.org/elisp/index.html
 
 =item B<--stdout>
@@ -451,7 +446,7 @@ downloading with separate directives like C<save:> which tells to save the
 file under different name. The simplest way to retreive the latest version
 of a kit from FTP site is:
 
-    mywebget.pl --new --overwite --verbose \
+    mywebget --new --overwite --verbose \
        http://www.example.com/kit-1.00.tar.gz
 
 Do not worry about the filename "kit-1.00.tar.gz". The latest version, say,
@@ -470,57 +465,57 @@ depending on the used http or ftp protocol.
 
 Get files from site:
 
-    mywebget.pl http://www.example.com/dir/package.tar.gz ..
+    mywebget http://www.example.com/dir/package.tar.gz ..
 
 Get all mailing list archive files that match "gz":
 
-    mywebget.pl -R gz  http://example.com/mailing-list/archive/download/
+    mywebget -R gz  http://example.com/mailing-list/archive/download/
 
 Read a directory and store it to filename YYYY-MM-DD::!dir!000root-file.
 
-    mywebget.pl --prefix-date --overwrite --verbose http://www.example.com/dir/
+    mywebget --prefix-date --overwrite --verbose http://www.example.com/dir/
 
 To update newest version of the kit, but only if there is none at disk
 already. The B<--new> option instructs to find newer packages and the
 filename is only used as a skeleton for files to look for:
 
-    mywebget.pl --overwrite --skip-version --new --verbose \
+    mywebget --overwrite --skip-version --new --verbose \
         ftp://ftp.example.com/dir/packet-1.23.tar.gz
 
 To overwrite file and add a date prefix to the file name:
 
-    mywebget.pl --prefix-date --overwrite --verbose \
+    mywebget --prefix-date --overwrite --verbose \
        http://www.example.com/file.pl
 
     --> YYYY-MM-DD::file.pl
 
 To add date and WWW site prefix to the filenames:
 
-    mywebget.pl --prefix-date --prefix-www --overwrite --verbose \
+    mywebget --prefix-date --prefix-www --overwrite --verbose \
        http://www.example.com/file.pl
 
     --> YYYY-MM-DD::www.example.com::file.pl
 
 Get all updated files under default cnfiguration file's tag KITS:
 
-    mywebget.pl --verbose --overwrite --skip-version --new --Tag kits
-    mywebget.pl -v -o -s -n -T kits
+    mywebget --verbose --overwrite --skip-version --new --Tag kits
+    mywebget -v -o -s -n -T kits
 
 Get files as they read in the configuration file to the current directory,
 ignoring any C<lcd:> and C<save:> directives:
 
-    mywebget.pl --config $HOME/config/mywebget.conf /
+    mywebget --config $HOME/config/mywebget.conf /
         --no-lcd --no-save --overwrite --verbose \
         http://www.example.com/file.pl
 
 To check configuration file, run the program with non-matching regexp and
 it parses the file and checks the C<lcd:> directives on the way:
 
-    mywebget.pl -v -r dummy-regexp
+    mywebget -v -r dummy-regexp
 
     -->
 
-    mywebget.pl.DirectiveLcd: LCD [$EUSR/directory ...]
+    mywebget.DirectiveLcd: LCD [$EUSR/directory ...]
     is not a directory at /users/foo/bin/mywebget.pl line 889.
 
 
@@ -592,7 +587,7 @@ each directive end to a colon. The usage of each directory is best explained
 by examining the configuration file below and reading the commentary
 near each directive.
 
-    #   $HOME/config/mywebget.conf F- Perl mywebget.pl configuration file
+    #   $HOME/config/mywebget.conf F- Perl mywebget configuration file
 
     ROOT   = $HOME                      # define variables
     CONF   = $HOME/config
@@ -882,7 +877,7 @@ This directive must in separate line inside tag.
 The C<print:> directive for tag is shown only if user turns on --verbose
 mode:
 
-    mywebget.pl -v -T linux
+    mywebget -v -T linux
 
 =item B<rename:PERL-CODE>
 
@@ -1107,7 +1102,7 @@ C<any>
 
 =head1 VERSION
 
-$Id: mywebget.pl,v 1.94 2006/03/09 21:47:19 jaalto Exp $
+$VERSION
 
 =head1 AUTHOR
 
@@ -1366,7 +1361,7 @@ sub HandleCommandLineArgs ()
     $debug and $verb == 0  and $verb = 1;
     $debug > 2             and $verb = 10;
 
-    $version    and die "$VERSION $VERSION_VC $PROGNAME $CONTACT $URL\n";
+    $version    and die "$VERSION $PROGNAME $CONTACT $URL\n";
     $helpHTML   and Help( undef, -html );
     $helpMan    and Help( undef, -man );
     $help       and Help();
