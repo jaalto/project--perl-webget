@@ -3,7 +3,8 @@ mywebget.pl - A Perl derivation of famous wget
 
 System wide install
 
-        Run makefile with appropriate parameters
+        Run makefile with appropriate parameters. The program is
+        installed without any file extension.
 
             make help
             make DESTDIR= prefix=/usr/local install
