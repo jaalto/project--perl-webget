@@ -100,7 +100,6 @@ function sfperlwebget_ask ()
     esac
 }
 
-
 function sfperlwebgetscp ()
 {
     local id="sfperlwebgetscp"
