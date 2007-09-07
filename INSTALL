@@ -6,7 +6,7 @@ System wide install
         Run makefile with appropriate parameters
 
             make help
-            make DESTDIR=/usr/local
+            make DESTDIR= prefix=/usr/local install
 
 Manual install:
 
@@ -14,3 +14,4 @@ Manual install:
         2. Look at bin/*conf and apply ideas there and write your
            own configuration file (optional; not required)
 
+End of file

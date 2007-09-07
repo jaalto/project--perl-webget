@@ -14,3 +14,7 @@ etc/            Administarive files; used for install and managing project
 
 Requirements:   standard Perl, any decent version (5.004+)
 Licence     :   GNU GPL v2 or any later version, see COPYING
+Homepage    :   http://freshmeat.net/projects/perl-webget
+Contact     :   <jari.aalto@cante.net>
+
+End of file
