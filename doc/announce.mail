@@ -1,0 +1,139 @@
+From: Jari Aalto
+Subject: ANNOUNCE: Emacs lisp developer tracking system (site-lisp builder)
+Newsgroups: comp.emacs, gnu.emacs.help, comp.emacs.xemacs
+
+Hi
+
+    I've been maintaining a list which includes site address for
+    each Emacs Lisp Developers, who have released code in their web or ftp
+    sites. I'm sure this is list is not complete yet.
+
+    As a lisp developer, if you do not appear in this list yet, please
+    make yourself known by sending following information to me:
+
+    - Your full name and preferred email address
+    - URL address of a web (or FTP) page that lists your software
+
+Where is the list used?
+
+    The list is actually a configuration file for a perl tool
+    ´mywebget.pl' which can automatically retrieve and update new
+    files which Author has been put available.
+
+    If you run the whole configuration file, it downloads all lisp
+    packages around the globe and builds a site-lisp/net/users and
+    site-lisp/net/packages hierarchies for you.
+
+    Current Perl code documentation is at
+
+        http://tiny-tools.sourceforge.net/mywebget.html
+
+Where is the list and code now?
+
+    The latest and much improved Perl code and configuration file is in the
+    CVS under /bin directory:
+
+    cvs -d :pserver:anonymous@cvs.tiny-tools.sourceforge.net:/cvsroot/tiny-tools login
+    cvs -d :pserver:anonymous@cvs.tiny-tools.sourceforge.net:/cvsroot/tiny-tools co tiny-tools
+
+    Old list is available at
+
+        http://tiny-tools.sourceforge.net/mywebget-emacs.conf
+
+Who are in the list?
+
+    Here are the current Emacs lisp developers known to the configuration
+    file. Please add yourself in!
+
+    Jari
+
+
+2001-12-30 - 145 members in list
+
+abrahamsen-per
+ahlfeld-jorg
+bakhash-david
+barzilay-eli
+belanger-jay
+berndl-klaus
+berry-karl
+bihlmeyer-robert
+bjorlykke-stig
+blaak-ray
+boukanov-igor
+breton-peter
+breton-tom
+brillant-alexandre
+broubaker-heddy
+brodie-bill
+burgett-steve
+burton-brent
+burton-kevin
+caoile-clifford-escobar
+carpenter-bill
+casadonte-joe
+chen-gongquan
+chen-jerry
+clausen-lars
+conrad-christoph
+dampel-herbert
+davidson-kevin
+deleuze-christophe
+dickow-ulrik
+dirson-yann
+drieu-benjamin
+dyke-neil tag3: junkbuster tag3: spamprod
+edmonds-brian
+englen-stephen
+eide-eric
+ernst-michael
+fouts-martin
+ friedman-noah  tag3: noah
+galbraith-peter
+garshol-lars tag3: css-mode
+glickstein-bob
+goel-deepak
+grigni-michelangelo
+gorrell-harley
+grossjohan-kai  tag3: kai
+heideman-john
+ingalls-bruce
+ingrand-francois
+muenkel-heiko
+niksic-hrvoje
+hiroshi-yokota
+hirose-yuuji
+hodges-matt
+howe-dennis
+jackson-trey
+josefsson-simon
+jump-theodore
+kadlec-albrecht
+keane-joe
+kifer-michael tag3: ediff
+kemp-steve
+knuth-don
+konerding-david
+johnson-bryan
+jones-kyle
+kapur-nevin
+karunakaran-rajeev
+kleinpaste-karl
+lannerback-anders
+koppelman-david
+latorre-vinicius
+lauri-gian
+lepied-frederick  tag3: flepied
+liljenberg-peter
+lindgren-anders
+lopez-emilio
+lord-philip
+lundin-daniel
+ludlam-eric  tag3: zappo
+zappo-ftp
+manning-carl
+marsden-eric
+mengarini-will
+minar-nelson
+minejima-yuji
+milliken-peter
