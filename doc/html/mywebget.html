@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>mywebget.pl - Perl Web URL fetch program</title>
+<title>mywebget - Perl Web URL fetch program</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:rurban@x-ray.at" />
 </head>
@@ -59,17 +59,17 @@
 </p>
 <hr />
 <h1><a name="name">NAME</a></h1>
-<p>mywebget.pl - Perl Web URL fetch program</p>
+<p>mywebget - Perl Web URL fetch program</p>
 <p>
 </p>
 <hr />
 <h1><a name="synopsis">SYNOPSIS</a></h1>
 <pre>
-    mywebget.pl <a href="http://example.com/">http://example.com/</a> [URL ...]
-    mywebget.pl --config $HOME/config/mywebget.conf --Tag linux --Tag emacs ..
-    mywebget.pl --verbose --overwrite <a href="http://example.com/">http://example.com/</a>
-    mywebget.pl --verbose --overwrite --Output ~/dir/ <a href="http://example.com/">http://example.com/</a>
-    mywebget.pl --new --overwrite <a href="http://example.com/kit-1.1.tar.gz">http://example.com/kit-1.1.tar.gz</a></pre>
+    mywebget <a href="http://example.com/">http://example.com/</a> [URL ...]
+    mywebget --config $HOME/config/mywebget.conf --Tag linux --Tag emacs ..
+    mywebget --verbose --overwrite <a href="http://example.com/">http://example.com/</a>
+    mywebget --verbose --overwrite --Output ~/dir/ <a href="http://example.com/">http://example.com/</a>
+    mywebget --new --overwrite <a href="http://example.com/kit-1.1.tar.gz">http://example.com/kit-1.1.tar.gz</a></pre>
 <p>
 </p>
 <hr />
@@ -111,8 +111,8 @@ like doing:</p>
 </dd>
 <dd>
 <pre>
-    % cd DIRECTORY
-    % mywebget.pl <a href="http://example.com/index.html">http://example.com/index.html</a></pre>
+    cd DIRECTORY
+    mywebget <a href="http://example.com/index.html">http://example.com/index.html</a></pre>
 </dd>
 </li>
 <dt><strong><a name="item__2d_2dextract__2de"><strong>--extract -e</strong></a></strong>
@@ -160,7 +160,7 @@ harcoded file with:</p>
 </dd>
 <dd>
 <pre>
-    mywebget.pl -o -v <a href="http://example.com/dir/program-1.3.tar.gz">http://example.com/dir/program-1.3.tar.gz</a></pre>
+    mywebget -o -v <a href="http://example.com/dir/program-1.3.tar.gz">http://example.com/dir/program-1.3.tar.gz</a></pre>
 </dd>
 <dd>
 <p>is not usually practical from automation point of view. Adding
@@ -271,7 +271,7 @@ files are found form HTTP server directory:</p>
 </dd>
 <dd>
 <pre>
-    mywebget.pl -v -R &quot;\.gz&quot; <a href="http://example.com/archive/">http://example.com/archive/</a></pre>
+    mywebget -v -R &quot;\.gz&quot; <a href="http://example.com/archive/">http://example.com/archive/</a></pre>
 </dd>
 </li>
 <dt><strong><a name="item__2d_2dregexp_2dcontent__2da_regexp"><strong>--Regexp-content -A REGEXP</strong></a></strong>
@@ -288,7 +288,7 @@ case insesiteve manner:</p>
 </dd>
 <dd>
 <pre>
-    mywebget.pl -v -R '\.el$' -A &quot;(?i)Author: Mr. Foo&quot; \
+    mywebget -v -R '\.el$' -A &quot;(?i)Author: Mr. Foo&quot; \
       <a href="http://www.emacswiki.org/elisp/index.html">http://www.emacswiki.org/elisp/index.html</a></pre>
 </dd>
 </li>
@@ -425,7 +425,7 @@ downloading with separate directives like <code>save:</code> which tells to save
 file under different name. The simplest way to retreive the latest version
 of a kit from FTP site is:</p>
 <pre>
-    mywebget.pl --new --overwite --verbose \
+    mywebget --new --overwite --verbose \
        <a href="http://www.example.com/kit-1.00.tar.gz">http://www.example.com/kit-1.00.tar.gz</a></pre>
 <p>Do not worry about the filename ``kit-1.00.tar.gz''. The latest version, say,
 kit-3.08.tar.gz will be retrieved. The option <strong>--new</strong> instructs to find
@@ -442,49 +442,49 @@ depending on the used http or ftp protocol.</p>
 <h1><a name="examples">EXAMPLES</a></h1>
 <p>Get files from site:</p>
 <pre>
-    mywebget.pl <a href="http://www.example.com/dir/package.tar.gz">http://www.example.com/dir/package.tar.gz</a> ..</pre>
+    mywebget <a href="http://www.example.com/dir/package.tar.gz">http://www.example.com/dir/package.tar.gz</a> ..</pre>
 <p>Get all mailing list archive files that match ``gz'':</p>
 <pre>
-    mywebget.pl -R gz  <a href="http://example.com/mailing-list/archive/download/">http://example.com/mailing-list/archive/download/</a></pre>
+    mywebget -R gz  <a href="http://example.com/mailing-list/archive/download/">http://example.com/mailing-list/archive/download/</a></pre>
 <p>Read a directory and store it to filename YYYY-MM-DD::!dir!000root-file.</p>
 <pre>
-    mywebget.pl --prefix-date --overwrite --verbose <a href="http://www.example.com/dir/">http://www.example.com/dir/</a></pre>
+    mywebget --prefix-date --overwrite --verbose <a href="http://www.example.com/dir/">http://www.example.com/dir/</a></pre>
 <p>To update newest version of the kit, but only if there is none at disk
 already. The <strong>--new</strong> option instructs to find newer packages and the
 filename is only used as a skeleton for files to look for:</p>
 <pre>
-    mywebget.pl --overwrite --skip-version --new --verbose \
+    mywebget --overwrite --skip-version --new --verbose \
         <a href="ftp://ftp.example.com/dir/packet-1.23.tar.gz">ftp://ftp.example.com/dir/packet-1.23.tar.gz</a></pre>
 <p>To overwrite file and add a date prefix to the file name:</p>
 <pre>
-    mywebget.pl --prefix-date --overwrite --verbose \
+    mywebget --prefix-date --overwrite --verbose \
        <a href="http://www.example.com/file.pl">http://www.example.com/file.pl</a></pre>
 <pre>
     --&gt; YYYY-MM-DD::file.pl</pre>
 <p>To add date and WWW site prefix to the filenames:</p>
 <pre>
-    mywebget.pl --prefix-date --prefix-www --overwrite --verbose \
+    mywebget --prefix-date --prefix-www --overwrite --verbose \
        <a href="http://www.example.com/file.pl">http://www.example.com/file.pl</a></pre>
 <pre>
     --&gt; YYYY-MM-DD::www.example.com::file.pl</pre>
 <p>Get all updated files under default cnfiguration file's tag KITS:</p>
 <pre>
-    mywebget.pl --verbose --overwrite --skip-version --new --Tag kits
-    mywebget.pl -v -o -s -n -T kits</pre>
+    mywebget --verbose --overwrite --skip-version --new --Tag kits
+    mywebget -v -o -s -n -T kits</pre>
 <p>Get files as they read in the configuration file to the current directory,
 ignoring any <code>lcd:</code> and <code>save:</code> directives:</p>
 <pre>
-    mywebget.pl --config $HOME/config/mywebget.conf /
+    mywebget --config $HOME/config/mywebget.conf /
         --no-lcd --no-save --overwrite --verbose \
         <a href="http://www.example.com/file.pl">http://www.example.com/file.pl</a></pre>
 <p>To check configuration file, run the program with non-matching regexp and
 it parses the file and checks the <code>lcd:</code> directives on the way:</p>
 <pre>
-    mywebget.pl -v -r dummy-regexp</pre>
+    mywebget -v -r dummy-regexp</pre>
 <pre>
     --&gt;</pre>
 <pre>
-    mywebget.pl.DirectiveLcd: LCD [$EUSR/directory ...]
+    mywebget.DirectiveLcd: LCD [$EUSR/directory ...]
     is not a directory at /users/foo/bin/mywebget.pl line 889.</pre>
 <p>
 </p>
@@ -551,7 +551,7 @@ each directive end to a colon. The usage of each directory is best explained
 by examining the configuration file below and reading the commentary
 near each directive.</p>
 <pre>
-    #   $HOME/config/mywebget.conf F- Perl mywebget.pl configuration file</pre>
+    #   $HOME/config/mywebget.conf F- Perl mywebget configuration file</pre>
 <pre>
     ROOT   = $HOME                      # define variables
     CONF   = $HOME/config
@@ -928,7 +928,7 @@ mode:</p>
 </dd>
 <dd>
 <pre>
-    mywebget.pl -v -T linux</pre>
+    mywebget -v -T linux</pre>
 </dd>
 </li>
 <dt><strong><a name="item_rename_3aperl_2dcode"><strong>rename:PERL-CODE</strong></a></strong>
@@ -1234,14 +1234,14 @@ This module is loaded only if HTTPS scheme is encountered.</p>
 </p>
 <hr />
 <h1><a name="version">VERSION</a></h1>
-<p>$Id: mywebget.pl,v 1.94 2006/03/09 21:47:19 jaalto Exp $</p>
+<p>$VERSION</p>
 <p>
 </p>
 <hr />
 <h1><a name="author">AUTHOR</a></h1>
-<p>Copyright (C) 1996-2006 Jari Aalto. All rights reserved. This program is
-free software; you can redistribute it and/or modify it under the same
-terms as Perl itself or in terms of Gnu General Public License v2 or later.</p>
+<p>Copyright (C) 1996-2006 Jari Aalto. This program is free software; you
+can redistribute it and/or modify it under the same terms of Gnu
+General Public License v2 or any later version.</p>
 
 </body>
 

@@ -1,12 +1,12 @@
 NAME
-    mywebget.pl - Perl Web URL fetch program
+    mywebget - Perl Web URL fetch program
 
 SYNOPSIS
-        mywebget.pl http://example.com/ [URL ...]
-        mywebget.pl --config $HOME/config/mywebget.conf --Tag linux --Tag emacs ..
-        mywebget.pl --verbose --overwrite http://example.com/
-        mywebget.pl --verbose --overwrite --Output ~/dir/ http://example.com/
-        mywebget.pl --new --overwrite http://example.com/kit-1.1.tar.gz
+        mywebget http://example.com/ [URL ...]
+        mywebget --config $HOME/config/mywebget.conf --Tag linux --Tag emacs ..
+        mywebget --verbose --overwrite http://example.com/
+        mywebget --verbose --overwrite --Output ~/dir/ http://example.com/
+        mywebget --new --overwrite http://example.com/kit-1.1.tar.gz
 
 OPTIONS
   General options
@@ -33,8 +33,8 @@ OPTIONS
         Do a chdir() to DIRECTORY before any URL download starts. This is
         like doing:
 
-            % cd DIRECTORY
-            % mywebget.pl http://example.com/index.html
+            cd DIRECTORY
+            mywebget http://example.com/index.html
 
     --extract -e
         Unpack any files after retrieving them. The command to unpack
@@ -65,7 +65,7 @@ OPTIONS
         version number in filename usually tells which is the current one so
         getting harcoded file with:
 
-            mywebget.pl -o -v http://example.com/dir/program-1.3.tar.gz
+            mywebget -o -v http://example.com/dir/program-1.3.tar.gz
 
         is not usually practical from automation point of view. Adding --new
         option to the command line causes double pass: a) the whole
@@ -134,7 +134,7 @@ OPTIONS
         "Connect to the URL and get all files matching REGEXP". Here all
         gzip compressed files are found form HTTP server directory:
 
-            mywebget.pl -v -R "\.gz" http://example.com/archive/
+            mywebget -v -R "\.gz" http://example.com/archive/
 
     --Regexp-content -A REGEXP
         Analyze the content of the file and match REGEXP. Only if the regexp
@@ -145,7 +145,7 @@ OPTIONS
         For example to download Emacs lisp file (.el) written by Mr. Foo in
         case insesiteve manner:
 
-            mywebget.pl -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
+            mywebget -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
               http://www.emacswiki.org/elisp/index.html
 
     --stdout
@@ -237,7 +237,7 @@ README
     the file under different name. The simplest way to retreive the latest
     version of a kit from FTP site is:
 
-        mywebget.pl --new --overwite --verbose \
+        mywebget --new --overwite --verbose \
            http://www.example.com/kit-1.00.tar.gz
 
     Do not worry about the filename "kit-1.00.tar.gz". The latest version,
@@ -255,57 +255,57 @@ README
 EXAMPLES
     Get files from site:
 
-        mywebget.pl http://www.example.com/dir/package.tar.gz ..
+        mywebget http://www.example.com/dir/package.tar.gz ..
 
     Get all mailing list archive files that match "gz":
 
-        mywebget.pl -R gz  http://example.com/mailing-list/archive/download/
+        mywebget -R gz  http://example.com/mailing-list/archive/download/
 
     Read a directory and store it to filename YYYY-MM-DD::!dir!000root-file.
 
-        mywebget.pl --prefix-date --overwrite --verbose http://www.example.com/dir/
+        mywebget --prefix-date --overwrite --verbose http://www.example.com/dir/
 
     To update newest version of the kit, but only if there is none at disk
     already. The --new option instructs to find newer packages and the
     filename is only used as a skeleton for files to look for:
 
-        mywebget.pl --overwrite --skip-version --new --verbose \
+        mywebget --overwrite --skip-version --new --verbose \
             ftp://ftp.example.com/dir/packet-1.23.tar.gz
 
     To overwrite file and add a date prefix to the file name:
 
-        mywebget.pl --prefix-date --overwrite --verbose \
+        mywebget --prefix-date --overwrite --verbose \
            http://www.example.com/file.pl
 
         --> YYYY-MM-DD::file.pl
 
     To add date and WWW site prefix to the filenames:
 
-        mywebget.pl --prefix-date --prefix-www --overwrite --verbose \
+        mywebget --prefix-date --prefix-www --overwrite --verbose \
            http://www.example.com/file.pl
 
         --> YYYY-MM-DD::www.example.com::file.pl
 
     Get all updated files under default cnfiguration file's tag KITS:
 
-        mywebget.pl --verbose --overwrite --skip-version --new --Tag kits
-        mywebget.pl -v -o -s -n -T kits
+        mywebget --verbose --overwrite --skip-version --new --Tag kits
+        mywebget -v -o -s -n -T kits
 
     Get files as they read in the configuration file to the current
     directory, ignoring any "lcd:" and "save:" directives:
 
-        mywebget.pl --config $HOME/config/mywebget.conf /
+        mywebget --config $HOME/config/mywebget.conf /
             --no-lcd --no-save --overwrite --verbose \
             http://www.example.com/file.pl
 
     To check configuration file, run the program with non-matching regexp
     and it parses the file and checks the "lcd:" directives on the way:
 
-        mywebget.pl -v -r dummy-regexp
+        mywebget -v -r dummy-regexp
 
         -->
 
-        mywebget.pl.DirectiveLcd: LCD [$EUSR/directory ...]
+        mywebget.DirectiveLcd: LCD [$EUSR/directory ...]
         is not a directory at /users/foo/bin/mywebget.pl line 889.
 
 CONFIGURATION FILE
@@ -370,7 +370,7 @@ CONFIGURATION FILE
     by examining the configuration file below and reading the commentary
     near each directive.
 
-        #   $HOME/config/mywebget.conf F- Perl mywebget.pl configuration file
+        #   $HOME/config/mywebget.conf F- Perl mywebget configuration file
 
         ROOT   = $HOME                      # define variables
         CONF   = $HOME/config
@@ -648,7 +648,7 @@ LIST OF DIRECTIVES IN CONFIGURATION FILE
         The "print:" directive for tag is shown only if user turns on
         --verbose mode:
 
-            mywebget.pl -v -T linux
+            mywebget -v -T linux
 
     rename:PERL-CODE
         Rename each file using PERL-CODE. The PERL-CODE must be full perl
@@ -846,11 +846,10 @@ OSNAMES
     "any"
 
 VERSION
-    $Id: mywebget.pl,v 1.94 2006/03/09 21:47:19 jaalto Exp $
+    $VERSION
 
 AUTHOR
-    Copyright (C) 1996-2006 Jari Aalto. All rights reserved. This program is
-    free software; you can redistribute it and/or modify it under the same
-    terms as Perl itself or in terms of Gnu General Public License v2 or
-    later.
+    Copyright (C) 1996-2006 Jari Aalto. This program is free software; you
+    can redistribute it and/or modify it under the same terms of Gnu General
+    Public License v2 or any later version.
 

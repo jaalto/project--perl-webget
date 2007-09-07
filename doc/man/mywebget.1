@@ -131,15 +131,15 @@
 .IX Title "MYWEBGET 1"
 .TH MYWEBGET 1 "2007-09-07" "perl v5.8.8" "Perl mywebget URL fetch utility"
 .SH "NAME"
-mywebget.pl \- Perl Web URL fetch program
+mywebget \- Perl Web URL fetch program
 .SH "SYNOPSIS"
 .IX Header "SYNOPSIS"
 .Vb 5
-\&    mywebget.pl http://example.com/ [URL ...]
-\&    mywebget.pl --config $HOME/config/mywebget.conf --Tag linux --Tag emacs ..
-\&    mywebget.pl --verbose --overwrite http://example.com/
-\&    mywebget.pl --verbose --overwrite --Output ~/dir/ http://example.com/
-\&    mywebget.pl --new --overwrite http://example.com/kit-1.1.tar.gz
+\&    mywebget http://example.com/ [URL ...]
+\&    mywebget --config $HOME/config/mywebget.conf --Tag linux --Tag emacs ..
+\&    mywebget --verbose --overwrite http://example.com/
+\&    mywebget --verbose --overwrite --Output ~/dir/ http://example.com/
+\&    mywebget --new --overwrite http://example.com/kit-1.1.tar.gz
 .Ve
 .SH "OPTIONS"
 .IX Header "OPTIONS"
@@ -167,8 +167,8 @@ Do a \fIchdir()\fR to \s-1DIRECTORY\s0 before any \s-1URL\s0 download starts. Th
 like doing:
 .Sp
 .Vb 2
-\&    % cd DIRECTORY
-\&    % mywebget.pl http://example.com/index.html
+\&    cd DIRECTORY
+\&    mywebget http://example.com/index.html
 .Ve
 .IP "\fB\-\-extract \-e\fR" 4
 .IX Item "--extract -e"
@@ -204,7 +204,7 @@ number in filename usually tells which is the current one so getting
 harcoded file with:
 .Sp
 .Vb 1
-\&    mywebget.pl -o -v http://example.com/dir/program-1.3.tar.gz
+\&    mywebget -o -v http://example.com/dir/program-1.3.tar.gz
 .Ve
 .Sp
 is not usually practical from automation point of view. Adding
@@ -277,7 +277,7 @@ to the \s-1URL\s0 and get all files matching \s-1REGEXP\s0\*(R". Here all gzip c
 files are found form \s-1HTTP\s0 server directory:
 .Sp
 .Vb 1
-\&    mywebget.pl -v -R "\e.gz" http://example.com/archive/
+\&    mywebget -v -R "\e.gz" http://example.com/archive/
 .Ve
 .IP "\fB\-\-Regexp\-content \-A \s-1REGEXP\s0\fR" 4
 .IX Item "--Regexp-content -A REGEXP"
@@ -290,7 +290,7 @@ For example to download Emacs lisp file (.el) written by Mr. Foo in
 case insesiteve manner:
 .Sp
 .Vb 2
-\&    mywebget.pl -v -R '\e.el$' -A "(?i)Author: Mr. Foo" \e
+\&    mywebget -v -R '\e.el$' -A "(?i)Author: Mr. Foo" \e
 \&      http://www.emacswiki.org/elisp/index.html
 .Ve
 .IP "\fB\-\-stdout\fR" 4
@@ -385,7 +385,7 @@ file under different name. The simplest way to retreive the latest version
 of a kit from \s-1FTP\s0 site is:
 .PP
 .Vb 2
-\&    mywebget.pl --new --overwite --verbose \e
+\&    mywebget --new --overwite --verbose \e
 \&       http://www.example.com/kit-1.00.tar.gz
 .Ve
 .PP
@@ -407,19 +407,19 @@ depending on the used http or ftp protocol.
 Get files from site:
 .PP
 .Vb 1
-\&    mywebget.pl http://www.example.com/dir/package.tar.gz ..
+\&    mywebget http://www.example.com/dir/package.tar.gz ..
 .Ve
 .PP
 Get all mailing list archive files that match \*(L"gz\*(R":
 .PP
 .Vb 1
-\&    mywebget.pl -R gz  http://example.com/mailing-list/archive/download/
+\&    mywebget -R gz  http://example.com/mailing-list/archive/download/
 .Ve
 .PP
 Read a directory and store it to filename \s-1YYYY\-MM\-DD::\s0!dir!000root\-file.
 .PP
 .Vb 1
-\&    mywebget.pl --prefix-date --overwrite --verbose http://www.example.com/dir/
+\&    mywebget --prefix-date --overwrite --verbose http://www.example.com/dir/
 .Ve
 .PP
 To update newest version of the kit, but only if there is none at disk
@@ -427,14 +427,14 @@ already. The \fB\-\-new\fR option instructs to find newer packages and the
 filename is only used as a skeleton for files to look for:
 .PP
 .Vb 2
-\&    mywebget.pl --overwrite --skip-version --new --verbose \e
+\&    mywebget --overwrite --skip-version --new --verbose \e
 \&        ftp://ftp.example.com/dir/packet-1.23.tar.gz
 .Ve
 .PP
 To overwrite file and add a date prefix to the file name:
 .PP
 .Vb 2
-\&    mywebget.pl --prefix-date --overwrite --verbose \e
+\&    mywebget --prefix-date --overwrite --verbose \e
 \&       http://www.example.com/file.pl
 .Ve
 .PP
@@ -445,7 +445,7 @@ To overwrite file and add a date prefix to the file name:
 To add date and \s-1WWW\s0 site prefix to the filenames:
 .PP
 .Vb 2
-\&    mywebget.pl --prefix-date --prefix-www --overwrite --verbose \e
+\&    mywebget --prefix-date --prefix-www --overwrite --verbose \e
 \&       http://www.example.com/file.pl
 .Ve
 .PP
@@ -456,15 +456,15 @@ To add date and \s-1WWW\s0 site prefix to the filenames:
 Get all updated files under default cnfiguration file's tag \s-1KITS:\s0
 .PP
 .Vb 2
-\&    mywebget.pl --verbose --overwrite --skip-version --new --Tag kits
-\&    mywebget.pl -v -o -s -n -T kits
+\&    mywebget --verbose --overwrite --skip-version --new --Tag kits
+\&    mywebget -v -o -s -n -T kits
 .Ve
 .PP
 Get files as they read in the configuration file to the current directory,
 ignoring any \f(CW\*(C`lcd:\*(C'\fR and \f(CW\*(C`save:\*(C'\fR directives:
 .PP
 .Vb 3
-\&    mywebget.pl --config $HOME/config/mywebget.conf /
+\&    mywebget --config $HOME/config/mywebget.conf /
 \&        --no-lcd --no-save --overwrite --verbose \e
 \&        http://www.example.com/file.pl
 .Ve
@@ -473,7 +473,7 @@ To check configuration file, run the program with non-matching regexp and
 it parses the file and checks the \f(CW\*(C`lcd:\*(C'\fR directives on the way:
 .PP
 .Vb 1
-\&    mywebget.pl -v -r dummy-regexp
+\&    mywebget -v -r dummy-regexp
 .Ve
 .PP
 .Vb 1
@@ -481,7 +481,7 @@ it parses the file and checks the \f(CW\*(C`lcd:\*(C'\fR directives on the way:
 .Ve
 .PP
 .Vb 2
-\&    mywebget.pl.DirectiveLcd: LCD [$EUSR/directory ...]
+\&    mywebget.DirectiveLcd: LCD [$EUSR/directory ...]
 \&    is not a directory at /users/foo/bin/mywebget.pl line 889.
 .Ve
 .SH "CONFIGURATION FILE"
@@ -563,7 +563,7 @@ by examining the configuration file below and reading the commentary
 near each directive.
 .PP
 .Vb 1
-\&    #   $HOME/config/mywebget.conf F- Perl mywebget.pl configuration file
+\&    #   $HOME/config/mywebget.conf F- Perl mywebget configuration file
 .Ve
 .PP
 .Vb 4
@@ -919,7 +919,7 @@ The \f(CW\*(C`print:\*(C'\fR directive for tag is shown only if user turns on \-
 mode:
 .Sp
 .Vb 1
-\&    mywebget.pl -v -T linux
+\&    mywebget -v -T linux
 .Ve
 .IP "\fBrename:PERL\-CODE\fR" 4
 .IX Item "rename:PERL-CODE"
@@ -1166,9 +1166,9 @@ This module is loaded only if \s-1HTTPS\s0 scheme is encountered.
 \&\f(CW\*(C`any\*(C'\fR
 .SH "VERSION"
 .IX Header "VERSION"
-$Id: mywebget.pl,v 1.94 2006/03/09 21:47:19 jaalto Exp $
+$VERSION
 .SH "AUTHOR"
 .IX Header "AUTHOR"
-Copyright (C) 1996\-2006 Jari Aalto. All rights reserved. This program is
-free software; you can redistribute it and/or modify it under the same
-terms as Perl itself or in terms of Gnu General Public License v2 or later.
+Copyright (C) 1996\-2006 Jari Aalto. This program is free software; you
+can redistribute it and/or modify it under the same terms of Gnu
+General Public License v2 or any later version.
