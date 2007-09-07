@@ -1,36 +1,43 @@
-# .......................................................................
+#!/bin/bash
+# -*- mode: sh -*-
 #
-#   $Id: admin.bashrc,v 1.7 2004/04/05 10:23:25 jaalto Exp $
+#	Copyright (C) 2002-2007 Jari Aalto
 #
-#   These bash functions will help uploading files to Sourceforge project.
-#   You need:
+#	This program is free software; you can redistribute it and/or
+#	modify it under the terms of the GNU General Public License as
+#	published by the Free Software Foundation; either version 2 of the
+#	License, or (at your option) any later version
 #
-#       Unix        (Unix)  http://www.fsf.org/directory/bash.html
-#                   (Win32) http://www.cygwin.com/
-#       Perl 5.4+   (Unix)  http://www.perl.org
-#                   (Win32) http://www.ativestate.com
+#	This program is distributed in the hope that it will be useful, but
+#	WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#	General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with program; see the file COPYING. If not, write to the
+#	Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+#	Boston, MA 02110-1301, USA.
+#
+#	Visit <http://www.gnu.org/copyleft/gpl.html>
+#
+#   Description
+#
+#       This file is of interest only for the Admin or Co-Developer of
+#       project. These bash functions will help maintaining the project.
+#       You need:
+#
+#       Bash        any version
+#       Perl        5.004 or any later version
 #       t2html.pl   Perl program to convert text -> HTML
-#                   http://www.cpan.org/modules/by-authors/id/J/JA/JARIAALTO/
+#                   http://freshmeat.net/projects/perl-text2html
 #
+#       Variables to set:
 #
-#   This file is of interest only for the Admin or Co-Developer of
-#   project.
-#
-#       http://sourceforge.net/projects/perl-webget
-#       http://perl-webget.sourceforge.net/
-#
-#   Include this file to your $HOME/.bashrc and make the necessary
-#   modifications:
-#
-#       SF_PERL_WEBGET_USER=<sourceforge-login-name>
+#       SF_PERL_WEBGET_USER=<login-name>
 #       SF_PERL_WEBGET_USER_NAME="FirstName LastName"
 #       SF_PERL_WEBGET_EMAIL=<email address>
 #       SF_PERL_WEBGET_ROOT=~/cvs-projects/perl-webget
 #       SF_PERL_WEBGET_HTML_TARGET=http://perl-webget.sourceforge.net/
-#
-#       source ~/sforge/devel/perl-webget/bin/admin.bashrc
-#
-# .......................................................................
 
 function sfperlwebgetinit ()
 {
@@ -45,11 +52,9 @@ Perl, HTML, CSS2, conversion, webget"}
     SF_PERL_WEBGET_TITLE=${SF_PERL_WEBGET_TITLE:-"$SF_PERL_WEBGET_DESC"}
     SF_PERL_WEBGET_ROOT=${SF_PERL_WEBGET_ROOT:-""}
 
-
     if [ "$SF_PERL_WEBGET_USER" = "" ]; then
        echo "$id: Identity SF_PERL_WEBGET_USER unknown."
     fi
-
 
     if [ "$SF_PERL_WEBGET_USER_NAME" = "" ]; then
        echo "$id: Identity SF_PERL_WEBGET_USER_NAME unknown."
@@ -59,8 +64,6 @@ Perl, HTML, CSS2, conversion, webget"}
        echo "$id: Address SF_PERL_WEBGET_EMAIL unknown."
     fi
 }
-
-
 
 function sfperlwebgetdate ()
 {
@@ -114,9 +117,8 @@ function sfperlwebgetscp ()
         return
     fi
 
-    scp $* $sfuser@shell.sourceforge.net:/home/groups/$sfproject/htdocs/
+    scp "$@" $sfuser@shell.sourceforge.net:/home/groups/$sfproject/htdocs/
 }
-
 
 function sfperlwebgetcmd ()
 {
@@ -136,8 +138,6 @@ function sfperlwebgetcmd ()
     ssh $sfuser@shell.sourceforge.net "cd $dir; $*"
 }
 
-
-
 function sfperlwebgethtml ()
 {
     local id="sfperlwebgethtml"
@@ -154,7 +154,6 @@ function sfperlwebgethtml ()
     #
     #        bash$ sfperlwebgethtml <FILE.txt> --as-is
 
-
     local input="$1"
 
     if [ "$input" = "" ]; then
@@ -166,8 +165,6 @@ function sfperlwebgethtml ()
         echo "$id: No file found [$input]"
         return
     fi
-
-
 
     local opt
 
@@ -196,10 +193,7 @@ function sfperlwebgethtml ()
     else
         echo "$id: Can't move generated HTML to ../html/"
     fi
-
-
 }
-
 
 function sfperlwebgethtmlall ()
 {
@@ -226,7 +220,6 @@ function sfperlwebgethtmlall ()
 
          done
     )
-
 }
 
 function sfperlwebgetdoc ()
@@ -282,15 +275,12 @@ function sfperlwebget_release_check ()
         ( cd $SF_PERL_WEBGET_ROOT && cvs -nq up )
     fi
 
-
     if sfperlwebget_ask '[sfperlwebgetdoc] Generate manuals (y/N)?'
     then
         echo "Running..."
         sfperlwebgetdoc
     fi
-
 }
-
 
 function sfperlwebget_release ()
 {
@@ -325,9 +315,7 @@ function sfperlwebget_release ()
         rm $dir/$file
     fi
 
-
     (
-
         local todir=$base-$ver
         local tmp=$dir/$todir
 
@@ -363,17 +351,14 @@ function sfperlwebget_release ()
     )
 
     echo "$id: Call ncftpput upload.sourceforge.net /incoming $dir/$file"
-
 }
 
 sfperlwebgetinit                       # Run initializer
-
 
 export SF_PERL_WEBGET_HTML_TARGET
 export SF_PERL_WEBGET_KWD
 export SF_PERL_WEBGET_DESC
 export SF_PERL_WEBGET_TITLE
 export SF_PERL_WEBGET_ROOT
-
 
 # End of file
