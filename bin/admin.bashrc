@@ -37,7 +37,7 @@
 #       SF_PERL_WEBGET_USER_NAME="FirstName LastName"
 #       SF_PERL_WEBGET_EMAIL=<email address>
 #       SF_PERL_WEBGET_ROOT=~/cvs-projects/perl-webget
-#       SF_PERL_WEBGET_HTML_TARGET=http://perl-webget.sourceforge.net/
+#       SF_PERL_WEBGET_HTML_TARGET=http://freshmeat.net/projects/perl-webget
 
 function sfperlwebgetinit ()
 {
