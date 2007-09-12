@@ -11,7 +11,7 @@ System wide install
 
 Manual install:
 
-        1. Copy bin/mywebget.pl somewhere along $PATH
+        1. Copy bin/*.pl somewhere along $PATH
         2. Look at bin/*conf and apply ideas there and write your
            own configuration file (optional; not required)
 
