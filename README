@@ -1,10 +1,10 @@
 Perl webget - A Perl derivation of wget
 ---------------------------------------
 
-Perl webget resembles wget(1) with a twist. It can use categorized
-configuration files, analyze web pages and "search" for download
-link(s) as you instruct. Instead of absolute links, it contains
-heuristics to track more newer versions of the files.
+Perl webget is similar to wget, but it can use categorized
+configuration files, analyze Web pages, and "search" for download
+links as you instruct. Instead of absolute links, it contains
+heuristics to track newer versions of files.
 
     bin/            The program and example configuration
     doc/            Program's manual in various formats
