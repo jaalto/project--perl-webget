@@ -1,20 +1,30 @@
-Perl webget - A Perl derivation of famous wget
-----------------------------------------------
+Perl webget - A Perl derivation of wget
+---------------------------------------
 
 Perl webget resembles wget(1) with a twist. It can use categorized
 configuration files, analyze web pages and "search" for download
 link(s) as you instruct. Instead of absolute links, it contains
 heuristics to track more newer versions of the files.
 
+    bin/            The program and example configuration
+    doc/            Program's manual in various formats
+    etc/            Administarive files; used for managing the project
 
-bin/            The program, example configurartion, ChangeLog
-                and helper bash setup for project administration
-doc/*/          Program's manual in various formats
-etc/            Administarive files; used for install and managing project
+Important files
 
-Requirements:   standard Perl, any recent version (5.004+)
-Licence     :   GNU GPL v2 or any later version, see COPYING
-Homepage    :   http://freshmeat.net/projects/perl-webget
-Contact     :   <jari.aalto@cante.net>
+    COPYING         GPL Licence
+    INSTALL         Install instructions
+    bin/ChangeLog   Project change records
+
+Project contacts
+
+    Homepage
+      http://freshmeat.net/projects/perlwebget
+
+    Reporting bugs
+      See freshmeat page
+
+    Source code repository
+      See freshmeat page
 
 End of file
