@@ -90,7 +90,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2007.0907.1149';
+    $VERSION = '2007.0919.2100';
 
 # ****************************************************************************
 #
@@ -3520,6 +3520,7 @@ sub LatestVersion ( $ $ )
     if ( /$regexp/o  )
     {
         my $pfx  = $1;
+        $pfx =~ s,([][{}+.?*]),\\$1,g;   # Quote special characters.
 
         #  Examine 150b6, 1.50, 1_15
 
@@ -3541,7 +3542,8 @@ sub LatestVersion ( $ $ )
             #   because it requires extension "1$", but file.txt-1.2
             #   has extension "2$"
 
-            unless (  (( /\.[a-z]+[^-.]+$/ and /$pfx.*$post/) or /$pfx/ )
+            unless (  ( ( /\.[a-z]+[^-.]+$/ and /$pfx.*$post/)
+                         or /$pfx/ )
                       and  /$regexp/o
                    )
             {

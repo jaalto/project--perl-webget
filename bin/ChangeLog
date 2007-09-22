@@ -1,20 +1,25 @@
-2006-03-09  Jari Aalto  <jari dot aalto A T cante dot net>
+2007-09-19  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget.pl (LatestVersion): Quote special characters in regexp.
+	The name may contain special characters, like in 'aewm++'.
+
+2006-03-09  Jari Aalto  <jari.aalto@cante.net>
 
 	* mywebget.pl (UrlHttpSearchNewest): Impreved --Regexp
 	  search option.
 
-2006-02-21  Jari Aalto  <jari dot aalto A T cante dot net>
+2006-02-21  Jari Aalto  <jari.aalto@cante.net>
 
 	* mywebget.pl (HandleCommandLineArgs): Missing =s spec from
 	--mirror (did not accept an argument). Fixed.
 
-2006-02-09 Thu  Jari Aalto  <jari dot aalto A T cante dot net>
+2006-02-09 Thu  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.52 (mackall-matt): New.
         quilt mode.
         (widhopf-fenk-robert): New.
 
-2006-01-22 Sun  Jari Aalto  <jari dot aalto A T cante dot net>
+2006-01-22 Sun  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget.pl (sub FileListFilter): 1.90 Files in sites using ftp procol
         were not scrutinized to new: file test. Added $getFile test after
@@ -22,7 +27,7 @@
         (sub Main): 1.90 Use $fileName (new: tag content) for $origFile when
         passing it to UrlFtp(). This makes scanning new files take into effect.
 
-2005-12-01 Thu  Jari Aalto  <jari dot aalto A T cante dot net>
+2005-12-01 Thu  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget.pl (sub FileDeCompressedCmd): 1.85 incorrect
         $decompress binary 'bzip' => 'bzip2.
@@ -39,17 +44,17 @@
         (sub UrlHttpManipulate): 1.85 New. Handle Sourceforge's
         project downloads correctly.
 
-2005-11-29 Tue  Jari Aalto  <jari dot aalto A T cante dot net>
+2005-11-29 Tue  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.51 (warsaw-barry): URLs updated.
         (python-mode): New tag. Point people to sourceforge.
 
-2005-10-16 Sun  Jari Aalto  <jari dot aalto A T cante dot net>
+2005-10-16 Sun  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget.pl (LatestVersion): 1.84 Increased
         debug messages so that level 2 is needed.
 
-2005-09-29 Thu  Jari Aalto  <jari dot aalto A T cante dot net>
+2005-09-29 Thu  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget.pl (sub LatestVersion): 1.84 Added `tbz2' to
         variable $ext.
@@ -59,7 +64,7 @@
         (emacs-jabber):G New.
         (mitchell-lawrence): Added lisppaste.el
 
-2005-08-13 Sat  Jari Aalto  <jari dot aalto A T cante dot net>
+2005-08-13 Sat  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget.pl (sub ConfigVariableParse): 1.81
         Ignore some URLS, that look like variable assignments:
@@ -68,30 +73,30 @@
         configuration file contents.
         (sub ConfigRead): 1.81 Fixed 'already flag' debug output.
 
-2005-04-06 Wed  Jari Aalto  <jari dot aalto A T cante dot net>
+2005-04-06 Wed  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.49 (corneli-joe): New.
 
-2005-02-16  Jari Aalto  <jari dot aalto A T cante dot net>
+2005-02-16  Jari Aalto  <jari.aalto@cante.net>
 
         Update Copright year in all files
 
-2005-02-06 Sun  Jari Aalto  <jari dot aalto A T cante dot net>
+2005-02-06 Sun  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.47 (two-mode): New.
 
-2005-02-07  Jari Aalto  <jari dot aalto A T cante dot net>
+2005-02-07  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: (buhl-josh): Tag corrected. Due
         to misunderstanding the tag was named 'ahlfeld-jorg'. Bug reported
         by jbuhl users sourceforgenet.
 
-2005-02-04  Jari Aalto  <jari dot aalto A T cante dot net>
+2005-02-04  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf (svn):  1.45 Subversion tag disabled. Point
         people to use Stefan's tag reichor-stefan.
 
-2005-02-02 Wed  Jari Aalto <jari dot aalto A T cante dot net>
+2005-02-02 Wed  Jari Aalto <jari.aalto@cante.net>
 
         * mywebget.pl
         - There were serious problems with <rename:>. Now accepts
@@ -111,16 +116,16 @@
         'on disk' checking was too early.
         (sub FileExists): 1.77 Missing -e check added.
 
-2005-01-30 Sun  Jari  Aalto <jari dot aalto A T cante dot net>
+2005-01-30 Sun  Jari  Aalto <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.45 (dyke-neil): Added quake.el
 
-2005-01-18 Tue  Jari  <jari dot aalto A T cante dot net>
+2005-01-18 Tue  Jari  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf (hughes-graham): 1.44 New. Added rc4.el
         which implements encrypt in pure elisp.
 
-2005-01-04 Tue  Jari Aalto <jari dot aalto A T cante dot net>
+2005-01-04 Tue  Jari Aalto <jari.aalto@cante.net>
 
         * mywebget.pl (sub UrlHttpFileCheck): 1.77 Removed unnecessary
         development line: 'debug=5'.
