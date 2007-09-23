@@ -1,5 +1,7 @@
 2007-09-19  Jari Aalto  <jari.aalto@cante.net>
 
+	RELEASE: 20070923.2150
+
 	* mywebget.pl (LatestVersion): Quote special characters in regexp.
 	The name may contain special characters, like in 'aewm++'.
 
