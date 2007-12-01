@@ -5,7 +5,7 @@
 #
 #  File id
 #
-#       Copyright (C) 1996-2007 Jari Aalto
+#       Copyright (C) 1996-2008 Jari Aalto
 #
 #	This program is free software; you can redistribute it and/or
 #	modify it under the terms of the GNU General Public License as
@@ -90,7 +90,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2007.0919.2100';
+    $VERSION = '2007.1201.1827';
 
 # ****************************************************************************
 #
@@ -1100,13 +1100,9 @@ This module is loaded only if HTTPS scheme is encountered.
 
 C<any>
 
-=head1 VERSION
-
-$VERSION
-
 =head1 AUTHOR
 
-Copyright (C) 1996-2006 Jari Aalto. This program is free software; you
+Copyright (C) 1996-2008 Jari Aalto. This program is free software; you
 can redistribute it and/or modify it under the same terms of Gnu
 General Public License v2 or any later version.
 
@@ -2775,8 +2771,8 @@ sub FileDeCompressedRootDir ( $ )
     #   If there is directory it must be in front of every file
 
     local $ARG;
-    my %seen  = ();
-    my @nodir = ();
+    my %seen;
+    my @nodir;
 
     for ( @$fileArrRef  )
     {
@@ -2795,12 +2791,24 @@ sub FileDeCompressedRootDir ( $ )
     my @roots  = keys %seen;
     my $ret;
 
-    if ( @roots == 1  and  @nodir == 0 )
+    if ( @roots )
     {
-        $ret = $roots[0]
+        my $root = $roots[0];
+
+        if ( @roots == 1  and  @nodir == 1  and  $root eq $nodir[0])
+        {
+            #  Special case. The directory itself is always "alone" entry
+            # drwxrwxrwx foo/users 0 2006-07-22 14:18 package-0.5.6
+            $ret = $root
+            }
+        elsif ( @roots == 1  and  @nodir == 0 )
+        {
+            $ret = $root;
+        }
     }
 
-    $debug  and  print "$id: RET roots [@roots] no-dirs [@nodir]\n";
+    $debug  and  print "$id: RET [$ret] status [$status]; "
+                     . "roots [@roots] no-dirs [@nodir]\n";
 
     $ret, $status, $fileArrRef ;
 }
@@ -3017,7 +3025,6 @@ sub Unpack ($ $; $ $)
         my $cwd   = cwd();
         my $chdir = 0;
         my $file  = basename $ARG;
-        my $newDir;
 
         # ............................................ check ...
         # Must contain root directory in archive
@@ -3028,7 +3035,7 @@ sub Unpack ($ $; $ $)
         {
             $debug  and  print "##\n";
 
-            $newDir = FileRootDirCreate basename($ARG), $cwd, $opt;
+            my $newDir = FileRootDirCreate basename($ARG), $cwd, $opt;
 
             $debug  and  print "## $newDir\n";
 
@@ -6471,7 +6478,10 @@ sub Test ()
     print UrlHttpParseHref $str, "tar.gz";
 }
 
-Boot();
+# Boot();
+
+$debug = 10;
+FileRootDirNeedeed 'abook_0.5.6.orig.tar.gz';
 
 # }}}
 
