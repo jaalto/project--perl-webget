@@ -90,7 +90,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2007.1201.1827';
+    $VERSION = '2007.1201.1832';
 
 # ****************************************************************************
 #
@@ -6478,10 +6478,7 @@ sub Test ()
     print UrlHttpParseHref $str, "tar.gz";
 }
 
-# Boot();
-
-$debug = 10;
-FileRootDirNeedeed 'abook_0.5.6.orig.tar.gz';
+Boot();
 
 # }}}
 
