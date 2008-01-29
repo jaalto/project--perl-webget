@@ -3674,7 +3674,7 @@ sub LatestVersion ( $ $ )
     {
         if ( $verb )
         {
-            print  <<EOF;
+            print  << "EOF";
 $id: Unknown version format in filename. Cannot parse according to skeleton [$ARG]
     The most usual reason for this error is, that you have supplied
     <pregexp:> and <new:>. Please examine your URL and try removing <new:>
@@ -3691,12 +3691,16 @@ EOF
 
     if ( $ret eq '' )
     {
-        die <<EOF;
+        die << "EOF";
 $id: Internal error, Run with --debug on to pinpoint the details.
 
      Cannot find anything suitable for download. This may be due to
-     non-matching file regexp: that is, your file-format for <new:> is wrong,
-     or <regexp:> is too limiting or <no-regexp:> filtered everything.
+     non-matching file regexp: that is or <regexp:> is too limiting or
+     <no-regexp:> filtered everything. If you used <new:>, it may
+     be possible that the heuristics couldn't determine what were the
+     links to examine; in that case, please let the program know what
+     kind of file it should search by providing template directive
+     <file:archive-YYYYMMDD.tar.gz>
 
      check also that the <new:> file extension looks the same as what
      <pregexp:> found from the page.
@@ -4876,6 +4880,7 @@ sub UrlHttpSearchNewest ( % )
             {
                 #  Nope, this is "download.html" search with
                 #  possible "--Regexp SEARCH" option.
+
                 $getFile = $urls[0];
                 $file    = $getFile;
             }

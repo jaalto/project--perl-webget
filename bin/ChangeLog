@@ -1,3 +1,16 @@
+2008-01-29  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget.pl (LatestVersion): Reformat error message.
+	Suggest using <file:> in the configuration line.
+
+	* mywebget-emacs.conf: (lua): Add lua-mode download.
+
+2008-01-25  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget-emacs.conf: (jsp): change download directory
+	from www/jsp to www/
+	(niksic-hrvoje): Download all *.el files.
+
 2007-12-01  Jari Aalto  <jari.aalto@cante.net>
 
 	* mywebget.pl (HELP): Removed heading VERSION. Can't
