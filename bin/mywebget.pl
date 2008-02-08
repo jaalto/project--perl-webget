@@ -90,7 +90,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2007.1201.1832';
+    $VERSION = '2008.0208.1331';
 
 # ****************************************************************************
 #
@@ -4628,12 +4628,14 @@ sub UrlHttpManipulate (%)
 
     $debug > 2  and  print "$id: INPUT url [$url]\n";
 
-    if ( $url =~ /^(.*)prdownloads.(sourceforge.*)/
-         and  $url !~ /use_mirror/ )
-    {
-        my ($part1, $part2) = ( $1, $2 );
+    # http://prdownloads.sourceforge.net/checkstyle/mirror_picker.php?height=350&amp;width=300&amp;group_id=29721&amp;use_mirror=garr&amp;filename=checkstyle-4.4.tar.gz
+    # http://surfnet.dl.sourceforge.net/sourceforge/checkstyle/checkstyle-4.4.tar.gz
 
-        $debug > 2 and print "$id: url part1 [$part1] part2 [$part2]\n";
+    if ( $url =~ m,^(.*)prdownloads.(sourceforge.*/).*filename=(\S+), )
+    {
+        my ($part1, $part2, $file) = ($1, $2, $3);
+
+        $debug > 2 and print "$id: url part1,2,3 [$part1] [$part2] [$file]\n";
 
         unless ( $mirror )
         {
@@ -4655,7 +4657,7 @@ sub UrlHttpManipulate (%)
             print "$id: Using mirror [$mirror]\n";
         }
 
-        $url = "$part1$mirror.dl.$part2"  if $mirror;
+        $url = "http://$mirror.dl.$part2$file"  if $mirror;
     }
 
     $debug > 2  and  print "$id: RET url [$url]\n";
@@ -4672,6 +4674,7 @@ sub UrlHttpManipulate (%)
 #
 #   GLOBAL VARIABLES
 #
+#       $ARG
 #       $SKIP_VERSION
 #
 #   INPUT PARAMETERS
@@ -4687,7 +4690,7 @@ sub UrlHttpManipulate (%)
 
 sub UrlHttpFileCheck ( % )
 {
-    my $id         = "$LIB.UrlHttpFileCheck";
+    my $id        = "$LIB.UrlHttpFileCheck";
     my %arg       = @ARG;
     my $saveFile  = $arg{savefile};
     my $unpack    = $arg{unpack};
@@ -4850,6 +4853,11 @@ sub UrlHttpSearchNewest ( % )
     my @list;
 
     $debug  and print "$id: Getting list of files $getPage ...\n";
+
+    if ( $getPage =~ /\.(gz|bz2|lzma|zip|tar|jar)/ )
+    {
+        die "[ERROR] The URL must not contain filename: $getPage";
+    }
 
     my $request = new HTTP::Request( 'GET' => $getPage );
     my $obj     = $ua->request($request);
@@ -5288,6 +5296,11 @@ sub UrlHttp ( % )
     {
 
         my $getPage = $thisPage ? $url : $baseUrl ;
+
+        if ( $file )
+        {
+            $getPage =~ s/\Q$file//;
+        }
 
         @list       = UrlHttpSearchNewest
                             useragent    => $ua

@@ -1,3 +1,9 @@
+2008-02-08  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget.pl (UrlHttp): Remoe filename from URL, when
+	searching for newer files.
+	(UrlHttpManipulate): Fix Sourceforge URL manipulation code.
+
 2008-01-29  Jari Aalto  <jari.aalto@cante.net>
 
 	* mywebget.pl (LatestVersion): Reformat error message.
