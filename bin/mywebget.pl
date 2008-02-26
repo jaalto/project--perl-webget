@@ -90,7 +90,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0208.1331';
+    $VERSION = '2008.0226.0848';
 
 # ****************************************************************************
 #
@@ -3348,7 +3348,7 @@ sub LatestVersion ( $ $ )
     #   Prevent 1.1.tar.gz --> "1.1.t" with negative lookahead
 
     my $ext     = '(?!(?i)tar|gz|bzip|bz2|tgz|tbz2|zip|rar|z$)';
-    my $add     = '(?:-?(?:alpha|beta)\d*|' . $ext . '[a-z])';
+    my $add     = '(?:[-_]?(?:alpha|beta)\d*|' . $ext . '[a-z])';
     my $regexp  = '^(.*?[-_]|\D*\d+\D+|\D+)'        # $1
                   . '([-_.\db]*\d'                  # $2
                   . $add
@@ -3357,8 +3357,8 @@ sub LatestVersion ( $ $ )
                   ;
 
     $debug   and
-        print "$id: file [$file] REGEXP /$regexp/\n",
-            , join("\n", @$array), "\n";
+        print "$id: file [$file] REGEXP /$regexp/ ",
+            , "ARRAY OF FILENAMES TO EXAMINE: ", join("\n", @$array), "\n";
 
     DUPLICATE_REMOVE:   # Make "local sandbox" for a while (scoping rules)
     {
@@ -3532,7 +3532,7 @@ sub LatestVersion ( $ $ )
         #  Examine 150b6, 1.50, 1_15
 
         my $ver  = '[-_]([-._\db]+ ' . $add . '?)';
-        my $post = "$3\$";                  #   Add anchor too
+        my $post = $3 . '$';                  #   Add end anchor
 
         $debug  and  print "$id: INITIAL PFX: [$pfx] POSTFIX: [$post]\n";
 
@@ -4928,9 +4928,10 @@ sub UrlHttpSearchNewest ( % )
                 #   Try old fashioned. The filename may contain the
                 #   version information,
 
-                $debug  and  print "$id: EXAMINE latest URL model[$file]\n";
+                $debug  and
+		    print "$id: EXAMINE latest URL model[$file] list[@urls]\n";
 
-                @list = ( LatestVersion $file, \@urls ) ;
+                @list = ( LatestVersion $file, \@urls ) if @urls ;
                 # $file = '';
             }
 

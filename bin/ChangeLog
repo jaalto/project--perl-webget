@@ -1,3 +1,12 @@
+2008-02-26  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget.pl (LatestVersion): Adjust 'add' variable.
+	(UrlHttpSearchNewest): Call LatestVersion() only if there are @urls.
+
+2008-02-12  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget-emacs.conf: (maclennan-sean): New.
+
 2008-02-08  Jari Aalto  <jari.aalto@cante.net>
 
 	* mywebget.pl (UrlHttp): Remoe filename from URL, when
