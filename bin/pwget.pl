@@ -87,7 +87,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0916.1725';
+    $VERSION = '2008.0916.1927';
 
 # ****************************************************************************
 #
@@ -3255,17 +3255,25 @@ sub DirectiveLcd (%)
 
     $verb > 2  and  print "$id: LCD converted $lcd\n";
 
-    unless ( -d $lcd )
+    my $isDir = -d $lcd ? 1 : 0 ;
+
+    unless ( $isDir )
     {
+        $verb  and  print STDERR "$id: Creating directory $lcd\n";
+
         not $mkdir  and  die "$id: [$dir] => lcd [$lcd] is not a directory";
 
-        $verb  and  warn "$id: Creating directory $lcd";
-
-        mkpath( $lcd, $verb) or die "$id: mkpath $lcd failed $ERRNO";
+	unless ($test)
+	{
+	    mkpath( $lcd, $verb) or die "$id: mkpath $lcd failed $ERRNO";
+	}
     }
 
-    $debug > 2      and  print "$id: chdir $lcd\n";
-    chdir $lcd      or   die   "$id: chdir $lcd $ERRNO";
+    if ( -d $lcd )
+    {
+	$debug > 2      and  print "$id: chdir $lcd\n";
+	chdir $lcd      or   die   "$id: chdir $lcd $ERRNO";
+    }
 }
 
 # ****************************************************************************

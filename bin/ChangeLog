@@ -1,10 +1,11 @@
 2008-09-16  Jari Aalto  <jari.aalto@cante.net>
 
-	* pwget.pl: Rename to shorter name 'perl wget'.
-	Was mywebget.pl
+	* pwget.pl: Rename to shorter name 'perl wget'. Was mywebget.pl
 	(help::POD): Document short options.
-	(HandleCommandLineArgs): Add new option --dry-run.
-	Add short option -c for --config.
+	(HandleCommandLineArgs): Add new option --dry-run. Add short
+	option -c for --config.
+	(DirectiveLcd): Do not create directories if --test option is in
+	effect.
 
 2007-09-19  Jari Aalto  <jari.aalto@cante.net>
 
