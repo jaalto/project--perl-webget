@@ -87,7 +87,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0916.1335';
+    $VERSION = '2008.0916.1623';
 
 # ****************************************************************************
 #
@@ -192,7 +192,7 @@ program. With this option, local directories are created as needed making
 it possible to re-create the exact structure as it is in configuration
 file.
 
-=item B<--config FILE>
+=item B<-c|--config FILE>
 
 This option can be given multiple times. All configurations are read.
 
@@ -1312,7 +1312,7 @@ sub HandleCommandLineArgs ()
         , "Tag=s"           => \@TAG_LIST
         , "W|prefix-www"    => \$PREFIX_WWW
         , "chdir=s"         => \$chdir
-        , "config:s"        => \@CFG_FILE
+        , "c|config:s"      => \@CFG_FILE
         , "debug:i"         => \$debug
         , "dry-run"         => \$test
         , "extract"         => \$EXTRACT

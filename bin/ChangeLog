@@ -4,6 +4,7 @@
 	Was mywebget.pl
 	(help::POD): Document short options.
 	(HandleCommandLineArgs): Add new option --dry-run.
+	Add short option -c for --config.
 
 2007-09-19  Jari Aalto  <jari.aalto@cante.net>
 

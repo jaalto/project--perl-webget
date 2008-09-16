@@ -18,7 +18,7 @@ OPTIONS
         as needed making it possible to re-create the exact structure as it
         is in configuration file.
 
-    --config FILE
+    -c|--config FILE
         This option can be given multiple times. All configurations are
         read.
 
