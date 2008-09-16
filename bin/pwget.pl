@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 # -*- mode: perl; -*-
 #
-#  mywebget -- batch download files possibly with configuration file
+#  pwget -- batch download files possibly with configuration file
 #
 #  File id
 #
-#       Copyright (C) 1996-2007 Jari Aalto
+#       Copyright (C) 1996-2008 Jari Aalto
 #
 #	This program is free software; you can redistribute it and/or
 #	modify it under the terms of the GNU General Public License as
@@ -90,7 +90,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2007.0919.2100';
+    $VERSION = '2008.0916.1125';
 
 # ****************************************************************************
 #
@@ -170,15 +170,15 @@ sub Initialize ()
 
 =head1 NAME
 
-mywebget - Perl Web URL fetch program
+pwget - Perl Web URL fetch program
 
 =head1 SYNOPSIS
 
-    mywebget http://example.com/ [URL ...]
-    mywebget --config $HOME/config/mywebget.conf --Tag linux --Tag emacs ..
-    mywebget --verbose --overwrite http://example.com/
-    mywebget --verbose --overwrite --Output ~/dir/ http://example.com/
-    mywebget --new --overwrite http://example.com/kit-1.1.tar.gz
+    pwget http://example.com/ [URL ...]
+    pwget --config $HOME/config/pwget.conf --Tag linux --Tag emacs ..
+    pwget --verbose --overwrite http://example.com/
+    pwget --verbose --overwrite --Output ~/dir/ http://example.com/
+    pwget --new --overwrite http://example.com/kit-1.1.tar.gz
 
 =head1 OPTIONS
 
@@ -186,7 +186,7 @@ mywebget - Perl Web URL fetch program
 
 =over 4
 
-=item B<--Create-paths -C>
+=item B<-C|--Create-paths>
 
 Create paths that do not exist in C<lcd:> directives.
 
@@ -210,7 +210,7 @@ Do a chdir() to DIRECTORY before any URL download starts. This is
 like doing:
 
     cd DIRECTORY
-    mywebget http://example.com/index.html
+    pwget http://example.com/index.html
 
 =item B<--extract -e>
 
@@ -225,11 +225,11 @@ where these programs come standard. Refer to section SEE ALSO.
   .bz2 => bzip2
   .zip => unzip
 
-=item B<--Firewall FIREWALL>
+=item B<-F|--Firewall FIREWALL>
 
 Use FIREWALL when accessing files via ftp:// protocol.
 
-=item B<--mirror SITE>
+=item B<-m|--mirror SITE>
 
 If URL points to Sourcefoge download area, use mirror SITE for downloading.
 Alternatively the full full URL can include the mirror information. And
@@ -237,14 +237,14 @@ example:
 
     --mirror kent ... http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz
 
-=item B<--new -n>
+=item B<-n|--new>
 
 Get newest file. This applies to datafiles, which do not have extension
 .asp or .html. When new releases are announced, the version
 number in filename usually tells which is the current one so getting
 harcoded file with:
 
-    mywebget -o -v http://example.com/dir/program-1.3.tar.gz
+    pwget -o -v http://example.com/dir/program-1.3.tar.gz
 
 is not usually practical from automation point of view. Adding
 B<--new> option to the command line causes double pass: a) the whole
@@ -271,11 +271,11 @@ combine B<--no-lcd> with B<--no-save>
 
 Ignore C<x:> directives in configuration file.
 
-=item B<--Output DIR>
+=item B<-O|--Output DIR>
 
 Before retrieving any files, chdir to DIR.
 
-=item B<--overwrite -o>
+=item B<-o|--overwrite>
 
 Allow overwriting existing files when retrieving URLs.
 Combine this with B<--skip-version> if you periodically update files.
@@ -290,20 +290,20 @@ optional in the call:
     --Proxy example.com.proxy.com:8080
     --Proxy example.com.proxy.com:8080/
 
-=item B<--prefix PREFIX>
+=item B<-p|--prefix PREFIX>
 
 Add PREFIX to all retrieved files.
 
-=item B<--Postfix POSTFIX >
+=item B<-P|--Postfix POSTFIX >
 
 Add POSTFIX to all retrieved files.
 
-=item B<--prefix-date -D>
+=item B<-D|--prefix-date>
 
 Add iso8601 ":YYYY-MM-DD" prefix to all retrived files.
 This is added before possible B<--prefix-www> or B<--prefix>.
 
-=item B<--prefix-www -W>
+=item B<-W|--prefix-www>
 
 Usually the files are stored with the same name as in the URL dir, but
 if you retrieve files that have identical names you can store each
@@ -312,20 +312,20 @@ page separately so that the file name is prefixed by the site name.
     http://example.com/page.html    --> example.com::page.html
     http://example2.com/page.html   --> example2.com::page.html
 
-=item B<--regexp -r REGEXP>
+=item B<-r|--regexp REGEXP>
 
 Retrieve URLs matching REGEXP from configuration file. This cancels
 B<--Tag> options in the command line.
 
-=item B<--Regexp -R REGEXP>
+=item B<-R|--Regexp REGEXP>
 
 Retrieve file matching at the destination URL site. This is like "Connect
 to the URL and get all files matching REGEXP". Here all gzip compressed
 files are found form HTTP server directory:
 
-    mywebget -v -R "\.gz" http://example.com/archive/
+    pwget -v -R "\.gz" http://example.com/archive/
 
-=item B<--Regexp-content -A REGEXP>
+=item B<-A|--Regexp-content REGEXP>
 
 Analyze the content of the file and match REGEXP. Only if the regexp
 matches the file content, then download file. This option will make
@@ -335,12 +335,12 @@ and then a match is searched against the content.
 For example to download Emacs lisp file (.el) written by Mr. Foo in
 case insesiteve manner:
 
-    mywebget -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
+    pwget -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
       http://www.emacswiki.org/elisp/index.html
 
 =item B<--stdout>
 
-Retrieve URL and write it to stdout.
+Retrieve URL and write to stdout.
 
 =item B<--skip-version>
 
@@ -359,7 +359,7 @@ This option does not make much sense without additional option B<--new>
 
 If you want to reload versioned file again, add option B<--overwrite>.
 
-=item B<--Tag -T NAME [NAME] ...>
+=item B<-T|--Tag NAME [NAME] ...>
 
 Search tag NAME from the config file and download only entries defined
 under that tag. Refer to B<--config FILE> option description. You can give
@@ -372,12 +372,12 @@ does not make sense and the concequencies are undefined.
 
 =over 4
 
-=item B<--debug -d [LEVEL]>
+=item B<-d|--debug [LEVEL]>
 
 Turn on debug with positive LEVEL number. Zero means no debug.
 This option turns on B<--verbose> too.
 
-=item B<--help -h>
+=item B<-h|--help>
 
 Print help page in text.
 
@@ -392,19 +392,19 @@ c<nroff -man> in order to read it.
 
 Print help page.
 
-=item B<--selftest>
+=item B<-s|--selftest>
 
 Run some internal tests. For maintainer or developer only.
 
-=item B<--test -t>
+=item B<-t|--test>
 
 Run in test mode.
 
-=item B<--verbose -v [NUMBER]>
+=item B<-v|--verbose [NUMBER]>
 
 Print verbose messages.
 
-=item B<--Version -V>
+=item B<-V|--Version>
 
 Print version information.
 
@@ -426,7 +426,7 @@ packages whose name has changed since last downlaod. There is heuristics to
 determine the newest file or package according to file name skeleton
 defined in configuration.
 
-This program does not replace mywebget(1) because it does not offer as many
+This program does not replace pwget(1) because it does not offer as many
 options as wget, like recursive downloads. Use wget for ad hoc downloads
 and this utility for files that you monitor periodically.
 
@@ -446,7 +446,7 @@ downloading with separate directives like C<save:> which tells to save the
 file under different name. The simplest way to retreive the latest version
 of a kit from FTP site is:
 
-    mywebget --new --overwite --verbose \
+    pwget --new --overwite --verbose \
        http://www.example.com/kit-1.00.tar.gz
 
 Do not worry about the filename "kit-1.00.tar.gz". The latest version, say,
@@ -465,58 +465,58 @@ depending on the used http or ftp protocol.
 
 Get files from site:
 
-    mywebget http://www.example.com/dir/package.tar.gz ..
+    pwget http://www.example.com/dir/package.tar.gz ..
 
 Get all mailing list archive files that match "gz":
 
-    mywebget -R gz  http://example.com/mailing-list/archive/download/
+    pwget -R gz  http://example.com/mailing-list/archive/download/
 
 Read a directory and store it to filename YYYY-MM-DD::!dir!000root-file.
 
-    mywebget --prefix-date --overwrite --verbose http://www.example.com/dir/
+    pwget --prefix-date --overwrite --verbose http://www.example.com/dir/
 
 To update newest version of the kit, but only if there is none at disk
 already. The B<--new> option instructs to find newer packages and the
 filename is only used as a skeleton for files to look for:
 
-    mywebget --overwrite --skip-version --new --verbose \
+    pwget --overwrite --skip-version --new --verbose \
         ftp://ftp.example.com/dir/packet-1.23.tar.gz
 
 To overwrite file and add a date prefix to the file name:
 
-    mywebget --prefix-date --overwrite --verbose \
+    pwget --prefix-date --overwrite --verbose \
        http://www.example.com/file.pl
 
     --> YYYY-MM-DD::file.pl
 
 To add date and WWW site prefix to the filenames:
 
-    mywebget --prefix-date --prefix-www --overwrite --verbose \
+    pwget --prefix-date --prefix-www --overwrite --verbose \
        http://www.example.com/file.pl
 
     --> YYYY-MM-DD::www.example.com::file.pl
 
 Get all updated files under default cnfiguration file's tag KITS:
 
-    mywebget --verbose --overwrite --skip-version --new --Tag kits
-    mywebget -v -o -s -n -T kits
+    pwget --verbose --overwrite --skip-version --new --Tag kits
+    pwget -v -o -s -n -T kits
 
 Get files as they read in the configuration file to the current directory,
 ignoring any C<lcd:> and C<save:> directives:
 
-    mywebget --config $HOME/config/mywebget.conf /
+    pwget --config $HOME/config/pwget.conf /
         --no-lcd --no-save --overwrite --verbose \
         http://www.example.com/file.pl
 
 To check configuration file, run the program with non-matching regexp and
 it parses the file and checks the C<lcd:> directives on the way:
 
-    mywebget -v -r dummy-regexp
+    pwget -v -r dummy-regexp
 
     -->
 
-    mywebget.DirectiveLcd: LCD [$EUSR/directory ...]
-    is not a directory at /users/foo/bin/mywebget.pl line 889.
+    pwget.DirectiveLcd: LCD [$EUSR/directory ...]
+    is not a directory at /users/foo/bin/pwget line 889.
 
 
 =head1 CONFIGURATION FILE
@@ -563,20 +563,20 @@ many or how deep include structure is used. Every file is included only
 once, so it is safe to to have multiple includes to the same file.
 Every include is read, so put the most importat override includes last:
 
-    INCLUDE <etc/mywebget.conf>             # Global
-    INCLUDE <$HOME/config/mywebget.conf>    # HOME overrides it
+    INCLUDE <etc/pwget.conf>             # Global
+    INCLUDE <$HOME/config/pwget.conf>    # HOME overrides it
 
 A special C<THIS> tag means relative path of the current include file,
 which makes it possible to include several files form the same
 directory where a initial include file resides
 
-    # Start of config at /etc/mywebget.conf
+    # Start of config at /etc/pwget.conf
 
     # THIS = /etc, current location
-    include <THIS/mywebget-others.conf>
+    include <THIS/pwget-others.conf>
 
     # Refers to directory where current user is: the pwd
-    include <mywebget-others.conf>
+    include <pwget-others.conf>
 
     # end
 
@@ -587,7 +587,7 @@ each directive end to a colon. The usage of each directory is best explained
 by examining the configuration file below and reading the commentary
 near each directive.
 
-    #   $HOME/config/mywebget.conf F- Perl mywebget configuration file
+    #   $HOME/config/pwget.conf F- Perl pwget configuration file
 
     ROOT   = $HOME                      # define variables
     CONF   = $HOME/config
@@ -599,8 +599,8 @@ near each directive.
     #   "win32", "debian", "emacs" configurations in separate
     #   and manageable files.
 
-    INCLUDE <$CONF/mywebget-other.conf>
-    INCLUDE <$CONF/mywebget-more.conf>
+    INCLUDE <$CONF/pwget-other.conf>
+    INCLUDE <$CONF/pwget-more.conf>
 
     tag1: local-copies tag1: local      # multiple names to this category
 
@@ -638,7 +638,7 @@ near each directive.
 
         http://example.com/~foo pregexp:\.tar\.gz$ x: xopt:rm
 
-    # End of configuration file mywebget.conf
+    # End of configuration file pwget.conf
 
 =head1 LIST OF DIRECTIVES IN CONFIGURATION FILE
 
@@ -877,7 +877,7 @@ This directive must in separate line inside tag.
 The C<print:> directive for tag is shown only if user turns on --verbose
 mode:
 
-    mywebget -v -T linux
+    pwget -v -T linux
 
 =item B<rename:PERL-CODE>
 
@@ -1054,12 +1054,12 @@ Double check the configuration file's line.
 
 =head1 ENVIRONMENT
 
-Variable C<MYWEBGET_PL_CFG> can point to the root configuration file in
+Variable C<PWGET_PL_CFG> can point to the root configuration file in
 which you can use B<include> directives to read more configuration files.
 The configuration file is read at startup if it exists.
 
-    export MYWEBGET_PL_CFG=$HOME/conf/mywebget.conf     # /bin/hash syntax
-    setenv MYWEBGET_PL_CFG $HOME/conf/mywebget.conf     # /bin/csh syntax
+    export PWGET_PL_CFG=$HOME/conf/pwget.conf     # /bin/hash syntax
+    setenv PWGET_PL_CFG $HOME/conf/pwget.conf     # /bin/csh syntax
 
 =head1 SEE ALSO
 
@@ -1106,7 +1106,7 @@ $VERSION
 
 =head1 AUTHOR
 
-Copyright (C) 1996-2006 Jari Aalto. This program is free software; you
+Copyright (C) 1996-2008 Jari Aalto. This program is free software; you
 can redistribute it and/or modify it under the same terms of Gnu
 General Public License v2 or any later version.
 
@@ -1130,7 +1130,7 @@ sub Help (;$ $)
         # Other option: name, section, release
         #
         my %options;
-        $options{center} = 'Perl mywebget URL fetch utility';
+        $options{center} = 'Perl pwget URL fetch utility';
 
         my $parser = Pod::Man->new(%options);
         $parser->parse_from_file ($PROGRAM_NAME);
@@ -1281,7 +1281,7 @@ sub HandleCommandLineArgs ()
         $verb
         $test
 
-        $MYWEBGET_PL_CFG
+        $PWGET_PL_CFG
     );
 
     $CFG_FILE_NEEDED = 0;
@@ -1304,45 +1304,35 @@ sub HandleCommandLineArgs ()
     (
           "Version"         => \$version
 
-        , "config:s"        => \@CFG_FILE
+        , "A|Regexp-content=s"  => \$CONTENT_REGEXP
         , "Create-paths"    => \$LCD_CREATE
-
-        , "debug:i"         => \$debug
-
-        , "Firewall=s"      => \$FIREWALL
-
-        , "h|help"          => \$help
-        , "Help-html"       => \$helpHTML
-        , "Help-man"        => \$helpMan
-        , "test"            => \$test
-
-        , "mirror=s"        => \$MIRROR
-        , "n|new"           => \$CHECK_NEWEST
-        , "no-lcd"          => \$NO_LCD
-        , "no-save"         => \$NO_SAVE
-        , "no-extract"      => \$NO_EXTRACT
-
-        , "overwrite"       => \$OVERWRITE
-        , "skip-version"    => \$SKIP_VERSION
-        , "Output:s"        => \$OUT_DIR
-
-        , "prefix:s"        => \$PREFIX
         , "D|prefix-date"   => \$PREFIX_DATE
-        , "W|prefix-www"    => \$PREFIX_WWW
-
+        , "Firewall=s"      => \$FIREWALL
+        , "Output:s"        => \$OUT_DIR
         , "Postfix:s"       => \$POSTFIX
         , "Proxy=s"         => \$PROXY
-
-        , "chdir=s"         => \$chdir
-        , "regexp=s"        => \$URL_REGEXP
         , "R|Regexp=s"      => \$SITE_REGEXP
-        , "A|Regexp-content=s"  => \$CONTENT_REGEXP
-        , "stdout"          => \$STDOUT
-
-        , "selftest"        => \$selfTest
         , "Tag=s"           => \@TAG_LIST
+        , "W|prefix-www"    => \$PREFIX_WWW
+        , "chdir=s"         => \$chdir
+        , "config:s"        => \@CFG_FILE
+        , "debug:i"         => \$debug
         , "extract"         => \$EXTRACT
-
+        , "help-html"       => \$helpHTML
+        , "help-man"        => \$helpMan
+        , "h|help"          => \$help
+        , "mirror=s"        => \$MIRROR
+        , "no-extract"      => \$NO_EXTRACT
+        , "no-lcd"          => \$NO_LCD
+        , "no-save"         => \$NO_SAVE
+        , "n|new"           => \$CHECK_NEWEST
+        , "overwrite"       => \$OVERWRITE
+        , "prefix:s"        => \$PREFIX
+        , "regexp=s"        => \$URL_REGEXP
+        , "selftest"        => \$selfTest
+        , "skip-version"    => \$SKIP_VERSION
+        , "stdout"          => \$STDOUT
+        , "test"            => \$test
         , "verbose:i"       => \$verb
 
     );
@@ -1429,18 +1419,18 @@ sub HandleCommandLineArgs ()
         )
     {
 
-        unless ( defined $MYWEBGET_PL_CFG )
+        unless ( defined $PWGET_PL_CFG )
         {
-            die "$id: No environment variable MYWEBGET_PL_CFG defined."
+            die "$id: No environment variable PWGET_PL_CFG defined."
                 , " Need --config"
                 ;
         }
 
-        my $file = PathConvertSmart $MYWEBGET_PL_CFG;
+        my $file = PathConvertSmart $PWGET_PL_CFG;
 
         unless ( -r $file )
         {
-            die "$id: MYWEBGET_PL_CFG is not readable [$file]";
+            die "$id: PWGET_PL_CFG is not readable [$file]";
         }
 
         $verb  and  print "$id: Using default config file $file\n";

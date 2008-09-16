@@ -1,3 +1,9 @@
+2008-09-16  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl: Rename to shorter name 'perl wget'.
+	Was mywebget.pl
+	(help::POD): Document short options.
+
 2007-09-19  Jari Aalto  <jari.aalto@cante.net>
 
 	RELEASE: 20070923.2150
