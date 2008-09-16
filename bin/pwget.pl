@@ -87,7 +87,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0916.1138';
+    $VERSION = '2008.0916.1335';
 
 # ****************************************************************************
 #
@@ -393,7 +393,7 @@ Print help page.
 
 Run some internal tests. For maintainer or developer only.
 
-=item B<-t|--test>
+=item B<-t|--test|--dry-run>
 
 Run in test mode.
 
@@ -1314,6 +1314,7 @@ sub HandleCommandLineArgs ()
         , "chdir=s"         => \$chdir
         , "config:s"        => \@CFG_FILE
         , "debug:i"         => \$debug
+        , "dry-run"         => \$test
         , "extract"         => \$EXTRACT
         , "help-html"       => \$helpHTML
         , "help-man"        => \$helpMan

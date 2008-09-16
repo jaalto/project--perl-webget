@@ -3,6 +3,7 @@
 	* pwget.pl: Rename to shorter name 'perl wget'.
 	Was mywebget.pl
 	(help::POD): Document short options.
+	(HandleCommandLineArgs): Add new option --dry-run.
 
 2007-09-19  Jari Aalto  <jari.aalto@cante.net>
 

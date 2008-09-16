@@ -195,7 +195,7 @@ OPTIONS
     -s|--selftest
         Run some internal tests. For maintainer or developer only.
 
-    -t|--test
+    -t|--test|--dry-run
         Run in test mode.
 
     -v|--verbose [NUMBER]
