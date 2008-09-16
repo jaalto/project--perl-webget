@@ -1,5 +1,5 @@
-Perl webget - A Perl derivation of wget
----------------------------------------
+Pwget - A Perl derivation of wget
+---------------------------------
 
 Pwget is similar to wget, but it can use categorized
 configuration files, analyze Web pages, and "search" for download
