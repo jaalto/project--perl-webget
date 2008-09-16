@@ -6,7 +6,6 @@ System wide install
         Run makefile with appropriate parameters. The program is
         installed without any file extension.
 
-            make help
             make DESTDIR= prefix=/usr/local install
 
 Manual install:
@@ -15,7 +14,7 @@ Manual install:
 
              make DESTDIR=$HOME prefix=/usr install
 
-        2. Look at bin/*conf and apply ideas there and write your
+        2. Look into doc/examples/ and apply ideas how to write your
            own configuration file (optional; not required)
 
 End of file
