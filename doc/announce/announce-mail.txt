@@ -1,31 +1,22 @@
 From: Jari Aalto
-X-Draft-From: ("comp.emacs" "")
 Newsgroups: comp.emacs,comp.emacs.xemacs,gnu.emacs.help
 Subject: ANNOUNCE: Lisp Developer tracking system
 --text follows this line--
 
     Hi,
 
-    I'm pleased to announce that the Perl utility `pwget.pl', which
-    can fetch URLs around the globe, has now moved to its own
-    project at:
+    I'm pleased to announce utility `pwget', which can fetch URLs
+    around the globe.
 
-        Perl webget Project
+        pwget - Perl webget Project
         http://freshmeat.net/projects/perlwebget
 
-    Now, what does that got to do with Emacs Lisp? The project
-    includes a configuration files that records known Emacs Lisp
-    developers who keep code in their Web pages or FTP directories.
-
-    Since the webget project now has it's own page, it's easier to
-    maintain and keep it up to date. Download the current release and
-    be ready to fetch all the favourite Lisp tools available from
-    those developers' sites.
-
-    Please pay a visit and share your comments and improvements!
+    Now, what does that has to do with Emacs Lisp? The utility
+    includes a configuration files that contain few records of URLs of
+    Emacs Lisp developers.
 
     If you're an Emacs Lisp developer and you're not yet in the
-    configuration file yet, please step in and send email including
-    the URL fro where your code can be found.
+    configuration file yet, please spend a moment and send email
+    including the URL of your web page where the code can be found.
 
     Jari
