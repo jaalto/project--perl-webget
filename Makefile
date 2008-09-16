@@ -39,6 +39,9 @@ realclean: clean
 install:
 	$(MAKE) -C bin install
 
-.PHONY: clean distclean realclean install
+www:
+	$(MAKE) -C doc www
+
+.PHONY: clean distclean realclean install www
 
 # End of file

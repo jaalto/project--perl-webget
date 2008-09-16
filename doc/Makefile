@@ -26,21 +26,38 @@ INSTALL_SUID	= $(INSTALL) -m 4755
 
 all: doc
 
-# Rule: clena - delete temporary files
+# Rule: clean - delete temporary files
 clean:
 	rm  -f *[~#] *.tmp
 
+# Rule: www - copy web pages to ../../<project>-www
+www: html
+	name=$$(basename $$(cd .. && pwd)); \
+	to=../../$$name-www; \
+	echo "Copying to $$to"; \
+	find . -type f -name "*.html" | \
+	rsync $${test:+"--dry-run"} \
+	  --files-from=- \
+	  --update \
+	  --progress \
+	  --verbose \
+	  -r \
+	  . \
+	  $$to/
+
 $(DOCDIR)/$(PACKAGE).html: $(PL)
-	perl $< help --help-html > $(DOCDIR)/$(PACKAGE).html
+	perl $< help --help-html > $(DOCDIR)/index.html
 	@-rm -f *.x~~ pod*.tmp
 
 $(DOCDIR)/$(PACKAGE).txt: $(PL)
-	perl $< --help > $(DOCDIR)/$(PACKAGE).txt
+	perl $< --help > $(DOCDIR)/index.txt
 	@-rm -f *.x~~ pod*.tmp
 
-# Rule: doc - Generate or update documentation
-doc: $(DOCDIR)/$(PACKAGE).html $(DOCDIR)/$(PACKAGE).txt
+html: $(DOCDIR)/$(PACKAGE).html
 
-man:
+# Rule: doc - Generate or update documentation
+doc: html $(DOCDIR)/$(PACKAGE).txt
+
+.PHONY: all doc html www
 
 # End of file

@@ -77,6 +77,7 @@ install-bin:
 	$(INSTALL_BIN) -d $(BINDIR)
 	$(INSTALL_BIN)	  $(INSTALL_OBJS_BIN) $(BINDIR)/$(PACKAGE)
 
+# Rule: install - install files
 install: all install-bin install-man
 
 .PHONY: clean distclean realclean install install-bin install-man
