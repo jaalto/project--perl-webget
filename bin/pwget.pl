@@ -18,11 +18,8 @@
 #	General Public License for more details.
 #
 #	You should have received a copy of the GNU General Public License
-#	along with program; see the file COPYING. If not, write to the
-#	Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-#	Boston, MA 02110-1301, USA.
-#
-#	Visit <http://www.gnu.org/copyleft/gpl.html>
+#	along with program; see the file COPYING. If not
+#	visit <http://www.gnu.org/copyleft/gpl.html>
 #
 #   Introduction
 #
@@ -90,7 +87,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0916.1125';
+    $VERSION = '2008.0916.1138';
 
 # ****************************************************************************
 #
