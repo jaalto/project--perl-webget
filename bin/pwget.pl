@@ -87,7 +87,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0916.2203';
+    $VERSION = '2008.0916.2232';
 
 # ****************************************************************************
 #
@@ -3336,7 +3336,7 @@ sub LatestVersion ( $ $ )
     #
     #   Prevent 1.1.tar.gz --> "1.1.t" with negative lookahead
 
-    my $ext     = '(?!(?i)tar|gz|bzip|bz2|tgz|tbz2|zip|rar|z$)';
+    my $ext     = '(?!(?i)tar|gz|bzip|bz2|tgz|tbz2|zip|rar|z)';
     my $add     = '(?:-?(?:alpha|beta)\d*|' . $ext . '[a-z])';
     my $regexp  = '^(.*?[-_]|\D*\d+\D+|\D+)'        # $1
                   . '([-_.\db]*\d'                  # $2
@@ -3521,7 +3521,7 @@ sub LatestVersion ( $ $ )
         #  Examine 150b6, 1.50, 1_15
 
         my $ver  = '[-_]([-._\db]+ ' . $add . '?)';
-        my $post = "$3\$";                  #   Add anchor too
+        my $post = "$3(\$|[&?][a-z])";       #   Add anchor too
 
         $debug  and  print "$id: INITIAL PFX: [$pfx] POSTFIX: [$post]\n";
 
@@ -3549,7 +3549,10 @@ sub LatestVersion ( $ $ )
 
             unless ( /$pfx.*$post/ )
             {
-                $debug > 1  and  print "$id: REJECTED, no pfx-postfix\t$ARG\n";
+                $debug > 1  and  print "$id: REJECTED, no ",
+				 "pfx '$pfx' postfix '$post'",
+				 "\t$ARG\n"
+				 ;
                 next;
             }
 
@@ -3848,7 +3851,7 @@ sub FileNameFix ( $ )
 
         $ARG = $1;
     }
-    elsif ( /^(.*)\?/ )
+    elsif ( /^(.*viewcvs.*)\?/ )
     {
         # http://cvs.someorg/cgi-bin/viewcvs.cgi/~checkout~/file?rev=HEAD
         # =>  file "file?rev=HEAD"
@@ -4514,6 +4517,12 @@ sub UrlHttpParseHref ($ ; $)
             next;
         }
 
+        if ( $file =~ m,mirror_picker, )  # Sourceforge
+        {
+            $debug  and  print "$id:  FILTERED OTHER [mirror_picker] $file\n";
+            next;
+        }
+
         push @ret, $file;
     }
 
@@ -4618,82 +4627,6 @@ sub UrlSfMirrorParse ($)
     }
 
     %hash;
-}
-
-# ****************************************************************************
-#
-#   DESCRIPTION
-#
-#       Manipulate URLs as needed for special sites, like sourceforge,
-#       which do not accept direct download but always a mirror
-#       Like http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz must
-#       include parameter like "?use_mirror=kent". Unfortunately, this
-#       isn't ye yhe real page. It returns a REFRESH page which contains
-#       headers:
-#
-#           Server: Apache/2.0.51 (Fedora)
-#           ...
-#           Title: Downloading File: /bogofilter/bogofilter-1.0.0.tar.bz2
-#           X-Powered-By: PHP/4.3.10
-#           Refresh: 5;URL=http://kent.dl.sourceforge.net/sourceforge/foo..
-#
-#   INPUT PARAMETERS
-#
-#       %       hash
-#
-#   RETURN VALUES
-#
-#       $       URL which may have been changed
-#
-# ****************************************************************************
-
-sub UrlHttpManipulate (%)
-{
-    my $id      = "$LIB.UrlHttpManipulate";
-    my %arg     = @ARG;
-    my $ua      = $arg{-useragent}  || die "No UA object";;
-    my $url     = $arg{-url};
-    my $mirror  = $arg{-mirror};
-##1
-    $debug = 5;
-    $debug > 2  and  print "$id: INPUT url [$url]\n";
-
-    if ( $url =~ /^(.*)prdownloads.(sourceforge.*)/
-         and  $url !~ /use_mirror/ )
-    {
-        my ($part1, $part2) = ( $1, $2 );
-
-        $debug > 2 and print "$id: url part1 [$part1] part2 [$part2]\n";
-
-        unless ( $mirror )
-        {
-            print "$id: Mirror site not defined. Guessing...\n";
-
-            my $request = new HTTP::Request( 'GET' => $url );
-            my $obj     = $ua->request( $request );
-            my $stat    = $obj->is_success;
-            my $str     = $obj->content;
-
-            my %hash = UrlSfMirrorParse($str);
-            my @list = keys %hash  if %hash;
-
-            $debug > 2  and  print "$id: mirror hash: "
-                                 , join(' ', @list), "\n"
-                                 ;
-
-            $mirror  = $list[0] if @list;
-            print "$id: Using mirror [$mirror]\n";
-        }
-
-        $url = "$part1$mirror.dl.$part2"  if $mirror;
-    }
-
-    $debug > 2  and  print "$id: RET url [$url]\n";
-
-##1
-    die $url;
-
-    $url;
 }
 
 # ****************************************************************************
@@ -5303,8 +5236,6 @@ EOF
     my $i    = 0;
     my @list = sort @$list;
 
-	warn "%%010";
-
     for ( @list )
     {
         $i++;
@@ -5315,8 +5246,6 @@ EOF
         #   have a choice.
         #
         #       save: this-name.txt
-
-	warn "%013";
 
         my $saveFile = $file;
 
@@ -5339,8 +5268,6 @@ EOF
 
         $debug  and  print "$id: SAVEFILE-2 $saveFile RELATIVE $relative\n";
 
-	warn "%%1";
-
         if ( $ARG  and  not m,://, )
         {
             #   If the ARG is NOT ABSOLUTE reference ftp:// or http://
@@ -5355,15 +5282,11 @@ EOF
             $saveFile  = basename  $saveFile;
         }
 
-	warn "%%2";
-
         unless ( $relative )
         {
             warn "$id: [ERROR] Can't resolve relative $baseUrl + [$ARG]";
             next;
         }
-
-	warn "%%3";
 
         my $url = $relative;
 
@@ -5371,8 +5294,6 @@ EOF
         {
             $saveFile = EvalCode $url, $saveFile, $rename
         }
-
-	warn "%%4";
 
         $saveFile = FileNameFix $saveFile;
 
@@ -5383,11 +5304,6 @@ EOF
                                    , overwrite => $overwrite
                                    ;
         }
-
-        $url = UrlHttpManipulate -useragent => $ua
-                                 , -url     => $url
-                                 , -mirror  => $mirror
-                                 ;
 
         my $progress = DownloadProgress $baseUrl, $ARG, "$id: ..."
                                         , $i, scalar @list;
@@ -5616,10 +5532,18 @@ sub UrlHttp ( % )
                   ;
     }
 
+    $file = $getFile;
+
+    if ( $new )
+    {
+	local $ARG = $list[0];
+	$file = $ARG unless /[?&]/;   # Ignore PHP and exotic paths
+    }
+
     my ($ret, @files) = UrlHttpDownload
                     useragent   => $ua
                     , list      => \@list
-                    , file      => $new ? $list[0] : $file
+                    , file      => $file
                     , stdout    => $stdout
                     , find      => $find
                     , saveopt   => $saveopt
@@ -5815,21 +5739,6 @@ EOF
     print "$id: UrlSfMirrorParse\n";
 
     UrlSfMirrorParse $str;
-}
-
-sub TestDriverSfMirror ()
-{
-    my $id = "$LIB.TestDriverSfMirror";
-
-    $debug = 6   unless $debug;
-
-    my $ua  = new LWP::UserAgent;
-    my $url = "http://prdownloads.sourceforge.net/"
-            . "bogofilter/bogofilter-0.9.1.tar.bz2";
-
-    print "$id: url $url\n";
-
-    UrlHttpManipulate -useragent => $ua, -url => $url;
 }
 
 sub SelfTest ()

@@ -13,6 +13,14 @@
 	(SourceforgeProjectId): New.
 	(UrlHttp): Handle SF url with UrlManipulateMain().
 	(UrlHttGet): New.
+	(LatestVersion): Adjust postfix variable $post to detect
+	exotic URLs (sourceforge) like filename=foo-0.7.1.tar.gz&amp;abmode=
+	(UrlHttpParseHref): Filter sourceforge 'mirror_picker'.
+	(FileNameFix): Only fix for 'viewcvs'.
+	(TestDriverSfMirror): Remove.
+	(UrlHttpManipulate): Remove.
+	(UrlHttp): Set correct $file, ignore exotic [?&] PHP paths as
+	save filename.
 
 2007-09-19  Jari Aalto  <jari.aalto@cante.net>
 
