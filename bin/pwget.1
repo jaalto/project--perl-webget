@@ -1042,13 +1042,13 @@ This is \*(L"file not found error\*(R". You have written the filename incorrectl
 Double check the configuration file's line.
 .SH "ENVIRONMENT"
 .IX Header "ENVIRONMENT"
-Variable \f(CW\*(C`PWGET_PL_CFG\*(C'\fR can point to the root configuration file in
+Variable \f(CW\*(C`PWGET_CFG\*(C'\fR can point to the root configuration file in
 which you can use \fBinclude\fR directives to read more configuration files.
 The configuration file is read at startup if it exists.
 .PP
 .Vb 2
-\&    export PWGET_PL_CFG=$HOME/conf/pwget.conf     # /bin/hash syntax
-\&    setenv PWGET_PL_CFG $HOME/conf/pwget.conf     # /bin/csh syntax
+\&    export PWGET_CFG=$HOME/conf/pwget.conf     # /bin/hash syntax
+\&    setenv PWGET_CFG $HOME/conf/pwget.conf     # /bin/csh syntax
 .Ve
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"

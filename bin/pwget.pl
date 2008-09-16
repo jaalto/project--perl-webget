@@ -87,7 +87,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0916.1623';
+    $VERSION = '2008.0916.1725';
 
 # ****************************************************************************
 #
@@ -1051,12 +1051,12 @@ Double check the configuration file's line.
 
 =head1 ENVIRONMENT
 
-Variable C<PWGET_PL_CFG> can point to the root configuration file in
+Variable C<PWGET_CFG> can point to the root configuration file in
 which you can use B<include> directives to read more configuration files.
 The configuration file is read at startup if it exists.
 
-    export PWGET_PL_CFG=$HOME/conf/pwget.conf     # /bin/hash syntax
-    setenv PWGET_PL_CFG $HOME/conf/pwget.conf     # /bin/csh syntax
+    export PWGET_CFG=$HOME/conf/pwget.conf     # /bin/hash syntax
+    setenv PWGET_CFG $HOME/conf/pwget.conf     # /bin/csh syntax
 
 =head1 SEE ALSO
 
@@ -1278,7 +1278,7 @@ sub HandleCommandLineArgs ()
         $verb
         $test
 
-        $PWGET_PL_CFG
+        $PWGET_CFG
     );
 
     $CFG_FILE_NEEDED = 0;
@@ -1417,18 +1417,18 @@ sub HandleCommandLineArgs ()
         )
     {
 
-        unless ( defined $PWGET_PL_CFG )
+        unless ( defined $PWGET_CFG )
         {
-            die "$id: No environment variable PWGET_PL_CFG defined."
+            die "$id: No environment variable PWGET_CFG defined."
                 , " Need --config"
                 ;
         }
 
-        my $file = PathConvertSmart $PWGET_PL_CFG;
+        my $file = PathConvertSmart $PWGET_CFG;
 
         unless ( -r $file )
         {
-            die "$id: PWGET_PL_CFG is not readable [$file]";
+            die "$id: PWGET_CFG is not readable [$file]";
         }
 
         $verb  and  print "$id: Using default config file $file\n";

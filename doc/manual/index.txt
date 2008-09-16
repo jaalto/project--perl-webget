@@ -809,12 +809,12 @@ ERRORS
         incorrectly. Double check the configuration file's line.
 
 ENVIRONMENT
-    Variable "PWGET_PL_CFG" can point to the root configuration file in
-    which you can use include directives to read more configuration files.
-    The configuration file is read at startup if it exists.
+    Variable "PWGET_CFG" can point to the root configuration file in which
+    you can use include directives to read more configuration files. The
+    configuration file is read at startup if it exists.
 
-        export PWGET_PL_CFG=$HOME/conf/pwget.conf     # /bin/hash syntax
-        setenv PWGET_PL_CFG $HOME/conf/pwget.conf     # /bin/csh syntax
+        export PWGET_CFG=$HOME/conf/pwget.conf     # /bin/hash syntax
+        setenv PWGET_CFG $HOME/conf/pwget.conf     # /bin/csh syntax
 
 SEE ALSO
     C program wget(1) http://www.ccp14.ac.uk/mirror/wget.htm and from the
