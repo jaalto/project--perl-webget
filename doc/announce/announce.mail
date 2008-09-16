@@ -17,16 +17,12 @@ Hi
 Where is the list used?
 
     The list is actually a configuration file for a perl tool
-    ´mywebget.pl' which can automatically retrieve and update new
+    `pwget.pl' which can automatically retrieve and update new
     files which Author has been put available.
 
     If you run the whole configuration file, it downloads all lisp
     packages around the globe and builds a site-lisp/net/users and
     site-lisp/net/packages hierarchies for you.
-
-    Current Perl code documentation is at
-
-        http://tiny-tools.sourceforge.net/mywebget.html
 
 Who are in the list?
 

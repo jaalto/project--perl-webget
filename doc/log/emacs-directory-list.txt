@@ -1,11 +1,10 @@
-Generated directories after running tag "elisp" in
-mywebget-emacs.conf. The directory structure is typically
-stored under /usr/share/site-lisp/net (you have to change
-variable ROOT, which points in default installation to /tmp)
+Generated directories after running tag "elisp". The directory
+structure is typically stored under /usr/share/*/site-lisp/net (you can
+change variable ROOT, which points in default installation dir /tmp)
 
 The command used was:
 
-    perl -S mywebget.pl --verbose --Create-paths --Tag elisp
+    perl -S pwget --verbose --Create-paths --Tag elisp
 
 
 .

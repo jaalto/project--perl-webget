@@ -8,17 +8,17 @@
 
 	RELEASE: 20070923.2150
 
-	* mywebget.pl (LatestVersion): Quote special characters in regexp.
+	* pwget.pl (LatestVersion): Quote special characters in regexp.
 	The name may contain special characters, like in 'aewm++'.
 
 2006-03-09  Jari Aalto  <jari.aalto@cante.net>
 
-	* mywebget.pl (UrlHttpSearchNewest): Impreved --Regexp
+	* pwget.pl (UrlHttpSearchNewest): Impreved --Regexp
 	  search option.
 
 2006-02-21  Jari Aalto  <jari.aalto@cante.net>
 
-	* mywebget.pl (HandleCommandLineArgs): Missing =s spec from
+	* pwget.pl (HandleCommandLineArgs): Missing =s spec from
 	--mirror (did not accept an argument). Fixed.
 
 2006-02-09 Thu  Jari Aalto  <jari.aalto@cante.net>
@@ -29,7 +29,7 @@
 
 2006-01-22 Sun  Jari Aalto  <jari.aalto@cante.net>
 
-        * mywebget.pl (sub FileListFilter): 1.90 Files in sites using ftp procol
+        * pwget.pl (sub FileListFilter): 1.90 Files in sites using ftp procol
         were not scrutinized to new: file test. Added $getFile test after
         regexp test.
         (sub Main): 1.90 Use $fileName (new: tag content) for $origFile when
@@ -37,7 +37,7 @@
 
 2005-12-01 Thu  Jari Aalto  <jari.aalto@cante.net>
 
-        * mywebget.pl (sub FileDeCompressedCmd): 1.85 incorrect
+        * pwget.pl (sub FileDeCompressedCmd): 1.85 incorrect
         $decompress binary 'bzip' => 'bzip2.
         Check ERRNO after external shell call. Changed backquotes
         to more reable qx().
@@ -59,12 +59,12 @@
 
 2005-10-16 Sun  Jari Aalto  <jari.aalto@cante.net>
 
-        * mywebget.pl (LatestVersion): 1.84 Increased
+        * pwget.pl (LatestVersion): 1.84 Increased
         debug messages so that level 2 is needed.
 
 2005-09-29 Thu  Jari Aalto  <jari.aalto@cante.net>
 
-        * mywebget.pl (sub LatestVersion): 1.84 Added `tbz2' to
+        * pwget.pl (sub LatestVersion): 1.84 Added `tbz2' to
         variable $ext.
 
         * mywebget-emacs.conf: 1.50 Chnaged all `belnet' sourceforge
@@ -74,7 +74,7 @@
 
 2005-08-13 Sat  Jari Aalto  <jari.aalto@cante.net>
 
-        * mywebget.pl (sub ConfigVariableParse): 1.81
+        * pwget.pl (sub ConfigVariableParse): 1.81
         Ignore some URLS, that look like variable assignments:
         print http://example.com/viewcvs/vc-svn.el?rev=HEAD
         (sub Boot): 1.81 Raised debug from 2 => 4 before printing
@@ -106,7 +106,7 @@
 
 2005-02-02 Wed  Jari Aalto <jari.aalto@cante.net>
 
-        * mywebget.pl
+        * pwget.pl
         - There were serious problems with <rename:>. Now accepts
           full perl code.
         (sub ExpandVars): 1.77 Commented out `PrintHash',
@@ -135,7 +135,7 @@
 
 2005-01-04 Tue  Jari Aalto <jari.aalto@cante.net>
 
-        * mywebget.pl (sub UrlHttpFileCheck): 1.77 Removed unnecessary
+        * pwget.pl (sub UrlHttpFileCheck): 1.77 Removed unnecessary
         development line: 'debug=5'.
         (sub UrlHttp): 1.77 Added input ARG $overwrite.
         (sub UrlFtp): 1.77 Added input ARG $overwrite.
@@ -155,7 +155,7 @@
 
 2004-11-07 Sun  Jari Aalto  <jari dot aalto A T cante dt net>
 
-        * mywebget.pl (sub UrlHttpParseHref): 1.75 HREF can also
+        * pwget.pl (sub UrlHttpParseHref): 1.75 HREF can also
         use single quote. Added.
 
         * mywebget-emacs.conf: 1.41 (mitchell-lawrence): New.
@@ -167,7 +167,7 @@
 
 2004-10-13  Jari Aalto  <jari.aalto@poboxes.com>
 
-        * mywebget.pl (DirectiveLcd): Changer input parameter to
+        * pwget.pl (DirectiveLcd): Changer input parameter to
         HASH.
         (HandleCommandLineArgs): Incorrect option name
         skip--version => skip-version.
@@ -195,7 +195,7 @@
 
 2004-08-24 Tue  Jari Aalto  <jari dot aalto A T cante dt net>
 
-        * mywebget.pl (Getopt::Long): 1.72 Set verbose to 5 if debug
+        * pwget.pl (Getopt::Long): 1.72 Set verbose to 5 if debug
         is on.
         (sub ConfigRead): 1.72 Lowered $verb check to print a warning
         if configuration file cannot be read.
@@ -213,7 +213,7 @@
 
 2004-04-01 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl (sub LatestVersion): 1.67 Didn't parse packages
+        * pwget.pl (sub LatestVersion): 1.67 Didn't parse packages
         names with embedded numbers. like4this-1.1.tar.gz; Fixed.
 
         * mywebget-emacs.conf:
@@ -227,7 +227,7 @@
 
 2004-03-31 Wed  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl: 1.64 (top level): REmoved extra newlines.
+        * pwget.pl: 1.64 (top level): REmoved extra newlines.
         Code beatifying session.
         (sub LatestVersion): 1.64 Correct version detecton bug,
         when the version used leading zeroes: treat foo-1.002 as
@@ -268,7 +268,7 @@
 
         [RELEASED 2003.0901 to sourceforge]
 
-        * mywebget.pl: 1.60 Use !/bin/perl, not
+        * pwget.pl: 1.60 Use !/bin/perl, not
         !/usr/local/bin/perl
         (HandleCommandLineArgs): 1.60 --help-html and --help-man
         are now --Help-html and --Help-man
@@ -299,7 +299,7 @@
 
 2003-08-04 Mon  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl (Getopt::Long): 1.59 Corrected --verbose and --debug
+        * pwget.pl (Getopt::Long): 1.59 Corrected --verbose and --debug
         option to accept no arguments and still activating the
         option.
 
@@ -328,7 +328,7 @@
 
 2003-06-17 Tue  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl (sub UrlHttpDownload): 1.56 Added debug calls.
+        * pwget.pl (sub UrlHttpDownload): 1.56 Added debug calls.
         (LWP::UserAgent;): 1.56 Incorrectly passed $file if <new:> was
         given. Now respect @list with <new:>. That it, it dindät download
         the test file because the savefilename as wrong.
@@ -344,7 +344,7 @@
         (theberge-jean): updated hachette.el according
         Jean-Philippe's recent comments
 
-        * mywebget.pl (UrlHttp): Parameter passing error
+        * pwget.pl (UrlHttp): Parameter passing error
         in callt o `UrlHttpSearchNewest'. Fixed.
         (UrlHttpSearchNewest): Added $ua `die' check.
         (UrlHttpSearchPage): Added $ua `die' check.
@@ -369,7 +369,7 @@
         (koomen-hans): New. EmacsWiki download
         (zajcev-evgeny): New. EmacsWiki download
 
-        * mywebget.pl (Help):
+        * pwget.pl (Help):
         -- NEW FEATURE: Download according to content
            match. Added option --Regexp-content
         -- Massive code logic rewrite of function `UrlHttpFile'.
@@ -383,7 +383,7 @@
 
 2003-06-07 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl (UrlHttp): 1.52 Added filtering out
+        * pwget.pl (UrlHttp): 1.52 Added filtering out
         duplicate files in FILE LIST with temporary hash.
         (UrlHttpParseHref): Added support for HTML tag BASE.
 
@@ -393,7 +393,7 @@
         with Emacs and XEmacs footnote.el. Is now saved as jhg-footnotee.el
         (tramp): Update print: to direct people to GNU savannah project.
 
-        * mywebget.pl (UrlHttp): 1.51 Incorrect test for if-statement
+        * pwget.pl (UrlHttp): 1.51 Incorrect test for if-statement
         in `Clearing FILE:'. Was @list > 0, is now @list > 1. This bug
         caused save: directive never to take place.
 
@@ -431,14 +431,14 @@
 
 2003-02-08 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl (sub Main): 1.50 Added https support. Needs
+        * pwget.pl (sub Main): 1.50 Added https support. Needs
         to load module Crypt::SSLeay dynamically.
 
 2002-12-22  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl (FileExists): Added check for complex URLs
+        * pwget.pl (FileExists): Added check for complex URLs
         download.php?file=this.tar.gz => file=this.tar.gz
-        * mywebget.pl (FileNameFix): Smarter filename fix code.
+        * pwget.pl (FileNameFix): Smarter filename fix code.
 
 2002-12-13  Jari Aalto  <jari aalto A T poboxes dt com>
 
@@ -448,7 +448,7 @@
 
 2002-12-11  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl (UrlHttp): Added extra check for `not $new'.
+        * pwget.pl (UrlHttp): Added extra check for `not $new'.
         must not clear the $file variable model.
 
 2002-08-31 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
@@ -458,7 +458,7 @@
         (function sfperlwebget_release ()): 1.3 Call
         `sfperlwebget_release_check'
         (function sfperlwebgetdoc ()): 1.3 Generate mywebget.1
-        and not mywebget.pl.1 unix manual page.
+        and not pwget.pl.1 unix manual page.
 
 2002-08-29 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
 
@@ -536,7 +536,7 @@
         (wiborg-espen): New.
         (zimmermann-reto): New.
 
-        * mywebget.pl (Main): Ignore <directive:> look-a-like
+        * pwget.pl (Main): Ignore <directive:> look-a-like
         words in print: commands. like if you suggest connecting
         to a "cvs -d :pserver:..." that looked like a directive
         <pserver:>, when it wasn't.
@@ -557,7 +557,7 @@
         * admin.bashrc (function sfperlwebgetdoc ()): New.
         (function sfperlwebgetcmd ()): New.
 
-        * mywebget.pl (Help): Added <print:> directive.
+        * pwget.pl (Help): Added <print:> directive.
         (UrlHttp): Correcte dbug where @LIST was ('') triggering
         `multiple file noticed' -check. This set directive save:
         to empty and no fiel was saved anywhere.
@@ -602,7 +602,7 @@
 
 2002-08-03 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl (LatestVersion): Support CDex packaging
+        * pwget.pl (LatestVersion): Support CDex packaging
         numbers: cdex_150b6_enu.exe. Didn't recognize `b6' ending.
         Rearranged debugging. The -d does not turn on full debug
         any more, but -d 10 does.
@@ -621,7 +621,7 @@
 
 2002-07-22  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl (UrlHttp):
+        * pwget.pl (UrlHttp):
         Filter out FRAGMENTs that are not part of the file names. This
         fixes bug, where you retrieved URLS from page using -R (regexp)
         iption.
@@ -655,7 +655,7 @@
 
 2002-01-14 Mon  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl: (sub FileExists): 1.41 New. If you download
+        * pwget.pl: (sub FileExists): 1.41 New. If you download
         a file.txt.gz  and instruct to extract it, it will become
         file.txt. We can't therefore check the existence of
         file.txt.gz, but file.txt as well.
@@ -676,7 +676,7 @@
         (mmm-mode): Removed. project is now at sourceforge under
         the same name.
 
-        * mywebget.pl (Filter): 1.39 Added Pre-Filter
+        * pwget.pl (Filter): 1.39 Added Pre-Filter
         Which removes unwanted files before the LatestVersion
         is called.
         (Getopt::Long): 1.40 Added --chdir option.
@@ -688,5 +688,5 @@
 
 2002-01-04 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
 
-        * mywebget.pl (Initialize): 1.36 Change incorrect environment
+        * pwget.pl (Initialize): 1.36 Change incorrect environment
         variable MYMYWEBGET_PL_CFG into MYWEBGET_PL_CFG

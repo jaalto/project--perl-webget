@@ -1,35 +1,26 @@
 From: Jari Aalto
 X-Draft-From: ("comp.emacs" "")
 Newsgroups: comp.emacs,comp.emacs.xemacs,gnu.emacs.help
-Subject: ANNOUNCE: Lisp Developer tracking system at sourceforge (mywebget.pl)
-X-Sender-Info: Emacs resources http://tiny-tools.sourceforge.net/
-  PGP 2.6.x keyid 47141D35 http://www.pgpi.net/
+Subject: ANNOUNCE: Lisp Developer tracking system
 --text follows this line--
 
     Hi,
 
-    I'm pleased to announce that the Perl utility `mywebget.pl', which
+    I'm pleased to announce that the Perl utility `pwget.pl', which
     can fetch URLs around the globe, has now moved to its own
     project at:
 
         Perl webget Project
-        http://perl-webget.sourceforge.net/
+        http://freshmeat.net/projects/perlwebget
 
-    Now, what does that got to do with Emacs Lisp? The perl program
-    was previously hosted under Emacs Tiny Tools project
-    (<http://tiny-tools.sourceforge.net/>), but many may not have paid
-    attention to the spicy perl program that lied under
-    bin/mywebget.pl. The project included emacs webget configuration
-    files that recorded all know Emacs Lisp developers who keep
-    code in their Web pages or FTP directories.
+    Now, what does that got to do with Emacs Lisp? The project
+    includes a configuration files that records known Emacs Lisp
+    developers who keep code in their Web pages or FTP directories.
 
     Since the webget project now has it's own page, it's easier to
     maintain and keep it up to date. Download the current release and
     be ready to fetch all the favourite Lisp tools available from
     those developers' sites.
-
-    Further instructions, what it means to build /usr/share/site-lisp/net
-    hierarchy is included in the package and in the sourceforge page.
 
     Please pay a visit and share your comments and improvements!
 
