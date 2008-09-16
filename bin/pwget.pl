@@ -87,7 +87,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0916.1927';
+    $VERSION = '2008.0916.1940';
 
 # ****************************************************************************
 #
@@ -1313,7 +1313,7 @@ sub HandleCommandLineArgs ()
         , "W|prefix-www"    => \$PREFIX_WWW
         , "chdir=s"         => \$chdir
         , "c|config:s"      => \@CFG_FILE
-        , "debug:i"         => \$debug
+        , "d|debug:i"       => \$debug
         , "dry-run"         => \$test
         , "extract"         => \$EXTRACT
         , "help-html"       => \$helpHTML
