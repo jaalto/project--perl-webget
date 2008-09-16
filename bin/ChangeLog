@@ -6,6 +6,13 @@
 	option -c for --config.
 	(DirectiveLcd): Do not create directories if --test option is in
 	effect.
+	(UrlManipulateSf): New.
+	(UrlManipulateMain): New.
+	(SopurceforgeParseDownloadPage): New.
+	(SourceforgeProjectName): New.
+	(SourceforgeProjectId): New.
+	(UrlHttp): Handle SF url with UrlManipulateMain().
+	(UrlHttGet): New.
 
 2007-09-19  Jari Aalto  <jari.aalto@cante.net>
 

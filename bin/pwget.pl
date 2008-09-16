@@ -87,7 +87,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0916.1940';
+    $VERSION = '2008.0916.2203';
 
 # ****************************************************************************
 #
@@ -4329,6 +4329,50 @@ sub UrlFtp ( % )
     ($stat, @files);
 }
 
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Download URL
+#
+#   INPUT PARAMETERS
+#
+#       $       URL
+#
+#   RETURN VALUES
+#
+#       $       content in string if success
+#
+# ****************************************************************************
+
+sub UrlHttGet ( $ )
+{
+    my $id  = "$LIB.UrlHttpGet";
+    my $url = shift;
+
+    my $ua = new LWP::UserAgent;
+
+    $debug  and  print "$id: GET $url ...\n";
+
+    my $request = new HTTP::Request( 'GET' => $url );
+    my $obj     = $ua->request($request);
+    my $stat    = $obj->is_success;
+
+    unless ( $stat )
+    {
+        print "  ** error: $url ",  $obj->message, "\n";
+	return;
+    }
+
+    $ARG      = $obj->content();
+    my $head  = $obj->headers_as_string();
+
+    $debug  and  print "$id: RET SUCCESS\n";
+
+    $ARG;
+}
+
 # ****************************************************************************
 #
 #   DESCRIPTION
@@ -4610,7 +4654,8 @@ sub UrlHttpManipulate (%)
     my $ua      = $arg{-useragent}  || die "No UA object";;
     my $url     = $arg{-url};
     my $mirror  = $arg{-mirror};
-
+##1
+    $debug = 5;
     $debug > 2  and  print "$id: INPUT url [$url]\n";
 
     if ( $url =~ /^(.*)prdownloads.(sourceforge.*)/
@@ -4644,6 +4689,245 @@ sub UrlHttpManipulate (%)
     }
 
     $debug > 2  and  print "$id: RET url [$url]\n";
+
+##1
+    die $url;
+
+    $url;
+}
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Determine Sourceforge project ID based on project name.
+#
+#   INPUT PARAMETERS
+#
+#       $       project name
+#
+#   RETURN VALUES
+#
+#       $       URL
+#
+# ****************************************************************************
+
+sub SourceforgeProjectId ($)
+{
+    my $id      = "$LIB.UrlSfManipulate";
+    my($name)   = @ARG;
+
+    $debug  and print "$id: INPUT name [$name]\n";
+
+    my $url    = "http://sourceforge.net/projects/$name";
+    local $ARG = UrlHttGet $url;
+
+    # href="/project/showfiles.php?group_id=88346#downloads">Jump to downloads for FOO</a></li>
+
+    my $ret;
+
+    if ( m,href\s*=\s*[\"\'][^\"\']+showfiles.php\?group_id=(\d+),i )
+    {
+	$ret = $1;
+    }
+
+    $debug  and print "$id: RET name [$name] id [$ret]\n";
+
+    $ret;
+}
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Parse Sourceforge project name from URL
+#
+#   INPUT PARAMETERS
+#
+#       $       URL
+#
+#   RETURN VALUES
+#
+#       $       Project name
+#
+# ****************************************************************************
+
+sub SourceforgeProjectName ($)
+{
+    my $id      = "$LIB.UrlSfManipulate";
+    local($ARG) = @ARG;
+
+    $debug  and  print "$id: INPUT $ARG\n";
+
+    my $name;
+
+    # http://sourceforge.net/projects/emacs-jabber
+    # http://prdownloads.sourceforge.net/emacs-jabber/emacs-jabber-0.6.1.tar.gz
+
+    if ( m,prdownloads\.(?:sourceforge|sf)\.net/([^/]+), )
+    {
+	$name = $1;
+    }
+    elsif (m, http://(?:www\.)?(?:sourceforge|sf).net/([^/]+), )
+    {
+	$name = $1;
+    }
+
+    $debug  and  print "$id: RET [$name]\n";
+
+    $name;
+}
+
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Parse downloads from Sourceforge page
+#
+#   INPUT PARAMETERS
+#
+#       $       URL
+#
+#   RETURN VALUES
+#
+#       %       hash: "string" => URL
+#
+# ****************************************************************************
+
+sub SopurceforgeParseDownloadPage ($)
+{
+    my $id   = "$LIB.UrlSfManipulate";
+    local($ARG) = @ARG;
+
+
+    # <td colspan="6"><a href="showfiles.php?group_id=88346&amp;package_id=92339&amp;release_id=482983" onclick="report_expand('pkg0_1rel0'); void(0); return false;" class="tup" id="pkg0_1rel0_0">0.7.1</a> <span class="notes"><a href="shownotes.php?release_id=482983&amp;group_id=88346" title="View notes">Notes</a></span> <small>(2007-01-31 22:46) </small></td>
+
+    # <td ><a id="showfiles_download_file_pkg0_1rel0_1" class="sfx_qalogger_element sfx_qalogger_clickable" href="http://downloads.sourceforge.net/emacs-jabber/emacs-jabber-0.7.1.tar.gz?modtime=1170287319&amp;big_mirror=0" onClick="window.location='/project/downloading.php?group_id=88346&amp;use_mirror=heanet&amp;filename=emacs-jabber-0.7.1.tar.gz&amp;'+Math.floor(Math.random()*100000000); return false;">emacs-jabber-0.7.1.tar.gz</a>
+
+}
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Manipulate http://prdownloads.sourceforge.net address
+#
+#   INPUT PARAMETERS
+#
+#       $       URL
+#
+#   RETURN VALUES
+#
+#       $       URL
+#
+# ****************************************************************************
+
+sub UrlManipulateSf ($)
+{
+    my $id   = "$LIB.UrlSfManipulate";
+    my($url) = @ARG;
+
+    $debug  and  print "$id: INPUT [$url]\n";
+
+    my $project = SourceforgeProjectName $url;
+
+    unless ( $project )
+    {
+	die "$id: [FATAL] Cannot parse $url\n";
+    }
+
+    my $gid = SourceforgeProjectId $project;
+
+    unless ( $project )
+    {
+	die "$id: [FATAL] Cannot get group ID for [$project] $url\n";
+    }
+
+    #  Download URL
+    my $base = "http://sourceforge.net";
+    my $durl = "$base/project/platformdownload.php?group_id=$gid";
+
+    local $ARG = UrlHttGet $durl;
+
+    unless ( $ARG )
+    {
+	die "$id: [FATAL] Cannot get SF page [$durl]";
+    }
+
+    # <td class="download" style="text-align: center;"><a href="/project/showfiles.php?group_id=88346&amp;package_id=92339&amp;release_id=482983">Download</a></td>
+
+    if ( m,class\s*=\s*.download.\s.*?href\s*=\s*.([^\"\'<>]+),ism )
+    {
+	$durl = $base . $1;
+    }
+    else
+    {
+	die "$id: [FATAL] Cannot parse SF page [$durl]";
+    }
+
+    local $ARG = UrlHttGet $durl;
+
+    unless ( $ARG )
+    {
+	die "$id: [FAIL] Cannot read SF page [$durl]";
+    }
+
+    # <td><a href="/project/showfiles.php?group_id=88346&amp;package_id=92339&amp;release_id=482983">0.7.1</a></td>
+    #              /project/showfiles.php?group_id=88346&package_id=92339&release_id=482983
+
+    if ( m,\shref\s*=\s*[\"\']\s*
+          (
+	    /project/
+	    showfiles.php\?
+	    group_id=$gid[^;]+;
+	    package_id=\d+[^;]+;
+	    release_id=(\d+)
+          )
+          ,isx
+       )
+    {
+	$durl = $base . $1;
+    }
+    else
+    {
+	die "$id: [FATAL] Cannot parse release_id (for final page) [$durl]";
+    }
+
+    $durl =~ s/&amp;/&/g;
+
+    $durl;
+}
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Manipulate URLs; redirect if necessary
+#
+#   INPUT PARAMETERS
+#
+#       $       URL
+#
+#   RETURN VALUES
+#
+#       $       URL
+#
+# ****************************************************************************
+
+sub UrlManipulateMain ($)
+{
+    my $id  = "$LIB.UrlManipulate";
+    my $url = shift;
+
+    $debug  and  print "$id: INPUT $url\n";
+
+    if ( $url =~ m,prdownloads\.(?:sourceforge|sf)\.net/, )
+    {
+	$url = UrlManipulateSf $url;
+    }
+
+    $debug  and  print "$id: RET $url\n";
 
     $url;
 }
@@ -4954,6 +5238,7 @@ sub UrlHttpSearchNewest ( % )
 
 sub UrlHttpDownload ( % )
 {
+    $debug = 1;
     my $id = "$LIB.UrlHttpDownload";
     my %arg = @ARG ;
 
@@ -5018,6 +5303,8 @@ EOF
     my $i    = 0;
     my @list = sort @$list;
 
+	warn "%%010";
+
     for ( @list )
     {
         $i++;
@@ -5028,6 +5315,8 @@ EOF
         #   have a choice.
         #
         #       save: this-name.txt
+
+	warn "%013";
 
         my $saveFile = $file;
 
@@ -5050,6 +5339,8 @@ EOF
 
         $debug  and  print "$id: SAVEFILE-2 $saveFile RELATIVE $relative\n";
 
+	warn "%%1";
+
         if ( $ARG  and  not m,://, )
         {
             #   If the ARG is NOT ABSOLUTE reference ftp:// or http://
@@ -5064,11 +5355,15 @@ EOF
             $saveFile  = basename  $saveFile;
         }
 
+	warn "%%2";
+
         unless ( $relative )
         {
             warn "$id: [ERROR] Can't resolve relative $baseUrl + [$ARG]";
             next;
         }
+
+	warn "%%3";
 
         my $url = $relative;
 
@@ -5076,6 +5371,8 @@ EOF
         {
             $saveFile = EvalCode $url, $saveFile, $rename
         }
+
+	warn "%%4";
 
         $saveFile = FileNameFix $saveFile;
 
@@ -5256,6 +5553,8 @@ sub UrlHttp ( % )
         ($baseUrl, $getFile) = ( $url =~ m,^(.*/)(.*), );
     }
 
+    $baseUrl = UrlManipulateMain $url;
+
     if (      $getFile eq ''
          and  ($regexp eq '' or $thisPageRegexp eq '')
          and  not $thisPage
@@ -5270,7 +5569,6 @@ sub UrlHttp ( % )
 
     if ( $new )        # Directory lookup
     {
-
         my $getPage = $thisPage ? $url : $baseUrl ;
 
         @list       = UrlHttpSearchNewest
@@ -5296,6 +5594,7 @@ sub UrlHttp ( % )
                     , pageregexp => $thisPageRegexp
                     ;
     }
+
 
     # ............................................ get list of files ...
 
