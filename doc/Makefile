@@ -46,7 +46,7 @@ www: html
 	  $$to/
 
 $(DOCDIR)/$(PACKAGE).html: $(PL)
-	perl $< help --help-html > $(DOCDIR)/index.html
+	perl $< --help-html > $(DOCDIR)/index.html
 	@-rm -f *.x~~ pod*.tmp
 
 $(DOCDIR)/$(PACKAGE).txt: $(PL)
