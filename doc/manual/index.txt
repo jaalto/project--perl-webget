@@ -849,7 +849,7 @@ VERSION
     $VERSION
 
 AUTHOR
-    Copyright (C) 1996-2008 Jari Aalto. This program is free software; you
+    Copyright (C) 1996-2009 Jari Aalto. This program is free software; you
     can redistribute it and/or modify it under the same terms of Gnu General
     Public License v2 or any later version.
 
