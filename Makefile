@@ -65,6 +65,8 @@ doc: man doc/conversion/index.html
 # Rule: install - Install the software
 install: all install-script-bin install-man1 install-doc
 
-.PHONY: all man doc
+test: perl-test
+
+.PHONY: all man doc test
 
 # End of file
