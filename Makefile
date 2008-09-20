@@ -1,10 +1,6 @@
 #!/usr/bin/make -f
 #
-#   Copyright information
-#
 #	Copyright (C) 2002-2009 Jari Aalto
-#
-#   License
 #
 #	This program is free software; you can redistribute it and/or
 #	modify it under the terms of the GNU General Public License as
@@ -14,34 +10,61 @@
 #	This program is distributed in the hope that it will be useful, but
 #	WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-#	General Public License for more details.
-#
-#	Visit <http://www.gnu.org/copyleft/gpl.html>
+#	General Public License for more details at
+#	<http://www.gnu.org/copyleft/gpl.html>.
+
+ifneq (,)
+This makefile requires GNU Make.
+endif
+
+MAKEDIR = admin/mk
+
+include $(MAKEDIR)/clean.mk
+include $(MAKEDIR)/install.mk
+include $(MAKEDIR)/manifest.mk
+include $(MAKEDIR)/perl.mk
+include $(MAKEDIR)/release.mk
+include $(MAKEDIR)/vars.mk
+include $(MAKEDIR)/www.mk
+
+PACKAGE			= pwget
+PL			= $(PACKAGE).pl
+BIN			= $(PACKAGE)
+PL_SCRIPT		= bin/$(PL)
+
+WWWROOT			= $(shell echo $$(pwd)/..)
+INSTALL_OBJS		= $(BIN)
+INSTALL_DOC_OBJS	= COPYING README
+INSTALL_MAN1_OBJS	= bin/*.1
+INSTALL_BIN_S_OBJS	= $(PL_SCRIPT)
 
 all:
-	@echo "Nothing to compile." \
-	      "see 'make DFESTDIR= prefix=/usr/local install"
+	@echo "Nothing to compile. See INSTALL"
 
-clean:
-	$(MAKE) -C bin clean
-	$(MAKE) -C doc clean
+bin/$(PACKAGE).1: $(SRC)
+	$(PERL) $< --help-man > $<
+	@-rm -f *.x~~ pod*.tmp
 
-man:
-	$(MAKE) -C bin man
+doc/manual/$(PACKAGE).html: $(SRC)
+	$(PERL) $< --help-html > $<
+	@-rm -f *.x~~ pod*.tmp
 
-doc: man
-	$(MAKE) -C doc all
+doc/manual/$(PACKAGE).txt: $(SRC)
+	$(PERL) $< --help > $<
+	@-rm -f *.x~~ pod*.tmp
 
-distclean: clean
+doc/conversion/index.html: doc/conversion/index.txt
+	perl -S t2html.pl --Auto-detect --Out --print-url $<
 
-realclean: clean
+# Rule: man - Generate or update manual pages documentation
+man: bin/$(PACKAGE).1 doc/manual/$(PACKAGE).html  doc/manual/$(PACKAGE).txt
 
-install:
-	$(MAKE) -C bin install
+# Rule: doc - Generate or update all documentation
+doc: man doc/conversion/index.html
 
-www:
-	$(MAKE) -C doc www
+# Rule: install - Install the software
+install: all install-script-bin install-man1 install-doc
 
-.PHONY: clean distclean realclean install www
+.PHONY: all man doc
 
 # End of file
