@@ -22,9 +22,42 @@
 	(UrlHttp): Set correct $file, ignore exotic [?&] PHP paths as
 	save filename.
 
-2007-09-19  Jari Aalto  <jari.aalto@cante.net>
+2008-02-26  Jari Aalto  <jari.aalto@cante.net>
 
-	RELEASE: 20070923.2150
+	* mywebget.pl (LatestVersion): Adjust 'add' variable.
+	(UrlHttpSearchNewest): Call LatestVersion() only if there are @urls.
+
+2008-02-12  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget-emacs.conf: (maclennan-sean): New.
+
+2008-02-08  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget.pl (UrlHttp): Remoe filename from URL, when
+	searching for newer files.
+	(UrlHttpManipulate): Fix Sourceforge URL manipulation code.
+
+2008-01-29  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget.pl (LatestVersion): Reformat error message.
+	Suggest using <file:> in the configuration line.
+
+	* mywebget-emacs.conf: (lua): Add lua-mode download.
+
+2008-01-25  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget-emacs.conf: (jsp): change download directory
+	from www/jsp to www/
+	(niksic-hrvoje): Download all *.el files.
+
+2007-12-01  Jari Aalto  <jari.aalto@cante.net>
+
+	* mywebget.pl (HELP): Removed heading VERSION. Can't
+	expand variabled inside POD section.
+	(Unpack): Move $newDir definition inside if.
+	(FileDeCompressedRootDir): Correct detection of root dir.
+
+2007-09-19  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (LatestVersion): Quote special characters in regexp.
 	The name may contain special characters, like in 'aewm++'.

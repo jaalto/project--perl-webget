@@ -15,11 +15,8 @@
 #	This program is distributed in the hope that it will be useful, but
 #	WITHOUT ANY WARRANTY; without even the implied warranty of
 #	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-#	General Public License for more details.
-#
-#	You should have received a copy of the GNU General Public License
-#	along with program; see the file COPYING. If not
-#	visit <http://www.gnu.org/copyleft/gpl.html>
+#	General Public License for more details ar
+#	<http://www.gnu.org/copyleft/gpl.html>.
 #
 #   Introduction
 #
@@ -87,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0916.2246';
+    $VERSION = '2008.0920.1948';
 
 # ****************************************************************************
 #
@@ -1096,10 +1093,6 @@ This module is loaded only if HTTPS scheme is encountered.
 =head1 OSNAMES
 
 C<any>
-
-=head1 VERSION
-
-$VERSION
 
 =head1 AUTHOR
 
@@ -2763,8 +2756,8 @@ sub FileDeCompressedRootDir ( $ )
     #   If there is directory it must be in front of every file
 
     local $ARG;
-    my %seen  = ();
-    my @nodir = ();
+    my %seen;
+    my @nodir;
 
     for ( @$fileArrRef  )
     {
@@ -2783,12 +2776,24 @@ sub FileDeCompressedRootDir ( $ )
     my @roots  = keys %seen;
     my $ret;
 
-    if ( @roots == 1  and  @nodir == 0 )
+    if ( @roots )
     {
-        $ret = $roots[0]
+        my $root = $roots[0];
+
+        if ( @roots == 1  and  @nodir == 1  and  $root eq $nodir[0])
+        {
+            #  Special case. The directory itself is always "alone" entry
+            # drwxrwxrwx foo/users 0 2006-07-22 14:18 package-0.5.6
+            $ret = $root
+            }
+        elsif ( @roots == 1  and  @nodir == 0 )
+        {
+            $ret = $root;
+        }
     }
 
-    $debug  and  print "$id: RET roots [@roots] no-dirs [@nodir]\n";
+    $debug  and  print "$id: RET [$ret] status [$status]; "
+                     . "roots [@roots] no-dirs [@nodir]\n";
 
     $ret, $status, $fileArrRef ;
 }
@@ -3005,7 +3010,6 @@ sub Unpack ($ $; $ $)
         my $cwd   = cwd();
         my $chdir = 0;
         my $file  = basename $ARG;
-        my $newDir;
 
         # ............................................ check ...
         # Must contain root directory in archive
@@ -3016,7 +3020,7 @@ sub Unpack ($ $; $ $)
         {
             $debug  and  print "##\n";
 
-            $newDir = FileRootDirCreate basename($ARG), $cwd, $opt;
+            my $newDir = FileRootDirCreate basename($ARG), $cwd, $opt;
 
             $debug  and  print "## $newDir\n";
 
@@ -3336,8 +3340,8 @@ sub LatestVersion ( $ $ )
     #
     #   Prevent 1.1.tar.gz --> "1.1.t" with negative lookahead
 
-    my $ext     = '(?!(?i)tar|gz|bzip|bz2|tgz|tbz2|zip|rar|z)';
-    my $add     = '(?:-?(?:alpha|beta)\d*|' . $ext . '[a-z])';
+    my $ext     = '(?!(?i)tar|gz|bzip|bz2|tgz|tbz2|zip|rar|z$)';
+    my $add     = '(?:[-_]?(?:alpha|beta)\d*|' . $ext . '[a-z])';
     my $regexp  = '^(.*?[-_]|\D*\d+\D+|\D+)'        # $1
                   . '([-_.\db]*\d'                  # $2
                   . $add
@@ -3346,8 +3350,8 @@ sub LatestVersion ( $ $ )
                   ;
 
     $debug   and
-        print "$id: file [$file] REGEXP /$regexp/\n",
-            , join("\n", @$array), "\n";
+        print "$id: file [$file] REGEXP /$regexp/ ",
+            , "ARRAY OF FILENAMES TO EXAMINE: ", join("\n", @$array), "\n";
 
     DUPLICATE_REMOVE:   # Make "local sandbox" for a while (scoping rules)
     {
@@ -3669,7 +3673,7 @@ sub LatestVersion ( $ $ )
     {
         if ( $verb )
         {
-            print  <<EOF;
+            print  << "EOF";
 $id: Unknown version format in filename. Cannot parse according to skeleton [$ARG]
     The most usual reason for this error is, that you have supplied
     <pregexp:> and <new:>. Please examine your URL and try removing <new:>
@@ -3686,12 +3690,16 @@ EOF
 
     if ( $ret eq '' )
     {
-        die <<EOF;
+        die << "EOF";
 $id: Internal error, Run with --debug on to pinpoint the details.
 
      Cannot find anything suitable for download. This may be due to
-     non-matching file regexp: that is, your file-format for <new:> is wrong,
-     or <regexp:> is too limiting or <no-regexp:> filtered everything.
+     non-matching file regexp: that is or <regexp:> is too limiting or
+     <no-regexp:> filtered everything. If you used <new:>, it may
+     be possible that the heuristics couldn't determine what were the
+     links to examine; in that case, please let the program know what
+     kind of file it should search by providing template directive
+     <file:archive-YYYYMMDD.tar.gz>
 
      check also that the <new:> file extension looks the same as what
      <pregexp:> found from the page.
@@ -4775,7 +4783,7 @@ sub UrlManipulateSf ($)
 
     my $gid = SourceforgeProjectId $project;
 
-    unless ( $project )
+    unless ( $gid )
     {
 	die "$id: [FATAL] Cannot get group ID for [$project] $url\n";
     }
@@ -4877,6 +4885,7 @@ sub UrlManipulateMain ($)
 #
 #   GLOBAL VARIABLES
 #
+#       $ARG
 #       $SKIP_VERSION
 #
 #   INPUT PARAMETERS
@@ -4892,7 +4901,7 @@ sub UrlManipulateMain ($)
 
 sub UrlHttpFileCheck ( % )
 {
-    my $id         = "$LIB.UrlHttpFileCheck";
+    my $id        = "$LIB.UrlHttpFileCheck";
     my %arg       = @ARG;
     my $saveFile  = $arg{savefile};
     my $unpack    = $arg{unpack};
@@ -5056,6 +5065,11 @@ sub UrlHttpSearchNewest ( % )
 
     $debug  and print "$id: Getting list of files $getPage ...\n";
 
+    if ( $getPage =~ /\.(gz|bz2|lzma|zip|tar|jar)/ )
+    {
+        die "[ERROR] The URL must not contain filename: $getPage";
+    }
+
     my $request = new HTTP::Request( 'GET' => $getPage );
     my $obj     = $ua->request($request);
     my $stat    = $obj->is_success;
@@ -5085,6 +5099,7 @@ sub UrlHttpSearchNewest ( % )
             {
                 #  Nope, this is "download.html" search with
                 #  possible "--Regexp SEARCH" option.
+
                 $getFile = $urls[0];
                 $file    = $getFile;
             }
@@ -5124,9 +5139,10 @@ sub UrlHttpSearchNewest ( % )
                 #   Try old fashioned. The filename may contain the
                 #   version information,
 
-                $debug  and  print "$id: EXAMINE latest URL model[$file]\n";
+                $debug  and
+		    print "$id: EXAMINE latest URL model[$file] list[@urls]\n";
 
-                @list = ( LatestVersion $file, \@urls ) ;
+                @list = ( LatestVersion $file, \@urls ) if @urls ;
                 # $file = '';
             }
 
@@ -5488,6 +5504,11 @@ sub UrlHttp ( % )
     if ( $new )        # Directory lookup
     {
         my $getPage = $thisPage ? $url : $baseUrl ;
+
+        if ( $file )
+        {
+            $getPage =~ s/\Q$file//;
+        }
 
         @list       = UrlHttpSearchNewest
                             useragent    => $ua

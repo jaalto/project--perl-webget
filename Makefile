@@ -41,15 +41,15 @@ INSTALL_BIN_S_OBJS	= $(PL_SCRIPT)
 all:
 	@echo "Nothing to compile. See INSTALL"
 
-bin/$(PACKAGE).1: $(SRC)
+bin/$(PACKAGE).1: $(PL_SCRIPT)
 	$(PERL) $< --help-man > $<
 	@-rm -f *.x~~ pod*.tmp
 
-doc/manual/$(PACKAGE).html: $(SRC)
+doc/manual/$(PACKAGE).html: $(PL_SCRIPT)
 	$(PERL) $< --help-html > $<
 	@-rm -f *.x~~ pod*.tmp
 
-doc/manual/$(PACKAGE).txt: $(SRC)
+doc/manual/$(PACKAGE).txt: $(PL_SCRIPT)
 	$(PERL) $< --help > $<
 	@-rm -f *.x~~ pod*.tmp
 
