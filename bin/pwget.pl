@@ -87,7 +87,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0916.2232';
+    $VERSION = '2008.0916.2246';
 
 # ****************************************************************************
 #
@@ -3516,6 +3516,9 @@ sub LatestVersion ( $ $ )
     if ( /$regexp/o  )
     {
         my $pfx  = $1;
+
+	$pfx =~ s/[-_]$//;    # package-name- => package-name
+
         $pfx =~ s,([][{}+.?*]),\\$1,g;   # Quote special characters.
 
         #  Examine 150b6, 1.50, 1_15
@@ -5171,7 +5174,6 @@ sub UrlHttpSearchNewest ( % )
 
 sub UrlHttpDownload ( % )
 {
-    $debug = 1;
     my $id = "$LIB.UrlHttpDownload";
     my %arg = @ARG ;
 
