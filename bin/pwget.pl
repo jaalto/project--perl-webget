@@ -43,11 +43,11 @@ use 5.004;
 #       Perl "word"
 
 use autouse 'Carp'          => qw( croak carp cluck confess );
-use autouse 'Text::Tabs'    => qw( expand                   );
-use autouse 'Pod::Text'     => qw( pod2text                 );
-use autouse 'Pod::Html'     => qw( pod2html                 );
-use autouse 'File::Copy'    => qw( copy move                );
-use autouse 'File::Path'    => qw( mkpath rmtree            );
+use autouse 'Text::Tabs'    => qw( expand );
+use autouse 'File::Copy'    => qw( copy move );
+use autouse 'File::Path'    => qw( mkpath rmtree );
+use autouse 'Pod::Html'     => qw( pod2html );
+#use autouse 'Pod::Text'     => qw( pod2text );
 
 #   Standard perl modules
 
@@ -1048,9 +1048,8 @@ Double check the configuration file's line.
 
 =head1 ENVIRONMENT
 
-Variable C<PWGET_CFG> can point to the root configuration file in
-which you can use B<include> directives to read more configuration files.
-The configuration file is read at startup if it exists.
+Variable C<PWGET_CFG> can point to the root configuration file. The
+configuration file is read at startup if it exists.
 
     export PWGET_CFG=$HOME/conf/pwget.conf     # /bin/hash syntax
     setenv PWGET_CFG $HOME/conf/pwget.conf     # /bin/csh syntax
@@ -1127,7 +1126,7 @@ sub Help (;$ $)
     }
     else
     {
-        pod2text $PROGRAM_NAME;
+        system "pod2text $PROGRAM_NAME";
     }
 
     exit 0;
@@ -1193,17 +1192,22 @@ sub PathConvert ($;$)
 sub PathConvertSmart ($)
 {
     my $id     = "$LIB.PathConvertSmart";
-    my ($path) = @ARG;
+    local ($ARG) = @ARG;
 
     if ( $CYGWIN_PERL )
     {
         #   In win32, you could define environment variables as
         #   C:\something\like, but that's not understood under cygwin.
 
-        $path = PathConvert $path, -cygwin;
+        $ARG = PathConvert $ARG, -cygwin;
     }
 
-    $path;
+    my $home = $ENV{HOME};
+
+    s,~,$home,;
+    s,\Q$HOME,$home,;
+
+    $ARG;
 }
 
 # ************************************************************** &args *******
@@ -1412,8 +1416,8 @@ sub HandleCommandLineArgs ()
 
         unless ( defined $PWGET_CFG )
         {
-            die "$id: No environment variable PWGET_CFG defined."
-                , " Need --config"
+            die "$id: No environment variable PWGET_CFG defined. "
+                , "Need --config FILE where to search."
                 ;
         }
 
