@@ -1,3 +1,18 @@
+2009-03-18  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (UrlHttpParseHref): Add code.google.com directory
+	filtering regexp.
+
+2009-03-08  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (UrlHttpParseHref): Add more debug.
+
+2009-02-20  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (LIST OF DIRECTIVES IN CONFIGURATION FILE):
+	Adjust right hand column to 60 in indented examples.
+	(xopt:rm): Adjust indentation.
+
 2009-02-11  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (Help): Workaround Perl v5.10.0 bug in Pod::Text,

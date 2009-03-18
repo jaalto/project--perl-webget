@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2008.0920.1948';
+    $VERSION = '2009.0318.1637';
 
 # ****************************************************************************
 #
@@ -900,17 +900,21 @@ Here is a more complicated example:
 
     http://www.contactor.se/~dast/svnusers/mbox.cgi pregexp:mbox.*\d$ rename:my($y,$m)=($url=~/year=(\d+).*month=(\d+)/);$ARG="$y-$m.mbox"
 
-Let's break that one apart. You may spend some time with this example since
-the possiblilities are limitless.
+Let's break that one apart. You may spend some time with this example
+since the possiblilities are limitless.
 
-    1. Connect to page http://www.contactor.se/~dast/svnusers/mbox.cgi
-    2. Search page for URLs matching regexp 'mbox.*\d$'. A found link would
-       could be
+    1. Connect to page
+       http://www.contactor.se/~dast/svnusers/mbox.cgi
+
+    2. Search page for URLs matching regexp 'mbox.*\d$'. A
+       found link would could be
        http://svn.haxx.se/users/mbox.cgi?year=2004&month=12
-    3. The found link is put to $ARG, which can be used to extract suitable
-       mailbox name with perl code that is evaluated. The resulting name must
-       apear in $ARG. Thus the code effectively extract two items from the
-       link to form a mailbox name:
+
+    3. The found link is put to $ARG, which can be used to
+       extract suitable mailbox name with perl code that
+       is evaluated. The resulting name must apear in
+       $ARG. Thus the code effectively extract two items
+       from the link to form a mailbox name:
 
         my ($y, $m) = ( $url =~ /year=(\d+).*month=(\d+)/ )
         $ARG = "$y-$m.mbox"
@@ -922,7 +926,8 @@ follows C<rename:> directive.
 
 =item B<regexp:REGEXP>
 
-Get all files in ftp directory matching regexp. Directive B<save:> is ignored.
+Get all files in ftp directory matching regexp. Directive B<save:> is
+ignored.
 
 =item B<regexp-no:REGEXP>
 
@@ -1019,8 +1024,11 @@ This options tells to remove any previous unpack directory.
 Sometimes the files in the archive are all read-only and unpacking the
 archive second time, after some period of time, would display
 
-    tar: package-3.9.5/.cvsignore: Could not create file: Permission denied
-    tar: package-3.9.5/BUGS: Could not create file: Permission denied
+    tar: package-3.9.5/.cvsignore: Could not create file:
+    Permission denied
+
+    tar: package-3.9.5/BUGS: Could not create file:
+    Permission denied
 
 This is not a serious error, because the archive was already on disk and
 tar did not overwrite previous files. It might be good to inform the
@@ -4497,8 +4505,11 @@ sub UrlHttpParseHref ($ ; $)
     {
         my $file = $1;
 
+	$debug  and  print "$id: FILE $file\n";
+
         if ( $base  and  $file eq $base )
         {
+            $debug  and  print "$id:  FILTERED BY BASE $base\n";
             next;
         }
 
@@ -4513,9 +4524,17 @@ sub UrlHttpParseHref ($ ; $)
             next;
         }
 
-        if ( $file =~ /^#/ )
+        if ( $file =~ /^#/i )
         {
             $debug  and  print "$id:  FILTERED [#] $file\n";
+            next;
+        }
+
+        #  code.google.com: detail?archive.tar.bz2&amp;can=2&amp;q=
+
+        if ( $file =~ /;q=$/i )
+        {
+            $debug  and  print "$id:  FILTERED [google] $file\n";
             next;
         }
 
@@ -4541,8 +4560,9 @@ sub UrlHttpParseHref ($ ; $)
         push @ret, $file;
     }
 
-    $debug  and  print "$id: EXIT. REGEXP = [$regexp] RET =>\n"
-                     , join("\n", @ret), "\n";
+    $debug  and  print "$id: EXIT. REGEXP = [$regexp] "
+		    , " RET =>\n"
+                    , join("\n", @ret), "\n";
 
     @ret;
 }
