@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0318.1637';
+    $VERSION = '2009.0318.2029';
 
 # ****************************************************************************
 #
@@ -331,6 +331,14 @@ case insesiteve manner:
 
     pwget -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
       http://www.emacswiki.org/elisp/index.html
+
+=item B<--sleep SECONDS>
+
+Sleep SECONDS before next URL request. When using regexp based
+downlaods that may return many hits, some sites disallow successive
+requests in within short period of time. This options makes program
+sleep for number of SECONDS between retrievals to overcome 'Service
+unavailable'.
 
 =item B<--stdout>
 
@@ -1242,48 +1250,39 @@ sub HandleCommandLineArgs ()
 
     # .......................................... command line options ...
 
-    use vars qw
+    use vars qw				# declare global variables
     (
-        $CHECK_NEWEST
-
-        $debug
-        $DIR_DATE
-
-        @CFG_FILE
         $CFG_FILE_NEEDED
+        $CHECK_NEWEST
+        $CONTENT_REGEXP
+        $DIR_DATE
+        $EXTRACT
         $FIREWALL
-
         $LCD_CREATE
-
         $MIRROR
-        $NO_SAVE
-        $NO_LCD
         $NO_EXTRACT
-
-        $OVERWRITE
+        $NO_LCD
+        $NO_SAVE
         $OUT_DIR
-
+        $OVERWRITE
+        $POSTFIX
         $PREFIX
         $PREFIX_DATE
         $PREFIX_WWW
-
-        $POSTFIX
         $PROXY
-        $STDOUT
-
-        $SKIP_VERSION
-
-        $URL_REGEXP
-        $EXTRACT
-        $SITE_REGEXP
-        $CONTENT_REGEXP
-
-        $TAG_REGEXP
-        @TAG_LIST
-        $verb
-        $test
-
         $PWGET_CFG
+        $SITE_REGEXP
+        $SKIP_VERSION
+        $SLEEP_SECONDS
+        $STDOUT
+        $TAG_REGEXP
+        $URL_REGEXP
+
+        @CFG_FILE
+        @TAG_LIST
+        $debug
+        $test
+        $verb
     );
 
     $CFG_FILE_NEEDED = 0;
@@ -1334,6 +1333,7 @@ sub HandleCommandLineArgs ()
         , "regexp=s"        => \$URL_REGEXP
         , "selftest"        => \$selfTest
         , "skip-version"    => \$SKIP_VERSION
+        , "sleep:i"         => \$SLEEP_SECONDS
         , "stdout"          => \$STDOUT
         , "test"            => \$test
         , "verbose:i"       => \$verb
@@ -4344,6 +4344,8 @@ sub UrlFtp ( % )
             {
                 PUSH ($saveFile);
             }
+
+	    sleep $SLEEP_SECONDS  if  $SLEEP_SECONDS;
         }
     }
 
@@ -5605,7 +5607,6 @@ sub UrlHttp ( % )
                     ;
 
     $ret, @files;
-
 }
 
 # ****************************************************************************
