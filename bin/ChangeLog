@@ -2,6 +2,8 @@
 
 	* pwget.pl (UrlHttpParseHref): Add www.emacswiki.org
 	filetr regexp.
+	(DirectiveLcd): in mkdir(), announce if test mode
+	is active.
 
 2009-03-18  Jari Aalto  <jari.aalto@cante.net>
 

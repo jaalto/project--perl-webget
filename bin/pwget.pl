@@ -3275,13 +3275,15 @@ sub DirectiveLcd (%)
 
     unless ( $isDir )
     {
-        $verb  and  print STDERR "$id: Creating directory $lcd\n";
+	my $TEST = "[test mode] "  if  $test;
+
+        $verb  and  print STDERR "$id: ${TEST}Creating directory $lcd\n";
 
         not $mkdir  and  die "$id: [$dir] => lcd [$lcd] is not a directory";
 
 	unless ($test)
 	{
-	    mkpath( $lcd, $verb) or die "$id: mkpath $lcd failed $ERRNO";
+	    mkpath($lcd, $verb)  or  die "$id: mkpath $lcd failed $ERRNO";
 	}
     }
 
