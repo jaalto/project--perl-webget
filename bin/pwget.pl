@@ -4540,12 +4540,13 @@ sub UrlHttpParseHref ($ ; $)
             next;
         }
 
-        if ( $file =~ /^(index)/ )
+	# http://www.emacswiki.org/emacs?action=admin;id=twit.el
+
+        if ( $file =~ /emacswiki.*;.*=/ )
         {
-            $debug  and  print "$id:  FILTERED [index] $file\n";
+            $debug  and  print "$id:  FILTERED [emacswiki] $file\n";
             next;
         }
-
 
         if ( $file =~ m,^\?|/$|mailto, )
         {

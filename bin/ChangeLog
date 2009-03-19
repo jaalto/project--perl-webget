@@ -1,3 +1,8 @@
+2009-03-19  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (UrlHttpParseHref): Add www.emacswiki.org
+	filetr regexp.
+
 2009-03-18  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (UrlHttpParseHref): Add code.google.com directory
