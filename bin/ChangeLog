@@ -1,3 +1,8 @@
+2009-03-25  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (UrlHttpDownload): Change savefile foo.txt?format=mode
+	so that the rest after question mark are removed. Thus foo.txt.
+
 2009-03-19  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (UrlHttpParseHref): Add www.emacswiki.org

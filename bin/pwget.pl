@@ -5298,6 +5298,11 @@ EOF
 
         $debug  and  print "$id: SAVEFILE-1 $saveFile\n";
 
+	#  foo.txt?format=txt
+	$saveFile =~ s/\?.*//;
+
+        $debug  and  print "$id: SAVEFILE-1b $saveFile\n";
+
         if ( $stdout )
         {
             $saveFile = TempFile();
@@ -5306,7 +5311,7 @@ EOF
         {
             $saveFile = $saveopt;
         }
-        elsif ( @list > 1  or $file eq ''  or ($find and not $saveopt) )
+        elsif ( @list > 1  or  $file eq ''  or  ($find and not $saveopt) )
         {
              $saveFile = basename $ARG;
         }
@@ -5356,8 +5361,8 @@ EOF
                                         , $i, scalar @list;
 
 
-        my $request = new HTTP::Request( 'GET' => $url );
-        my $obj     = $ua->request( $request , $saveFile );
+        my $request = new HTTP::Request('GET' => $url );
+        my $obj     = $ua->request($request , $saveFile );
         my $stat    = $obj->is_success;
 
         if ( $debug )
@@ -5381,7 +5386,7 @@ EOF
             if ( (not $contentStatus and $verb > 1)
                  or
                  ($contentStatus and $verb)
-               )
+	       )
             {
                 print "$progress ${err}$url => $saveFile\n";
             }
@@ -5562,7 +5567,6 @@ sub UrlHttp ( % )
                     , pageregexp => $thisPageRegexp
                     ;
     }
-
 
     # ............................................ get list of files ...
 
