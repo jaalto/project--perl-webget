@@ -915,22 +915,23 @@ since the possiblilities are limitless.
        http://www.contactor.se/~dast/svnusers/mbox.cgi
 
     2. Search page for URLs matching regexp 'mbox.*\d$'. A
-       found link would could be
+       found link could match hrefs like this:
        http://svn.haxx.se/users/mbox.cgi?year=2004&month=12
 
-    3. The found link is put to $ARG, which can be used to
-       extract suitable mailbox name with perl code that
-       is evaluated. The resulting name must apear in
-       $ARG. Thus the code effectively extract two items
-       from the link to form a mailbox name:
+    3. The found link is put to $ARG (same as $_), which can be used
+       to extract suitable mailbox name with a perl code that is
+       evaluated. The resulting name must apear in $ARG. Thus the code
+       effectively extract two items from the link to form a mailbox
+       name:
 
         my ($y, $m) = ( $url =~ /year=(\d+).*month=(\d+)/ )
         $ARG = "$y-$m.mbox"
 
         => 2004-12.mbox
 
-Just remember, that there B<must> not be any spaces in the code that
-follows C<rename:> directive.
+Just remember, that the perl code that follows C<rename:> directive
+B<must> must not contain any spaces. It all must be readable as one
+string.
 
 =item B<regexp:REGEXP>
 
@@ -1317,8 +1318,8 @@ sub HandleCommandLineArgs ()
         , "W|prefix-www"    => \$PREFIX_WWW
         , "chdir=s"         => \$chdir
         , "c|config:s"      => \@CFG_FILE
-        , "d|debug:i"       => \$debug
         , "dry-run"         => \$test
+        , "d|debug:i"       => \$debug
         , "extract"         => \$EXTRACT
         , "help-html"       => \$helpHTML
         , "help-man"        => \$helpMan

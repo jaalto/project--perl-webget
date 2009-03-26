@@ -1,3 +1,8 @@
+2009-03-26  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (Help::LIST OF DIRECTIVES IN CONFIGURATION FILE):
+	Adjust discussion about 'rename:'
+
 2009-03-25  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (UrlHttpDownload): Change savefile foo.txt?format=mode
