@@ -1,3 +1,8 @@
+2009-08-03  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (HandleCommandLineArgs): Do not set $verb to
+	default value 1. Be silent by default.
+
 2009-03-26  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (Help::LIST OF DIRECTIVES IN CONFIGURATION FILE):

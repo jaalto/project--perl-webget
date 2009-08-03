@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0318.2029';
+    $VERSION = '2009.0803.2246';
 
 # ****************************************************************************
 #
@@ -1344,7 +1344,6 @@ sub HandleCommandLineArgs ()
     $debug = 1          if $debug == 0;
     $debug = 0          if $debug < 0;
 
-    $verb = 1           if $verb == 0;
     $verb = 0           if $verb < 0;
 
     $verb = 5           if $debug;
@@ -5389,7 +5388,7 @@ EOF
                  ($contentStatus and $verb)
 	       )
             {
-                print "$progress ${err}$url => $saveFile\n";
+                $verb  and  print "$progress ${err}$url => $saveFile\n";
             }
 
         }
@@ -5408,7 +5407,7 @@ EOF
 
             $ret = $errUrlHashRef->{ $obj->code };
 
-            print "  ** error: $url ",  $obj->message, "\n";
+            warn "  ** error: $url ",  $obj->message, "\n";
         }
     }
 
@@ -5680,7 +5679,7 @@ sub UrlFile (%)
 
         unless ( copy($path, $file)  )
         {
-            print "$id: FileCopy $path => $file $ERRNO";
+            $verb  and  print "$id: FileCopy $path => $file $ERRNO";
         }
         else
         {
@@ -5697,13 +5696,13 @@ sub UrlFile (%)
 
         if ( -e $file  and  not $overwrite )
         {
-            print "$id: [ignored, exists] $file\n";
+            $verb  and  print "$id: [ignored, exists] $file\n";
             return;
         }
 
         unless ( open FILE, "> $file" )
         {
-            print "$id: can't write $file $ERRNO\n";
+            warn "$id: can't write $file $ERRNO\n";
             return;
         }
 
