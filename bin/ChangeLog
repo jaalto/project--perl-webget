@@ -1,3 +1,7 @@
+2009-09-12  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (HELP::--Regexp-content): Correct spelling.z
+
 2009-08-03  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (HandleCommandLineArgs): Do not set $verb to
@@ -428,7 +432,7 @@
 
         * pwget.pl (sub UrlHttpDownload): 1.56 Added debug calls.
         (LWP::UserAgent;): 1.56 Incorrectly passed $file if <new:> was
-        given. Now respect @list with <new:>. That it, it dindät download
+        given. Now respect @list with <new:>. That it, it dind't download
         the test file because the savefilename as wrong.
         (sub ConfigRead):
         1.56 Changed few calls from $debug to $debug > 1 and $debu > 2 to
@@ -712,9 +716,9 @@
         (breton-peter): URL corrected.
         (minar-nelson): Added downloading html-helper.mode
         (idlwave): Site has moved.
-        (template): Site moved to sourceforge project ´emacs-template'
+        (template): Site moved to sourceforge project 'emacs-template'
         but code is not in CVS.
-        (x-symbol): Site moved to sourceforge project ´x-symbol'
+        (x-symbol): Site moved to sourceforge project 'x-symbol'
         (w3): Removed. latest code is in GNU savannah CVS.
 
 2002-07-22  Jari Aalto  <jari aalto A T poboxes dt com>

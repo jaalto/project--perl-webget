@@ -327,7 +327,7 @@ downloads slow, because the file is read into memory as a single line
 and then a match is searched against the content.
 
 For example to download Emacs lisp file (.el) written by Mr. Foo in
-case insesiteve manner:
+case insensitive manner:
 
     pwget -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
       http://www.emacswiki.org/elisp/index.html
