@@ -3353,7 +3353,7 @@ sub LatestVersion ( $ $ )
     #   Difficult names are like4this-1.1.gz
     #
     #   Prevent 1.1.tar.gz --> "1.1.t" with negative lookahead
-    $debug = 10;
+
     my $ext     = '(?!(?i)tar|gz|bzip|bz2|tgz|tbz2|zip|rar|z$)';
     my $add     = '(?:[-_]?(?:alpha|beta|rc)\d*|' . $ext . '[a-z])';
     my $regexp  = '^(.*?[-_]|\D*\d+\D+|\D+)'        # $1
