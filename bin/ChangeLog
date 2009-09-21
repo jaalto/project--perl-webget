@@ -15,6 +15,11 @@
 	(HandleCommandLineArgs): Correct --verbose value setting with
 	'defined'.
 
+2009-09-16  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (LatestVersion): Add 'rc' to regexp,
+	like in 'release candidate'.
+
 2009-09-12  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (HELP::--Regexp-content): Correct spelling.

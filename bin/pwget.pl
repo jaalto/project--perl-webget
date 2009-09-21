@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0921.1639';
+    $VERSION = '2009.0921.1641';
 
 # ****************************************************************************
 #
@@ -3357,7 +3357,7 @@ sub LatestVersion ( $ $ )
     #   Prevent 1.1.tar.gz --> "1.1.t" with negative lookahead
 
     my $ext     = '(?!(?i)tar|gz|bzip|bz2|tgz|tbz2|zip|rar|z$)';
-    my $add     = '(?:[-_]?(?:alpha|beta)\d*|' . $ext . '[a-z])';
+    my $add     = '(?:[-_]?(?:alpha|beta|rc)\d*|' . $ext . '[a-z])';
 
     my $regexp  = '^(?<prefix>.*?[-_]|\D*\d+\D+|\D+)'   # $1
                   . '(?<version>'
