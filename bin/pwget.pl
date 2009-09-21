@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0803.2246';
+    $VERSION = '2009.0921.1356';
 
 # ****************************************************************************
 #
@@ -3356,16 +3356,21 @@ sub LatestVersion ( $ $ )
 
     my $ext     = '(?!(?i)tar|gz|bzip|bz2|tgz|tbz2|zip|rar|z$)';
     my $add     = '(?:[-_]?(?:alpha|beta)\d*|' . $ext . '[a-z])';
-    my $regexp  = '^(.*?[-_]|\D*\d+\D+|\D+)'        # $1
-                  . '([-_.\db]*\d'                  # $2
+
+    my $regexp  = '^(?<prefix>.*?[-_]|\D*\d+\D+|\D+)'   # $1
+                  . '(?<version>'
+		  . '[-_.\db]*\d'			# $2
                   . $add
                   . '?)'
-                  . '(\S+)'                         # $3
+		  . '(?<rest>\S+)'			# $3
                   ;
 
-    $debug   and
-        print "$id: file [$file] REGEXP /$regexp/ ",
-            , "ARRAY OF FILENAMES TO EXAMINE: ", join("\n", @$array), "\n";
+    $debug and
+        print "$id: file [$file] REGEXP /$regexp/ "
+            , "ARRAY OF FILENAMES TO EXAMINE: "
+	    , join("\n", @$array)
+	    , "\n"
+	    ;
 
     DUPLICATE_REMOVE:   # Make "local sandbox" for a while (scoping rules)
     {
@@ -3389,14 +3394,14 @@ sub LatestVersion ( $ $ )
         my $verStr   = shift;
 
         my $key      = "";
-        my @v        = /(\d+)/g ;
+        my @v        = /(\d+)/g ;	# explode all digits
 
-        if ( $verStr =~ /([a-z])$/ )    #   "1.1a"
+        if ( $verStr =~ /(?<ascii>[a-z])$/ )    #   "1.1a"
         {
             #  1.1a  => 1.1.97  use a's ascii code
             #  1.1   => 1.1.0
 
-            push @v, ord $1;    # get character ASCII code
+            push @v, ord $+{ascii};    # get character ASCII code
         }
 
         $debug > 1  and  print "$id: [Version pure] \@v = @v\n";
@@ -3419,10 +3424,10 @@ sub LatestVersion ( $ $ )
 
             for my $nbr ( @v )
             {
-                if ( $nbr =~ /^(0+)(\d+)/ )
+                if ( $nbr =~ /^(?<zeros>0+)(?<digits>\d+)/ )
                 {
-                    push @ver, (0) x length $1;
-                    push @ver, $2;
+                    push @ver, (0) x length $+{zeros};
+                    push @ver, $+{digits};
                 }
                 else
                 {
@@ -3533,18 +3538,18 @@ sub LatestVersion ( $ $ )
 
     if ( /$regexp/o  )
     {
-        my $pfx  = $1;
+        my $pfx  = $+{prefix};
 
 	$pfx =~ s/[-_]$//;    # package-name- => package-name
 
-        $pfx =~ s,([][{}+.?*]),\\$1,g;   # Quote special characters.
+        $pfx =~ s,([][{}+.?*]),\\$1,g;   # In RE, quote special characters.
 
         #  Examine 150b6, 1.50, 1_15
 
         my $ver  = '[-_]([-._\db]+ ' . $add . '?)';
         my $post = "$3(\$|[&?][a-z])";       #   Add anchor too
 
-        $debug  and  print "$id: INITIAL PFX: [$pfx] POSTFIX: [$post]\n";
+        $debug and print "$id: INITIAL PFX: [$pfx] POSTFIX: [$3] re [$post]\n";
 
         # .................................................. arrange ...
         # If there are version numbers, then sort all according
@@ -3583,7 +3588,7 @@ sub LatestVersion ( $ $ )
                        and print "$id: REJECTED, no regexp match\t$ARG\n";
             }
 
-            my ($BEG, $vver, $END) = ($1, $2, $3);
+            my ($BEG, $vver, $END) = ($+{prefix}, $+{version}, $+{rest});
 
             $debug > 1  and  print "$id: MATCH: [$BEG] [$vver] [$END]\n";
 
@@ -3591,15 +3596,16 @@ sub LatestVersion ( $ $ )
         }
 
         DebugHash();
+
         $ret = ParseVersion( $pfx, $post, $ver );
 
     }
-    elsif ( /(.*)-[\d.]+$/ )
+    elsif ( /(?<REST>.*)-[\d.]+$/ )
     {
         $debug  and  print "$id: plan B, non-standard version-N.NN\n";
 
-        my $pfx  = $1;
-        my $ver  = '(-[\d.]+)$';
+        my $pfx  = $+{REST};
+        my $ver  = '(?<version>-[\d.]+)$';
         my $post = "";
 
         $debug > 1
@@ -3607,13 +3613,13 @@ sub LatestVersion ( $ $ )
 
         for ( @$array )
         {
-            unless ( /($pfx)-$ver/ )
+            unless ( /(?<beg>$pfx)-$ver/ )
             {
                 $debug  and  print "$id: REJECTED\t\t$ARG\n";
                 next;
             }
 
-            my ($BEG, $vver) = ($1, $2);
+            my ($BEG, $vver) = ($+{beg}, $+{version});
 
             $debug > 1  and  print "$id: MATCH: [$BEG] [$vver]\n";
 
@@ -3624,26 +3630,26 @@ sub LatestVersion ( $ $ )
         $ret = ParseVersion( $pfx, $post, $ver );
 
     }
-    elsif ( /^(\D+)[\d.]+[a-h]+[\d.]+(.*)/ )   # WinCvs11b14.zip
+    elsif ( /^(?<beg>\D+)[\d.]+[a-h]+[\d.]+(?<REST>.*)/ )   # WinCvs11b14.zip
     {
         $debug > 1  and  print "$id: plan C, non-standard version-N.NN\n";
 
-        my $pfx  = $1;
-        my $ver  = '([\d.]+[a-h]+[\d.]+)';
-        my $post = $2;
+        my $pfx  = $+{beg};
+        my $ver  = '(?<version>[\d.]+[a-h]+[\d.]+)';
+        my $post = $+{REST};
 
         $debug > 1
                and  print "$id: (C) PFX: [$pfx] POSTFIX: [$post] [$ARG]\n";
 
         for ( @$array )
         {
-            unless ( /($pfx)$ver$post/ )
+            unless ( /(?<beg>$pfx)$ver$post/ )
             {
                 $debug > 1  and  print "$id: REJECTED\t\t$ARG\n";
                 next;
             }
 
-            my ($BEG, $vver) = ($1, $2);
+            my ($BEG, $vver) = ($+{beg}, $+{version});
 
             $debug > 1  and  print "$id: MATCH: [$BEG] [$vver] $ARG\n";
 
@@ -3654,25 +3660,25 @@ sub LatestVersion ( $ $ )
         $ret = ParseVersion( $pfx, $post, $ver );
 
     }
-    elsif ( /^(\D+)[\d.]+/ )   # WinCvs136.zip
+    elsif ( /^(?<prefix>\D+)[\d.]+/ )   # WinCvs136.zip
     {
         $debug > 1 and  print "$id: plan D, non-standard version-N.NN\n";
 
-        my $pfx  = $1;
-        my $ver  = '([\d.]+)';
+        my $pfx  = $+{prefix};
+        my $ver  = '(?<version>[\d.]+)';
         my $post = "";
 
         $debug > 1  and  print "$id: (D) PFX: [$pfx] POSTFIX: [$post]\n";
 
         for ( @$array )
         {
-            unless ( /($pfx)$ver/ )
+            unless ( /(?<beg>$pfx)$ver/ )
             {
                 $debug > 1 and  print "$id: REJECTED\t\t$ARG\n";
                 next;
             }
 
-            my ($BEG, $vver) = ($1, $2);
+            my ($BEG, $vver) = ($+{beg}, $+{version});
 
             $debug > 1 and  print "$id: MATCH: [$BEG] [$vver] $ARG\n";
 
