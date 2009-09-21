@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0921.1356';
+    $VERSION = '2009.0921.1639';
 
 # ****************************************************************************
 #
@@ -229,7 +229,7 @@ If URL points to Sourcefoge download area, use mirror SITE for downloading.
 Alternatively the full full URL can include the mirror information. And
 example:
 
-    --mirror kent ... http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz
+    --mirror kent http://downloads.sourceforge.net/foo/foo-1.0.0.tar.gz
 
 =item B<-n|--new>
 
@@ -685,14 +685,15 @@ Ftp login name. Default value is "anonymous".
 
 =item B<mirror:SITE>
 
-This is relevant to sourceforge, which does not allow direct downloads with
-links like http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz Visit
-the page and selct the announced mirror that can be seen from the URL
+This is relevant to Sourceforge only which does not allow direct
+downloads with links like
+<http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz>. Visit the
+page and selct the announced mirror that can be seen from the URL
 which includes string "use_mirror=site"
 
 An example:
 
-  http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz new: mirror:kent
+  http://downloads.sourceforge.net/foo/foo-1.0.0.tar.gz new: mirror:kent
 
 =item B<new:>
 
@@ -940,7 +941,7 @@ ignored.
 
 =item B<regexp-no:REGEXP>
 
-After the regexp: directive has matched, explude files that match
+After the C<regexp:> directive has matched, exclude files that match
 directive B<regexp-no:>
 
 =item B<Regexp:REGEXP>
@@ -1093,6 +1094,7 @@ CPAN/Web
 
 C<LWP::UserAgent>
 C<Net::FTP>
+C<wget(1)>   only needed for Sourceforge.net downloads
 
 =head1 COREQUISITES
 
@@ -1289,7 +1291,6 @@ sub HandleCommandLineArgs ()
     $CFG_FILE_NEEDED = 0;
     $FIREWALL        = "";
     $OVERWRITE       = 0;
-    $debug           = -1;
 
     # .................................................... read args ...
 
@@ -1341,9 +1342,10 @@ sub HandleCommandLineArgs ()
 
     );
 
-    $debug = 1          if $debug == 0;
+    $debug = 1          if defined $debug;
     $debug = 0          if $debug < 0;
 
+    $verb = 1           if defined $verb;
     $verb = 0           if $verb < 0;
 
     $verb = 5           if $debug;
@@ -3326,8 +3328,8 @@ sub DirectiveLcd (%)
 #
 #   INPUT PARAMETERS
 #
-#       $file       file to use as base.
-#       \@files     list of files
+#       $file       File to use as base.
+#       \@files     List of files to compare.
 #
 #   RETURN VALUES
 #
@@ -3367,7 +3369,7 @@ sub LatestVersion ( $ $ )
 
     $debug and
         print "$id: file [$file] REGEXP /$regexp/ "
-            , "ARRAY OF FILENAMES TO EXAMINE: "
+            , "ARRAY OF FILENAMES TO EXAMINE:\n"
 	    , join("\n", @$array)
 	    , "\n"
 	    ;
@@ -3538,7 +3540,9 @@ sub LatestVersion ( $ $ )
 
     if ( /$regexp/o  )
     {
-        my $pfx  = $+{prefix};
+        my $pfx      = $+{prefix};
+	my $version  = $+{version};
+	my $rest     = $+{rest};
 
 	$pfx =~ s/[-_]$//;    # package-name- => package-name
 
@@ -3547,9 +3551,17 @@ sub LatestVersion ( $ $ )
         #  Examine 150b6, 1.50, 1_15
 
         my $ver  = '[-_]([-._\db]+ ' . $add . '?)';
-        my $post = "$3(\$|[&?][a-z])";       #   Add anchor too
 
-        $debug and print "$id: INITIAL PFX: [$pfx] POSTFIX: [$3] re [$post]\n";
+	#  NOTE: Sourceforge is on format <URL>/file.tar.gz/download
+
+        my $post = "$rest(\$|[&?][a-z]|\\/download)";
+
+        $debug and print "$id: ORIGINAL ARG '$ARG'"
+		   . " INITIAL PFX: [$pfx]"
+		   . " MIDDLE: [$version] re /$ver/"
+		   . " POSTFIX: [$rest] re /$post/"
+		   . "\n"
+		   ;
 
         # .................................................. arrange ...
         # If there are version numbers, then sort all according
@@ -3575,8 +3587,8 @@ sub LatestVersion ( $ $ )
 
             unless ( /$pfx.*$post/ )
             {
-                $debug > 1  and  print "$id: REJECTED, no ",
-				 "pfx '$pfx' postfix '$post'",
+                $debug > 1  and  print "$id: REJECTED no ",
+				 "prefix '$pfx' postfix '$post'",
 				 "\t$ARG\n"
 				 ;
                 next;
@@ -3716,7 +3728,7 @@ $id: Internal error, Run with --debug on to pinpoint the details.
      Cannot find anything suitable for download. This may be due to
      non-matching file regexp: that is or <regexp:> is too limiting or
      <no-regexp:> filtered everything. If you used <new:>, it may
-     be possible that the heuristics couldn't determine what were the
+     be possible that the heuristics could not determine what were the
      links to examine; in that case, please let the program know what
      kind of file it should search by providing template directive
      <file:archive-YYYYMMDD.tar.gz>
@@ -3873,14 +3885,20 @@ sub FileNameFix ( $ )
     my $id       = "FileNameFix";
     local ($ARG) = @ARG;
 
-    if ( /\?.+=(.+\.(?:gz|bz2|tar|zip|rar|pak|lhz))/ )
+    $debug  and  print "$id: INPUT [$ARG]\n";
+
+    if ( /\?.+=(.+\.(?:gz|bz2|tar|zip|rar|pak|lhz|iso))/ )
     {
         # download.php?id=file.tar.gz
 
-        $debug  and
+        $debug and
             print "$id: A: chararcter [?] - fixing [$ARG] => [$1]\n";
 
         $ARG = $1;
+    }
+    elsif ( m,^(?:sourceforge|sf)\.net.*/([^/?]+), )
+    {
+	$ARG = $1;
     }
     elsif ( /^(.*viewcvs.*)\?/ )
     {
@@ -3892,6 +3910,8 @@ sub FileNameFix ( $ )
 
         $ARG = $1;
     }
+
+    $debug  and  print "$id: RET [$ARG]\n";
 
     $ARG;
 }
@@ -4365,12 +4385,11 @@ sub UrlFtp ( % )
     ($stat, @files);
 }
 
-
 # ****************************************************************************
 #
 #   DESCRIPTION
 #
-#       Download URL
+#       Download URL using external program wget(1)
 #
 #   INPUT PARAMETERS
 #
@@ -4382,7 +4401,35 @@ sub UrlFtp ( % )
 #
 # ****************************************************************************
 
-sub UrlHttGet ( $ )
+sub UrlHttGetWget ( $ )
+{
+    my $id  = "$LIB.UrlHttpGetWget";
+    my $url = shift;
+
+    $debug  and  print "$id: GET $url ...\n";
+
+    my $ret = qx(which wget > /dev/null 2>&1  &&  wget -q -O - '$url');
+
+    return $ret;
+}
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Download URL by using Perl only.
+#
+#   INPUT PARAMETERS
+#
+#       $       URL
+#
+#   RETURN VALUES
+#
+#       $       content in string if success
+#
+# ****************************************************************************
+
+sub UrlHttGetPerl ( $ )
 {
     my $id  = "$LIB.UrlHttpGet";
     my $url = shift;
@@ -4407,6 +4454,46 @@ sub UrlHttGet ( $ )
     $debug  and  print "$id: RET SUCCESS\n";
 
     $ARG;
+}
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Download URL by using Perl only.
+#
+#   INPUT PARAMETERS
+#
+#       $       URL
+#
+#   RETURN VALUES
+#
+#       $       content in string if success
+#
+# ****************************************************************************
+
+sub UrlHttGet ( $ )
+{
+    my $id  = "$LIB.UrlHttpGet";
+    local $ARG = shift;
+
+    $debug  and  print "$id: INPUT: $ARG\n";
+
+    #  Sourceforge is tricky, it automatically ries to start
+    #  download and pure Perl method won't work. We need to get
+    #  page content only, not start the file download.
+    #
+    #  FIXME: if there is a way to do this with LWP::UserAgent.
+    #  please let me know.
+
+    if ( m,(?:sourceforge|sf)\.net.*/download, )
+    {
+	UrlHttGetWget $ARG
+    }
+    else
+    {
+	UrlHttGetPerl $ARG;
+    }
 }
 
 # ****************************************************************************
@@ -4488,7 +4575,8 @@ sub UrlHttpParseHref ($ ; $)
     local $ARG = shift;
     my $regexp = shift;
 
-    $debug > 1 and  print  "$id: regexp [$regexp] ARG [$ARG]\n";
+    $debug  and  print   "$id: INPUT regexp [$regexp]\n";
+    $debug > 1 and print "$id: ARG [$ARG]\n";
 
     #   Some HTML pages do not use double quotes
     #
@@ -4693,7 +4781,7 @@ sub UrlSfMirrorParse ($)
 
 sub SourceforgeProjectId ($)
 {
-    my $id      = "$LIB.UrlSfManipulate";
+    my $id      = "$LIB.SourceforgeProjectId";
     my($name)   = @ARG;
 
     $debug  and print "$id: INPUT name [$name]\n";
@@ -4705,9 +4793,9 @@ sub SourceforgeProjectId ($)
 
     my $ret;
 
-    if ( m,href\s*=\s*[\"\'][^\"\']+showfiles.php\?group_id=(\d+),i )
+    if ( m,href\s*=.*group_id=(?<id>\d+),i )
     {
-	$ret = $1;
+	$ret = $+{id};
     }
 
     $debug  and print "$id: RET name [$name] id [$ret]\n";
@@ -4733,7 +4821,7 @@ sub SourceforgeProjectId ($)
 
 sub SourceforgeProjectName ($)
 {
-    my $id      = "$LIB.UrlSfManipulate";
+    my $id      = "$LIB.SourceforgeProjectName";
     local($ARG) = @ARG;
 
     $debug  and  print "$id: INPUT $ARG\n";
@@ -4743,7 +4831,10 @@ sub SourceforgeProjectName ($)
     # http://sourceforge.net/projects/emacs-jabber
     # http://prdownloads.sourceforge.net/emacs-jabber/emacs-jabber-0.6.1.tar.gz
 
-    if ( m,prdownloads\.(?:sourceforge|sf)\.net/([^/]+), )
+    if ( m,downloads\.(?:sourceforge|sf)\.net/([^/]+),
+	 or
+	 m,(?:sourceforge|sf)\.net/projects/([^/]+),
+       )
     {
 	$name = $1;
     }
@@ -4784,6 +4875,8 @@ sub SopurceforgeParseDownloadPage ($)
 
     # <td ><a id="showfiles_download_file_pkg0_1rel0_1" class="sfx_qalogger_element sfx_qalogger_clickable" href="http://downloads.sourceforge.net/emacs-jabber/emacs-jabber-0.7.1.tar.gz?modtime=1170287319&amp;big_mirror=0" onClick="window.location='/project/downloading.php?group_id=88346&amp;use_mirror=heanet&amp;filename=emacs-jabber-0.7.1.tar.gz&amp;'+Math.floor(Math.random()*100000000); return false;">emacs-jabber-0.7.1.tar.gz</a>
 
+    # Emacs font-lock no-op comment "'
+
 }
 
 # ****************************************************************************
@@ -4802,10 +4895,10 @@ sub SopurceforgeParseDownloadPage ($)
 #
 # ****************************************************************************
 
-sub UrlManipulateSf ($)
+sub UrlManipulateSfOld ($)
 {
-    my $id   = "$LIB.UrlSfManipulate";
-    my($url) = @ARG;
+    my $id    = "$LIB.UrlManipulateSfOld";
+    my ($url) = @ARG;
 
     $debug  and  print "$id: INPUT [$url]\n";
 
@@ -4813,7 +4906,7 @@ sub UrlManipulateSf ($)
 
     unless ( $project )
     {
-	die "$id: [FATAL] Cannot parse $url\n";
+	die "$id: [FATAL] Cannot parse project name from $url\n";
     }
 
     my $gid = SourceforgeProjectId $project;
@@ -4878,6 +4971,56 @@ sub UrlManipulateSf ($)
     $durl;
 }
 
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Manipulate address like:
+#       http://sourceforge.net/projects/clonezilla/files/clonezilla_live_testing/clonezilla-live-1.2.2-30.iso/download
+#
+#   INPUT PARAMETERS
+#
+#       $       URL
+#
+#   RETURN VALUES
+#
+#       $       URL
+#
+# ****************************************************************************
+
+sub UrlManipulateSf ($ ; $)
+{
+    my $id = "$LIB.UrlManipulateSf";
+    my ($url, $mirror ) = @ARG;
+
+    $debug  and  print "$id: INPUT url [$url]\n";
+
+    local $ARG = UrlHttGet $url;
+    my $ret;
+
+    if ( m,a \s+ href \s* = \"([^\"\']+) .* direct \s+ link \s* </a>,x )
+    {
+	$ret = $1;
+
+	$debug > 1 and  print "$id: SF parsed direct link: $ret\n";
+
+
+	if ( $mirror  and  $ret =~ m,^(.*use_mirror=)(.*), )
+	{
+	    $ret = $1 . $mirror;
+	    $debug > 1 and  print "$id: SF use mirror: $mirror\n";
+	}
+
+    }
+    else
+    {
+	die "$id: [FATAL] Cannot parse direct download from page $url";
+    }
+
+    return $ret;
+}
+
 # ****************************************************************************
 #
 #   DESCRIPTION
@@ -4894,16 +5037,23 @@ sub UrlManipulateSf ($)
 #
 # ****************************************************************************
 
-sub UrlManipulateMain ($)
+sub UrlManipulateMain ($ ; $ )
 {
-    my $id  = "$LIB.UrlManipulate";
-    my $url = shift;
+    my $id  = "$LIB.UrlManipulateMain";
+    my ($url, $mirror ) = @ARG;
 
     $debug  and  print "$id: INPUT $url\n";
 
-    if ( $url =~ m,prdownloads\.(?:sourceforge|sf)\.net/, )
+    # http://downloads.sourceforge.net/project/clonezilla/clonezilla_live_testing/clonezilla-live-1.2.2-30.iso?use_mirror=sunet
+
+    if ( $url =~ m,downloads\.(?:sourceforge|sf)\.net/, )
     {
-	$url = UrlManipulateSf $url;
+	$url = UrlManipulateSfOld $url;
+    }
+
+    if ( $url =~ m,(?:sourceforge|sf)\.net.*/download, )
+    {
+	$url = UrlManipulateSf $url, $mirror;
     }
 
     $debug  and  print "$id: RET $url\n";
@@ -5100,7 +5250,7 @@ sub UrlHttpSearchNewest ( % )
 
     $debug  and print "$id: Getting list of files $getPage ...\n";
 
-    if ( $getPage =~ /\.(gz|bz2|lzma|zip|tar|jar)/ )
+    if ( $getPage =~ /\.(gz|bz2|lzma|zip|tar|jar|iso)/ )
     {
         die "[ERROR] The URL must not contain filename: $getPage";
     }
@@ -5185,7 +5335,9 @@ sub UrlHttpSearchNewest ( % )
 
             unless ( @urls == 1 )
             {
-                warn "$id: Can't parse precise location [@urls] ";
+
+		$verb > 2  and
+                warn "$id: Can't parse precise latest version location [@urls] ";
 
                 #  Select from these URLs in the FileListFilter
 
@@ -5307,6 +5459,9 @@ EOF
 	#  foo.txt?format=txt
 	$saveFile =~ s/\?.*//;
 
+	#  Sourceforge special
+	$saveFile =~ s,/download$,,;
+
         $debug  and  print "$id: SAVEFILE-1b $saveFile\n";
 
         if ( $stdout )
@@ -5319,7 +5474,13 @@ EOF
         }
         elsif ( @list > 1  or  $file eq ''  or  ($find and not $saveopt) )
         {
-             $saveFile = basename $ARG;
+	     #  Sourceforge special
+	     my $tmp = $ARG;
+	     $tmp =~ s,/download$,,;
+
+             $saveFile = basename $tmp;
+
+	     $debug  and  print "$id: SAVEFILE-1c $saveFile [@list]\n";
         }
 
         my $relative = $ARG || $baseUrl;
@@ -5347,6 +5508,8 @@ EOF
         }
 
         my $url = $relative;
+
+	$url = UrlManipulateMain $url, $mirror;
 
         if ( $rename )
         {
@@ -5527,7 +5690,7 @@ sub UrlHttp ( % )
         ($baseUrl, $getFile) = ( $url =~ m,^(.*/)(.*), );
     }
 
-    $baseUrl = UrlManipulateMain $url;
+    $baseUrl = UrlManipulateMain $url, $mirror;
 
     if (      $getFile eq ''
          and  ($regexp eq '' or $thisPageRegexp eq '')

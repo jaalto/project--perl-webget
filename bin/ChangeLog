@@ -2,10 +2,22 @@
 
 	* pwget.pl (LatestVersion): Change all grouped references to names
 	regular expressions and references.
+	(UrlManipulateMain): Add Sourceforge <URL>/download support
+	(SourceforgeProjectName): Add sf.net/projects/<URL> support.
+	(SourceforgeProjectId): Update SF group_id regexp.
+	(UrlManipulateSfOld): New. Move old SF support.
+	(UrlManipulateSf): New SF support.
+	(UrlManipulateMain): Add 'mirror' parameter.
+	(UrlHttp): Pass $mirror to UrlManipulateMain().
+	(UrlHttGetPerl): New.
+	(UrlHttGetWget): New.
+	(FileNameFix): Add sourceforge support.
+	(HandleCommandLineArgs): Correct --verbose value setting with
+	'defined'.
 
 2009-09-12  Jari Aalto  <jari.aalto@cante.net>
 
-	* pwget.pl (HELP::--Regexp-content): Correct spelling.z
+	* pwget.pl (HELP::--Regexp-content): Correct spelling.
 
 2009-08-03  Jari Aalto  <jari.aalto@cante.net>
 
