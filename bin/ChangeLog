@@ -2,6 +2,11 @@
 
 	* pwget.pl (UrlHttp): Comment out '-->' which announce
 	initial file name, not the final.
+	(IsSourceforgeDownload): New.
+	(UrlHttpParseHref): Convert args to HASH syntax. Add parameter
+	unique.
+	(FileExists): Convert args to HASH syntax.
+	Add more archive extensions. Add Sourceforge support.
 
 2009-09-21  Jari Aalto  <jari.aalto@cante.net>
 

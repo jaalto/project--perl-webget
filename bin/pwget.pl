@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0922.0829';
+    $VERSION = '2009.0922.1822';
 
 # ****************************************************************************
 #
@@ -1976,6 +1976,32 @@ sub EvalCode ($ $ ; $)
 #
 #   DESCRIPTION
 #
+#       Check sourceforge special. The sourceofrge site does not publish
+#       direct download links. Check if this is one of those. And example:
+#
+#   INPUT PARAMETERS
+#
+#       string
+#
+#   RETURN VALUES
+#
+#       0       No
+#       1       Yes
+#
+# ****************************************************************************
+
+sub IsSourceforgeDownload ($)
+{
+    my $id = "$LIB.IsSourceforgeDownload";
+    local $ARG = shift;
+
+    m,(?:sourceforge|sf)\.net.*/download$,;
+}
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
 #       Check if HTML::Parse and HTML::FormatText libraries are available
 #
 #   INPUT PARAMETERS
@@ -3812,12 +3838,22 @@ sub FileSimpleCompressed ( $ )
 #
 # ****************************************************************************
 
-sub FileExists ( $ ; $ )
+sub FileExists ( % )
 {
     my $id = "FileExists";
-    my ($file, $unpack) = @ARG;
 
-    if ( $file =~ /\?.*=(.+[a-zA-Z])/ )
+    my %arg    = @ARG;
+    local $ARG = $arg{file};  	# REQUIRED
+    my $unpack = $arg{unpack} || 0;
+
+    my $file = $ARG;
+
+    if ( /^(.+)\?use_mirror/ )
+    {
+        $debug  and  print "$id: FILE [$file] sf fixed => [$1]\n";
+	$file = $1;
+    }
+    elsif ( /\?.*=(.+[a-zA-Z])/ )
     {
         #  download.php?file=this.tar.gz
 
@@ -3825,14 +3861,17 @@ sub FileExists ( $ ; $ )
         $file = $1;
     }
 
-    my @list =
+    my @list = qw
     (
-        '.zip'
-        , '.rar'
-        , '.gz'
-        , '.bz2'
-        , '.Z'
-        , '.z'
+        .bz2
+        .gz
+        .lzma
+        .lzop
+        .rar
+        .rzip
+        .z
+        .Z
+        .zip
     );
 
     my @suffixlist = map { my $f = $ARG; $f =~ s/\./\\./g; $f } @list;
@@ -4329,7 +4368,8 @@ sub UrlFtp ( % )
 
                 if ( $simpleZ )
                 {
-                    ($onDisk) = FileExists $saveFile, -forceUnpackCheck;
+                    ($onDisk) = FileExists file   => $saveFile,
+					   unpack => -forceUnpackCheck;
 
                     if ( $verb > 1 )
                     {
@@ -4338,7 +4378,8 @@ sub UrlFtp ( % )
                 }
                 else
                 {
-                    ($onDisk) = FileExists $saveFile, $unpack;
+                    ($onDisk) = FileExists file   => $saveFile,
+					   unpack => $unpack;
                 }
 
                 $debug and  print "$id: On disk? [$ARG] [save $saveFile] .. "
@@ -4425,7 +4466,8 @@ sub UrlHttGetWget ( $ )
 #
 #   RETURN VALUES
 #
-#       $       content in string if success
+#       $       Content in string if success
+#       $	Headers
 #
 # ****************************************************************************
 
@@ -4453,7 +4495,7 @@ sub UrlHttGetPerl ( $ )
 
     $debug  and  print "$id: RET SUCCESS\n";
 
-    $ARG;
+    $ARG, $head;
 }
 
 # ****************************************************************************
@@ -4468,7 +4510,8 @@ sub UrlHttGetPerl ( $ )
 #
 #   RETURN VALUES
 #
-#       $       content in string if success
+#       $       Content in string if success
+#       $       Header (not always)
 #
 # ****************************************************************************
 
@@ -4560,8 +4603,9 @@ sub UrlHttPageParse ( $ ; $ )
 #
 #   INPUT PARAMETERS
 #
-#       $content    The html page
-#       $regexp     [optional] Return only HREFs matching regexp.
+#       content     The html page
+#       regexp      [optional] Return only HREFs matching regexp.
+#	unique	    [optional] Filter out duplicates.
 #
 #   RETURN VALUES
 #
@@ -4569,14 +4613,18 @@ sub UrlHttPageParse ( $ ; $ )
 #
 # ****************************************************************************
 
-sub UrlHttpParseHref ($ ; $)
+sub UrlHttpParseHref ( % )
 {
     my $id     = "$LIB.UrlHttpParseHref";
-    local $ARG = shift;
-    my $regexp = shift;
 
+    my %arg    =  @ARG;
+    local $ARG = $arg{content};  	# REQUIRED
+    my $regexp = $arg{regexp} || '';
+    my $unique = $arg{unique} || 0;
+
+    $debug > 1 and print "$id: INPUT ARG [$ARG]\n";
     $debug  and  print   "$id: INPUT regexp [$regexp]\n";
-    $debug > 1 and print "$id: ARG [$ARG]\n";
+    $debug  and  print   "$id: INPUT unique [$unique]\n";
 
     #   Some HTML pages do not use double quotes
     #
@@ -4659,7 +4707,19 @@ sub UrlHttpParseHref ($ ; $)
         push @ret, $file;
     }
 
-    $debug  and  print "$id: EXIT. REGEXP = [$regexp] "
+    $debug  and  print "$id: EXIT-1 REGEXP = [$regexp] "
+		    , " RET =>\n"
+                    , join("\n", @ret), "\n";
+
+    if ( $unique )
+    {
+	my %hash;
+	@hash{@ret}++;
+
+	@ret = sort keys %hash;
+    }
+
+    $debug  and  print "$id: EXIT-2 REGEXP = [$regexp] "
 		    , " RET =>\n"
                     , join("\n", @ret), "\n";
 
@@ -4714,7 +4774,7 @@ sub UrlHttpDirParse ( $ ; $ )
     #   ?N=D ?M=A
     #   manual/
 
-    @files = UrlHttpParseHref $ARG, '' ;
+    @files = UrlHttpParseHref content => $ARG;
 
     @files;
 }
@@ -4787,7 +4847,7 @@ sub SourceforgeProjectId ($)
     $debug  and print "$id: INPUT name [$name]\n";
 
     my $url    = "http://sourceforge.net/projects/$name";
-    local $ARG = UrlHttGet $url;
+    local ($ARG) = UrlHttGet $url;
 
     # href="/project/showfiles.php?group_id=88346#downloads">Jump to downloads for FOO</a></li>
 
@@ -4831,9 +4891,9 @@ sub SourceforgeProjectName ($)
     # http://sourceforge.net/projects/emacs-jabber
     # http://prdownloads.sourceforge.net/emacs-jabber/emacs-jabber-0.6.1.tar.gz
 
-    if ( m,downloads\.(?:sourceforge|sf)\.net/([^/]+),
+    if ( m,(?:sourceforge|sf)\.net/project/([^/]+),
 	 or
-	 m,(?:sourceforge|sf)\.net/projects/([^/]+),
+	 m,downloads\.(?:sourceforge|sf)\.net/([^/]+),
        )
     {
 	$name = $1;
@@ -4920,7 +4980,7 @@ sub UrlManipulateSfOld ($)
     my $base = "http://sourceforge.net";
     my $durl = "$base/project/platformdownload.php?group_id=$gid";
 
-    local $ARG = UrlHttGet $durl;
+    local ($ARG) = UrlHttGet $durl;
 
     unless ( $ARG )
     {
@@ -4938,7 +4998,7 @@ sub UrlManipulateSfOld ($)
 	die "$id: [FATAL] Cannot parse SF page [$durl]";
     }
 
-    local $ARG = UrlHttGet $durl;
+    local ($ARG) = UrlHttGet $durl;
 
     unless ( $ARG )
     {
@@ -4968,6 +5028,8 @@ sub UrlManipulateSfOld ($)
 
     $durl =~ s/&amp;/&/g;
 
+    $debug  and  print "$id: RET [$durl]\n";
+
     $durl;
 }
 
@@ -4996,7 +5058,7 @@ sub UrlManipulateSf ($ ; $)
 
     $debug  and  print "$id: INPUT url [$url]\n";
 
-    local $ARG = UrlHttGet $url;
+    local ($ARG) = UrlHttGet $url;
     my $ret;
 
     if ( m,a \s+ href \s* = \"([^\"\']+) .* direct \s+ link \s* </a>,x )
@@ -5017,6 +5079,8 @@ sub UrlManipulateSf ($ ; $)
     {
 	die "$id: [FATAL] Cannot parse direct download from page $url";
     }
+
+    $debug  and  print "$id: RET $ret\n";
 
     return $ret;
 }
@@ -5042,11 +5106,11 @@ sub UrlManipulateMain ($ ; $ )
     my $id  = "$LIB.UrlManipulateMain";
     my ($url, $mirror ) = @ARG;
 
-    $debug  and  print "$id: INPUT $url\n";
+    $debug  and  print "$id: INPUT $url MIRROR $mirror\n";
 
     # http://downloads.sourceforge.net/project/clonezilla/clonezilla_live_testing/clonezilla-live-1.2.2-30.iso?use_mirror=sunet
 
-    if ( $url =~ m,downloads\.(?:sourceforge|sf)\.net/, )
+    if ( $url =~ m,prdownloads\.(?:sourceforge|sf)\.net/, )
     {
 	$url = UrlManipulateSfOld $url;
     }
@@ -5098,7 +5162,8 @@ sub UrlHttpFileCheck ( % )
 
     if ( $simpleZ )
     {
-        ($onDisk) = FileExists $saveFile, -forceUnpackCheck;
+        ($onDisk) = FileExists file   => $saveFile,
+			       unpack => -forceUnpackCheck;
 
         if ( $verb > 1 )
         {
@@ -5107,7 +5172,8 @@ sub UrlHttpFileCheck ( % )
     }
     else
     {
-        ($onDisk) = FileExists $saveFile, $unpack;
+        ($onDisk) = FileExists file   => $saveFile,
+			       unpack => $unpack;
     }
 
     $debug and  print "$id: file on disk? .. "
@@ -5181,7 +5247,8 @@ sub UrlHttpSearchPage ( % )
         my $content = $obj->content();
         my $head    = $obj->headers_as_string();
 
-        @list     = UrlHttpParseHref $content, $thisPageRegexp;
+        @list = UrlHttpParseHref content => $content,
+				 regexp  => $thisPageRegexp;
 
         if ( $regexpNo )
         {
@@ -5248,61 +5315,60 @@ sub UrlHttpSearchNewest ( % )
 
     my @list;
 
-    $debug  and print "$id: Getting list of files $getPage ...\n";
+    $debug  and print "$id: Getting list of files $getPage\n";
 
-    if ( $getPage =~ /\.(gz|bz2|lzma|zip|tar|jar|iso)/ )
+    if ( $getPage =~ /\.(gz|bz2|lzma|zip|tar|jar|iso)$/ )
     {
         die "[ERROR] The URL must not contain filename: $getPage";
     }
 
-    my $request = new HTTP::Request( 'GET' => $getPage );
-    my $obj     = $ua->request($request);
-    my $stat    = $obj->is_success;
+    my ($content, $head) = UrlHttGet $getPage || return;
 
-    unless ( $stat )
+    if ( $thisPage )
     {
-        print "  ** error: $baseUrl ",  $obj->message, "\n";
-    }
-    else
-    {
-        my $content = $obj->content();
-        my $head    = $obj->headers_as_string();
+	$getFile  = $file;
 
-        if ( $thisPage )
-        {
-            $getFile  = $file;
+	my %hash  = UrlHttPageParse $content, $versionRegexp;
+	my @keys  = keys %hash;
+	my @urls  = UrlHttpParseHref content => $content,
+	                             regexp  => $thisPageRegexp,
+				     unique  => 'unique'
+				     ;
 
-            my %hash  = UrlHttPageParse $content, $versionRegexp;
-            my @keys  = keys %hash;
-            my @urls  = UrlHttpParseHref $content, $thisPageRegexp;
-            my @files;
+	if ( @urls == 1 )	# only one match
+	{
+	    @list = @urls;
+	    goto EXIT;
+	}
 
-            #   The filename may contain the version information,
-            #   UNLESS this is page search condition.
+	my @files;
 
-            if ( $getFile !~ /\d/ )
-            {
-                #  Nope, this is "download.html" search with
-                #  possible "--Regexp SEARCH" option.
+	#   The filename may contain the version information,
+	#   UNLESS this is page search condition.
 
-                $getFile = $urls[0];
-                $file    = $getFile;
-            }
+	if ( $getFile !~ /\d/ )
+	{
+	    #  Nope, this is "download.html" search with
+	    #  possible "--Regexp SEARCH" option.
 
-            $debug  and print "$id: THISPAGE file [$file] "
-                        , "getFile [$getFile] "
-                        , "urls [@urls] "
-                        , "version urls [@keys]\n";
+	    $getFile = $urls[0];
+	    $file    = $getFile;
+	}
 
-            if ( @keys )
-            {
-                $debug  and  print "$id: <page> if-case\n";
+	$debug  and print "$id: THISPAGE file [$file] "
+		    , "getFile [$getFile] "
+		    , "urls [@urls] "
+		    , "version urls [@keys]\n";
 
-                @files = MakeLatestFiles $file, keys %hash ;
+	if ( @keys )
+	{
+	    $debug  and  print "$id: <page> if-case\n";
 
-                if ( @files == 1 )
-                {
-                    @list = ( RelativePath dirname($urls[0]), $files[0] );
+	    @files = MakeLatestFiles $file, keys %hash ;
+
+	    if ( @files == 1 )
+	    {
+		@list = ( RelativePath dirname($urls[0]), $files[0] );
 
 #                        for my $path ( @urls )
 #                        {
@@ -5310,49 +5376,52 @@ sub UrlHttpSearchNewest ( % )
 #                                ( dirname($path), $files[0] );
 #                        }
 #
-                }
-                else
-                {
-                    $debug  and  print "$id: Latest files > 1\n";
-                    @list = ( LatestVersion $file, [@urls, @files] ) ;
+	    }
+	    else
+	    {
+		$debug  and  print "$id: Latest files > 1\n";
+		@list = ( LatestVersion $file, [@urls, @files] ) ;
 
-                    # @list > 1  and  $file = '';
-                }
-            }
-            else
-            {
-                #   Try old fashioned. The filename may contain the
-                #   version information,
+		# @list > 1  and  $file = '';
+	    }
+	}
+	else
+	{
+	    #   Try old fashioned. The filename may contain the
+	    #   version information,
 
-                $debug  and
-		    print "$id: EXAMINE latest URL model[$file] list[@urls]\n";
+	    $debug  and
+		print "$id: EXAMINE latest URL model[$file] list[@urls]\n";
 
-                @list = ( LatestVersion $file, \@urls ) if @urls ;
-                # $file = '';
-            }
+	    @list = ( LatestVersion $file, \@urls ) if @urls ;
+	    # $file = '';
+	}
 
-            $debug  and  print "$id: FILES [@files] URLS [@urls]\n";
+	$debug  and  print "$id: FILES [@files] URLS [@urls]\n";
 
-            unless ( @urls == 1 )
-            {
+	unless ( @urls == 1 )
+	{
 
-		$verb > 2  and
-                warn "$id: Can't parse precise latest version location [@urls] ";
+	    $verb > 2  and
+	    warn "$id: Can't parse precise latest version location [@urls] ";
 
-                #  Select from these URLs in the FileListFilter
+	    #  Select from these URLs in the FileListFilter
 
-                @list = @urls;
-            }
-        }
-        else
-        {
-            $debug  and  print "$id: NOT <page> else\n";
-            @list   = UrlHttpDirParse $head . $content, "clean";
-            # $file   = '';
-        }
-
-        @list = FileListFilter $regexp, $regexpNo, $getFile, @list;
+	    @list = @urls;
+	}
     }
+    else
+    {
+	$debug  and  print "$id: NOT <page> else\n";
+	@list   = UrlHttpDirParse $head . $content, "clean";
+	# $file   = '';
+    }
+
+
+    EXIT:
+
+    @list = FileListFilter $regexp, $regexpNo, $getFile, @list;
+
 
     $debug  and  print "$id: RETURN [@list]";
 
@@ -5655,7 +5724,7 @@ sub UrlHttp ( % )
 
     if ( $debug )
     {
-        print "$id:\n"
+        print "$id: INPUT\n"
             , "\tURL       : $url\n"
             , "\tFILE      : $file\n"
             , "\trename    : $rename\n"
@@ -5710,9 +5779,13 @@ sub UrlHttp ( % )
     {
         my $getPage = $thisPage ? $url : $baseUrl ;
 
+	$debug  and print "$id: getPage 1 $getPage\n";
+
         if ( $file )
         {
             $getPage =~ s/\Q$file//;
+
+	    $debug  and print "$id: getPage 2 file [$file] $getPage\n";
         }
 
         @list       = UrlHttpSearchNewest
@@ -6298,7 +6371,8 @@ sub Main ($ $)
 
         # ............................................... components ...
 
-        my $url        = $1;
+        my $urlOrig    = $1;
+        my $url        = $urlOrig;  # may be changed
         my $type       = $2;
         my $path       = $3;
         my $site       = $4;
@@ -6335,8 +6409,8 @@ sub Main ($ $)
 
         if (
              $plainPage ne -find
-             or ( $url !~ m,/$, )
-             or ( $url !~ m,/[~][^/]+$, )
+             or $url !~ m,/$,
+             or $url !~ m,/[~][^/]+$,
            )
         {
             ($file = $url) =~ s,^\s*\S+/,,;
@@ -6376,9 +6450,19 @@ sub Main ($ $)
 
         $file = $prefix . $file . $postfix;
 
+	# Sourceforge special
+
+	if ( IsSourceforgeDownload $url )
+	{
+	    $url = $urlOrig;		# reset everything
+	    $file = "";
+	}
+
         # .................................................... do-it ...
 
-        $debug and warn "$id: <$type> <$site> <$path> <$url> <$file>\n";
+        $debug and
+	    print "$id: type <$type> site <$site>"
+	        . "path <$path> url <$url> file <$file>\n";
 
         $ARG   = $type;
         my ($stat, @files);
@@ -6898,7 +6982,7 @@ sub Test ()
 {
     my $str = join '', <>;
     $debug  = 1;
-    print UrlHttpParseHref $str, "tar.gz";
+    print UrlHttpParseHref content => $str, regexp => "tar.gz";
 }
 
 Boot();
