@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0922.1847';
+    $VERSION = '2009.0922.1927';
 
 # ****************************************************************************
 #
@@ -4485,6 +4485,8 @@ sub UrlHttGetPerl ( $ )
     $debug  and  print "$id: GET $url ...\n";
 
     my $request = new HTTP::Request( 'GET' => $url );
+    $request->user_agent( "Opera/9.70 (Linux i686)");
+
     my $obj     = $ua->request($request);
     my $stat    = $obj->is_success;
 
@@ -5234,27 +5236,26 @@ sub UrlHttpSearchPage ( % )
     my $id  = "$LIB.UrlHttpSearchPage";
     my %arg =  @ARG;
 
-    my $ua              = $arg{useragent}  || die "No UA object";;
-    my $url             = $arg{url};
+    my $url             = $arg{url}   || die "$id: missing arg URL";
     my $regexpNo        = $arg{regexpno};
     my $baseUrl         = $arg{baseurl};
     my $thisPageRegexp  = $arg{pageregexp};
 
+    if ( $debug )
+    {
+        print "$id: INPUT\n"
+            , "\turl       : $url\n"
+            , "\tregexpNo  : $regexpNo\n"
+            , "\tbaseUrl   : $baseUrl\n"
+            , "\tthisPageRegexp: $thisPageRegexp\n"
+	    ;
+    }
+
+    my ($content, $head) = UrlHttGet $url;
     my @list;
 
-    my $request = new HTTP::Request( 'GET' => $url );
-    my $obj     = $ua->request($request);
-    my $stat    = $obj->is_success;
-
-    unless ( $stat )
+    if ( $content )
     {
-        print "  ** error: $baseUrl ",  $obj->message, "\n";
-    }
-    else
-    {
-        my $content = $obj->content();
-        my $head    = $obj->headers_as_string();
-
         @list = UrlHttpParseHref content => $content,
 				 regexp  => $thisPageRegexp;
 
@@ -5271,6 +5272,7 @@ sub UrlHttpSearchPage ( % )
         # http://localhost/index.html#section1
 
         local $ARG;
+
         for ( @list )
         {
             if ( /#.*/ )
@@ -5283,8 +5285,7 @@ sub UrlHttpSearchPage ( % )
         $debug  and  print "$id: -find regexpNo [$regexpNo] @list\n";
     }
 
-
-    $debug  and  print "$id: ret [@list]\n";
+    $debug  and  print "$id: RET [@list]\n";
 
     @list;
 }
@@ -5733,8 +5734,8 @@ sub UrlHttp ( % )
     if ( $debug )
     {
         print "$id: INPUT\n"
-            , "\tURL       : $url\n"
-            , "\tFILE      : $file\n"
+            , "\turl       : $url\n"
+            , "\tfile      : $file\n"
             , "\trename    : $rename\n"
             , "\tconversion: $conversion\n"
             , "\tregexp    : $regexp\n"
@@ -5811,9 +5812,9 @@ sub UrlHttp ( % )
     }
     elsif ( $find )
     {
+
         @list = UrlHttpSearchPage
-                    useragent    => $ua
-                    , url        => $url
+                    url          => $url
                     , regexpno   => $regexpNo
                     , baseurl    => $baseUrl
                     , pageregexp => $thisPageRegexp

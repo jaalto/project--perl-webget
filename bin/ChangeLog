@@ -9,6 +9,8 @@
 	Add more archive extensions. Add Sourceforge support.
 	(HandleCommandLineArgs): Correct setting of $debug and $verb.
 	(UrlHttGetPerl): Chnage $ARG to my($content).
+	(UrlHttpSearchPage): Complete rewrite. Use UrlHttGet().
+	(UrlHttGetPerl): Se user_agent. Work around berlios.de.
 
 2009-09-21  Jari Aalto  <jari.aalto@cante.net>
 
