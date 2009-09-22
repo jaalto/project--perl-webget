@@ -7,6 +7,8 @@
 	unique.
 	(FileExists): Convert args to HASH syntax.
 	Add more archive extensions. Add Sourceforge support.
+	(HandleCommandLineArgs): Correct setting of $debug and $verb.
+	(UrlHttGetPerl): Chnage $ARG to my($content).
 
 2009-09-21  Jari Aalto  <jari.aalto@cante.net>
 

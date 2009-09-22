@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0922.1822';
+    $VERSION = '2009.0922.1847';
 
 # ****************************************************************************
 #
@@ -1342,11 +1342,15 @@ sub HandleCommandLineArgs ()
 
     );
 
-    $debug = 1          if defined $debug;
-    $debug = 0          if $debug < 0;
+    if ( defined $debug )
+    {
+	$debug = 1 unless $debug;
+    }
 
-    $verb = 1           if defined $verb;
-    $verb = 0           if $verb < 0;
+    if ( defined $verb )
+    {
+	$verb = 1 unless $verb;
+    }
 
     $verb = 5           if $debug;
 
@@ -4473,7 +4477,7 @@ sub UrlHttGetWget ( $ )
 
 sub UrlHttGetPerl ( $ )
 {
-    my $id  = "$LIB.UrlHttpGet";
+    my $id  = "$LIB.UrlHttpGetPerl";
     my $url = shift;
 
     my $ua = new LWP::UserAgent;
@@ -4490,12 +4494,14 @@ sub UrlHttGetPerl ( $ )
 	return;
     }
 
-    $ARG      = $obj->content();
-    my $head  = $obj->headers_as_string();
+    my $content = $obj->content();
+    my $head    = $obj->headers_as_string();
 
-    $debug  and  print "$id: RET SUCCESS\n";
+    $debug > 4  and  print "$id: RET head [$head]\n";
+    $debug > 4  and  print "$id: RET ARG [$content]\n";
+    $debug  and  print "$id: RET success [$stat]\n";
 
-    $ARG, $head;
+    $content, $head;
 }
 
 # ****************************************************************************
@@ -4510,17 +4516,17 @@ sub UrlHttGetPerl ( $ )
 #
 #   RETURN VALUES
 #
-#       $       Content in string if success
-#       $       Header (not always)
+#       $       Content as string if success
+#       $       [optional] Header (not always available)
 #
 # ****************************************************************************
 
 sub UrlHttGet ( $ )
 {
     my $id  = "$LIB.UrlHttpGet";
-    local $ARG = shift;
+    my $url = shift;
 
-    $debug  and  print "$id: INPUT: $ARG\n";
+    $debug  and  print "$id: INPUT: $url\n";
 
     #  Sourceforge is tricky, it automatically ries to start
     #  download and pure Perl method won't work. We need to get
@@ -4531,11 +4537,11 @@ sub UrlHttGet ( $ )
 
     if ( m,(?:sourceforge|sf)\.net.*/download, )
     {
-	UrlHttGetWget $ARG
+	UrlHttGetWget $url;
     }
     else
     {
-	UrlHttGetPerl $ARG;
+	UrlHttGetPerl $url;
     }
 }
 
@@ -5145,6 +5151,8 @@ sub UrlManipulateMain ($ ; $ )
 #   RETURN VALUES
 #
 #       True    if it's ok to download file.
+#		-skipversion
+#		-noovrt
 #
 # ****************************************************************************
 
@@ -5190,17 +5198,17 @@ sub UrlHttpFileCheck ( % )
         {
             $verb  and  print "$id: [already on disk]"
                         , " $ARG => $onDisk\n";
-            $ret = -skipversion
+            $ret = -skipversion;
         }
         elsif ( not $overwrite )
         {
             $verb   and print "$id: [no overwrite/already on disk]"
                         , " $ARG => $onDisk\n";
-            $ret = -noovrt
+            $ret = -noovrt;
         }
     }
 
-    $debug  and  print "$id: RET $ret\n";
+    $debug  and  print "$id: RET [$ret]\n";
 
     $ret;
 }
@@ -5322,7 +5330,7 @@ sub UrlHttpSearchNewest ( % )
         die "[ERROR] The URL must not contain filename: $getPage";
     }
 
-    my ($content, $head) = UrlHttGet $getPage || return;
+    my ($content, $head) = UrlHttGet $getPage or return;
 
     if ( $thisPage )
     {
