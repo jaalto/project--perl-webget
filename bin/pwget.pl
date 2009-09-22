@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0921.1641';
+    $VERSION = '2009.0922.0829';
 
 # ****************************************************************************
 #
@@ -4370,7 +4370,7 @@ sub UrlFtp ( % )
             }
             else
             {
-                PUSH ($saveFile);
+                PUSH($saveFile);
             }
 
 	    sleep $SLEEP_SECONDS  if  $SLEEP_SECONDS;
@@ -5498,6 +5498,7 @@ EOF
             $relative  = RelativePath BaseUrl($baseUrl), $ARG;
 
             #   The whole URL is now known, strip PATH from savefile.
+
             $saveFile  = basename  $saveFile;
         }
 
@@ -5546,7 +5547,7 @@ EOF
 
         if ( $stat )
         {
-            PUSH ($saveFile);
+            PUSH($saveFile);
 
             my $contentStatus = FileContentAnalyze $saveFile, $contentRegexp;
             my $err;
@@ -5673,7 +5674,8 @@ sub UrlHttp ( % )
             , "\toverwrite : $overwrite\n"
     }
 
-    $verb  and  print "$id: $url --> $file\n";
+# FIXME: remove, this is not the final save name
+#    $verb  and  print "$id: $url --> $file\n";
 
     my $ua = new LWP::UserAgent;
 
