@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0922.1927';
+    $VERSION = '2009.0923.1001';
 
 # ****************************************************************************
 #
@@ -686,19 +686,17 @@ Ftp login name. Default value is "anonymous".
 =item B<mirror:SITE>
 
 This is relevant to Sourceforge only which does not allow direct
-downloads with links like
-<http://prdownloads.sourceforge.net/foo/foo-1.0.0.tar.gz>. Visit the
-page and selct the announced mirror that can be seen from the URL
-which includes string "use_mirror=site"
+downloads with links. Visit project's Sourceforge homepage and see
+which mirrors are available for downloading.
 
 An example:
 
-  http://downloads.sourceforge.net/foo/foo-1.0.0.tar.gz new: mirror:kent
+  http://sourceforge.net/projects/austrumi/files/austrumi/austrumi-1.8.5/austrumi-1.8.5.iso/download new: mirror:kent
 
 =item B<new:>
 
 Get newest file. This variable is reset to the value of B<--new> after the
-line has been processed. Newest means, that an ls() command is run in the
+line has been processed. Newest means, that an C<ls> command is run in the
 ftp, and something equivalent in HTTP "ftp directories", and any files that
 resemble the filename is examined, sorted and heurestically determined
 according to version number of file which one is the latest. For example
@@ -708,7 +706,7 @@ be retrieved right.
 Time stamps of the files are not checked.
 
 The only requirement is that filename C<must> follow the universal version
-numbering standard for released kits:
+numbering standard:
 
     FILE-VERSION.extension      # de facto VERSION is defined as [\d.]+
 
@@ -717,11 +715,23 @@ numbering standard for released kits:
     file-1.2.3.5.tar.gz         # ok
 
     file1234.txt                # not recognized. Must have "-"
-    file-0.23d.tar.gz           # warning ! No letters allowed 0.23d
+    file-0.23d.tar.gz           # warning, letters are problematic
 
-Files that have some alphabetic version indicator at the end of VERSION
-are not handled correctly. Bitch the developer and persuade him to stick
-to the de facto standard so that files can be retrieved intelligently.
+Files that have some alphabetic version indicator at the end of
+VERSION may not be handled correctly. Contact the developer and inform
+him about the de facto standard so that files can be retrieved
+more intelligently.
+
+I<NOTE:> In order the B<new:> directive to know what kind of files to look for, it needs a file tamplate. You can use a direct link to some filename. Here the
+location "http://www.example.com/downloads" is examined and the filename template used is took as "file-1.1.tar.gz" to search for files that might be newer, like "file-9.1.10.tar.gz":
+
+  http://www.example.com/downloads/file-1.1.tar.gz new:
+
+If the filename appeard in a named page, use directive B<file:> for
+template. In this case the "download.html" page is examined for files
+looking like "file.*tar.gz" and the latest is searched:
+
+  http://www.example.com/project/download.html file:file-1.1.tar.gz new:
 
 =item B<overwrite:> B<o:>
 
@@ -729,61 +739,72 @@ Same as turning on B<--overwrite>
 
 =item B<page:>
 
-Download the HTTP page or apply command to it. A simple example, the
-contact page name "index.html", "welcome.html" etc. is not known:
+Read web page and apply commands to it. An example: contact the root page
+and save it:
 
    http://example.com/~foo page: save:foo-homepage.html
 
-C<More about> B<page:> C<directive and downloading difficult packages>
+In order to find the correct information from the page, other
+directives are usually supplied to guide the searching.
 
-B<REMEMBER: All the regular epxression used in the configuration file have
-a limitation of keeping together. This means that there must be no space
-characters in the regular expressions, because it will terminate reading
-the item.> Like if you write
+1) Adding directive C<pregexp:ARCHIVE-REGEXP> matches the A HREF links
+in the page.
 
-    pregexp:(this regexp )
+2) Adding directive B<new:> instructs to find newer VERSIONS of the file.
 
-It must be written:
+3) Adding directive C<file:DOWNLOAD-FILE> tells what template to use
+to construct the downloadable file name. This is needed for the
+C<new:> directive.
 
-    pregexp:(this\s+regexp\s)
+4) A directive C<vregexp:VERSION-REGEXP> matches the exact location in
+the page from where the version information is extracted. The default
+regexp looks for line that says "The latest version ... is ... N.N".
+The regexp must return submatch 2 for the version number.
 
-Read the HTTP url page "as is" and parse page content. You need this
-directive if the archive is not stored in HTTP server directory (similar
-to ftp dir), but the maintainer has set up a separate HTML page where the
-details how to get archive is explained.
+AN EXAMPLE
 
-In order to find the information from the page, you must also supply
-some other directives to guide searching and constructing
-the correct file name:
+Search for newer files. Examine page
+http://www.example.com/download/dir for model C<package-1.1.tar.gz>
+and find a newer file. E.g. C<package-4.7.tar.gz> would be downloaded.
 
-1) A page regexp directive C<pregexp:ARCHIVE-REGEXP> matches the A HREF
-filename location in the page.
+    http://www.example.com/download/dir/package-1.1.tar.gz new:
 
-2) Directive C<file:DOWNLOAD-FILE> tells what is the template to use to
-construct the downloadable file (for the C<new:> directive).
+AN EXAMPLE
 
-3) Directive C<vregexp:VERSION-REGEXP> matches the exact location
-in the page from where the version information is extracted. The default
-regexp looks for line that says "The latest version ...is.. 1.4.2". The
-regexp must return submatch 2 for the version number.
+Use directive B<rename:> to chnage the filename before soring it on
+disk. Here, the version number is attached to the actila filename:
 
-To put all together, an example shows more this in action. The following
-example should all be PUT ON ONE LINE, while it has been splitted to
-separate lines for legibility. The presented configuration line is
-explaind in next paragraphs.
+    file.txt-1.1
+    file.txt-1.2
+
+The directived needed would be as follows; entries have been broken to
+separate lines for legibility:
+
+    http://example.com/files/
+    pregexp:\.el-\d
+    vregexp:(file.el-([\d.]+))
+    file:file.el-1.1
+    new:
+    rename:s/-[\d.]+//
+
+This effectively reads: "See if there is new version of something that
+looks like file.el-1.1 and save it under name file.el by deleting the
+extra version number at the end of original filename".
+
+AN EXAMPLE
 
 Contact absolute B<page:> at http://www.example.com/package.html and
 search A HREF urls in the page that match B<pregexp:>. In addition, do
 another scan and search the version number in the page from thw
 position that match B<vregexp:> (submatch 2).
 
+After all the pieces have been found, use template B<file:> to make
+the retrievable file using the version number found from B<vregexp:>.
+The actual download location is combination of B<page:> and A HREF
+B<pregexp:> location.
 
-After all the pieces have been found, use template B<file:> to
-make the retrievable file using the version number found from
-B<vregexp:>. The actual download location is combination of
-B<page:> and A HREF B<pregexp:> location. Here is the whole "one line"
-definition in the configuration file:
-
+The directived needed would be as follows; entries have been broken to
+separate lines for legibility:
 
     http://www.example.com/~foo/package.html
     page:
@@ -793,8 +814,7 @@ definition in the configuration file:
     new:
     x:
 
-Still not clear? Look at this complete HTML page where the above directives
-apply:
+An example of web page where the above would apply:
 
     <HTML>
     <BODY>
@@ -808,64 +828,53 @@ apply:
     </BODY>
     </HTML>
 
-For this example it is assumed that package.tar.gz is actually a symbolic
-link to the latest standard release file package-2.4.1.tar.gz. From this
-page the actual download location would have been
-http://www.example.com/~foo/download/files/package-2.4.1.tar.gz So why not
-simply download package.tar.gz? Because then the program can't decide if
-the version at the page is newer than one stored on disk from the previous
-download. With version numbers in the file names, it can.
+For this example, assume that C<package.tar.gz> is a symbolic link
+pointing to the latest release file C<package-2.4.1.tar.gz>. Thus the
+actual download location would have been
+C<http://www.example.com/~foo/download/files/package-2.4.1.tar.gz>.
 
-ANOTHER EXAMPLE
-
-It is possible to add B<rename:> directive to change the final name
-of the saved file to the above cases. Sometimes people put version number
-to "plain" files, that are not archives, like
-
-    file.el-1.1
-    file.el-1.2
-
-the .el files are Emacs editor packages files and it would be very
-inconvenient for Emacs users to refer to those with any other name than
-plain "file.el". To write a complete line to find such files from
-a page and save them in plain name, see below. Lines have been broken
-for legibility:
-
-    http://example.com/files/
-    page:
-    pregexp:\.el-\d
-    vregexp:(file.el-([\d.]+))
-    file:file.el-1.1
-    new:
-    rename:s/-[\d.]+//
-
-It effectively says "See if there is new version of something that
-looks like file.el-1.1 and save it under name file.el by deleting the extra
-version number at the end of original filename".
+Why not simply download C<package.tar.gz>? Because then the program
+can't decide if the version at the page is newer than one stored on
+disk from the previous download. With version numbers in the file
+names, the comparison is possible.
 
 =item B<page:find>
 
-THIS IS NOT FOR FTP directories. Use directive B<regexp:> for FTP.
+FIXME: This opton is obsolete. do not use.
 
-This is more general instruction than the B<page:> and B<vregexp:>
+THIS IS FOR HTTP only. Use Use directive B<regexp:> for FTP protocls.
+
+This is a more general instruction than the B<page:> and B<vregexp:>
 explained above.
 
 Instruct to download every URL on HTML page matching B<pregexp:RE>. In
-typical situation the page maintainer lists his software in the development
-page. This example would download every tar.gz file mentined in a page.
-Note, that the REGEXP is matched against the A HREF link content, not
-the actual text that you see on the page:
+typical situation the page maintainer lists his software in the
+development page. This example would download every tar.gz file in the
+page. Note, that the REGEXP is matched against the A HREF link
+content, not the actual text that is displayed on the page:
 
     http://www.example.com/index.html page:find pregexp:\.tar.gz$
 
 You can also use additional B<regexp-no:> directive if you want to exclude
 files after the B<pregexp:> has matched a link.
 
-    http://www.example.com/index.html page:find pregexp:\.tar.gz$ regexp-no:this-packet
+    http://www.example.com/index.html page:find pregexp:\.tar.gz$ regexp-no:desktop
 
 =item B<pass:PASSWORD>
 
 For FTP logins. Default value is C<nobody@example.com>.
+
+=item B<pregexp:RE>
+
+Search A HREF links in page matching a regular expression. The regular
+expression must be a single word with no whitespace. This is
+incorrect:
+
+    pregexp:(this regexp )
+
+It must be written as:
+
+    pregexp:(this\s+regexp\s)
 
 =item B<print:MESSAGE>
 
@@ -1783,6 +1792,37 @@ sub PrintHash ( $ % )
         my $val = $hash{ $key };
         printf "%-20s = %s\n", $key, $val;
     }
+}
+
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Remove duplicates.
+#
+#   INPUT PARAMETERS
+#
+#	@	    List of values.
+#
+#   RETURN VALUES
+#
+#	@	    List of values.
+#
+# ****************************************************************************
+
+sub ListUnique ( @ )
+{
+    my $id     = "$LIB.ListUnique";
+
+    $debug > 2 and print "$id: INPUT\n", join("\n", @ARG), "\n";
+
+    my %hash;
+    @hash{ @ARG }++;
+    my @ret = sort keys %hash;
+
+    $debug > 1 and print "$id: RET\n", join("\n", @ret), "\n";
+
+    @ret;
 }
 
 # ****************************************************************************
@@ -3372,6 +3412,11 @@ sub LatestVersion ( $ $ )
     my $id                = "$LIB.LatestVersion";
     my ( $file , $array ) = @ARG;
 
+    $debug > 1 and
+	print "$id: INPUT file [$file] ARRAY =>\n",
+	      join ("\n", @$array),
+	      "\n";
+
     ! $file  and  die "$id: <file:> argument missing";
 
     # ................................................ write regexps ...
@@ -3404,16 +3449,7 @@ sub LatestVersion ( $ $ )
 	    , "\n"
 	    ;
 
-    DUPLICATE_REMOVE:   # Make "local sandbox" for a while (scoping rules)
-    {
-        my %hash;
-        @hash{ @$array } = (1) x @$array;
-
-        @$array = keys %hash;
-
-        $debug   and   print "$id: after duplicate remove "
-                           , join("\n", @$array), "\n";
-    }
+    @$array = ListUnique @$array;
 
     # .......................................................... sub ...
 
@@ -3704,7 +3740,7 @@ sub LatestVersion ( $ $ )
     }
     elsif ( /^(?<prefix>\D+)[\d.]+/ )   # WinCvs136.zip
     {
-        $debug > 1 and  print "$id: plan D, non-standard version-N.NN\n";
+        $debug > 1 and  print "$id: plan D, non-standard version-N.N\n";
 
         my $pfx  = $+{prefix};
         my $ver  = '(?<version>[\d.]+)';
@@ -4023,24 +4059,31 @@ sub MakeLatestFiles ( $ @ )
 #
 #   INPUT PARAMETERS
 #
-#       $regexp     Select files according to regexp.
-#       $regexpNo   Files not to match after REGEXP
+#       regexp     Select files according to regexp.
+#       regexpno   Files not to include after REGEXP has matched.
 #
-#       $getFile    If newest file is wanted, here is sample.
-#                   If this variable is empty; then no newest file is searched.
+#       getfile    If newest file is wanted, here is sample.
+#                  If this variable is empty; then no newest file is searched.
 #
-#       @           candidate file list
+#	list	   @, candidate file list
 #
 #   RETURN VALUES
 #
-#       @           List of selected files
+#       @          List of selected files
 #
 # ****************************************************************************
 
-sub FileListFilter ( $ $ @)
+sub FileListFilter ( % )
 {
     my $id                          = "$LIB.FileListFilter";
-    my ( $regexp, $regexpNo, $getFile, @list ) = @ARG;
+    my %arg = @ARG;
+
+    my $regexp	    = $arg{regexp};
+    my $regexpNo    = $arg{regexpno};
+    my $getFile	    = $arg{getfile};
+    my $list	    = $arg{list};
+
+    my @list = @$list;
 
     $debug  and  print "$id: INPUT REGEXP [$regexp]"
         , " REGEXPNO [$regexpNo]"
@@ -4077,11 +4120,15 @@ sub FileListFilter ( $ $ @)
         @list = sort grep /$regexp/, @list;
     }
 
-    $debug  and  print "$id: after regexp [@list]\n";
+    $debug  and  print "$id: after regexp\n",
+	               join("\n", @list),
+                       "\n";
 
     if ( $getFile )
     {
         my $name = basename $getFile;
+	$debug  and  print "$id: getfile basename [$name]\n";
+
         my $file = LatestVersion $name, \@list;
 
         if ( $verb )
@@ -4094,7 +4141,9 @@ sub FileListFilter ( $ $ @)
 
     @list = Filter( $regexpNo, @list )  if $regexpNo  and @list;
 
-    $debug  and  print "$id: RET [@list]\n";
+    $debug  and  print "$id: RET\n",
+	               join("\n", @list),
+                       "\n";
 
     @list;
 }
@@ -4340,7 +4389,10 @@ sub UrlFtp ( % )
         $debug  and warn "$id: Running ftp dir ls()\n";
 
         @list = $ftp->ls();
-        @list = FileListFilter $regexp, $regexpNo, $getFile, @list;
+        @list = FileListFilter regexp => $regexp,
+			       regexpno => $regexpNo,
+			       getfile => $getFile,
+			       list => [@list];
 
         $debug  and  warn "$id: List length ", scalar @list, " --> @list\n";
 
@@ -4630,7 +4682,7 @@ sub UrlHttpParseHref ( % )
     my $regexp = $arg{regexp} || '';
     my $unique = $arg{unique} || 0;
 
-    $debug > 1 and print "$id: INPUT ARG [$ARG]\n";
+    $debug > 3 and print "$id: INPUT ARG [$ARG]\n";
     $debug  and  print   "$id: INPUT regexp [$regexp]\n";
     $debug  and  print   "$id: INPUT unique [$unique]\n";
 
@@ -4715,20 +4767,10 @@ sub UrlHttpParseHref ( % )
         push @ret, $file;
     }
 
-    $debug  and  print "$id: EXIT-1 REGEXP = [$regexp] "
-		    , " RET =>\n"
-                    , join("\n", @ret), "\n";
+    @ret = ListUnique @ret  if  $unique;
 
-    if ( $unique )
-    {
-	my %hash;
-	@hash{@ret}++;
-
-	@ret = sort keys %hash;
-    }
-
-    $debug  and  print "$id: EXIT-2 REGEXP = [$regexp] "
-		    , " RET =>\n"
+    $debug  and  print "$id: RET REGEXP = [$regexp] "
+		    , " LIST =>\n"
                     , join("\n", @ret), "\n";
 
     @ret;
@@ -5324,6 +5366,7 @@ sub UrlHttpSearchNewest ( % )
 
     my @list;
 
+    $debug > 1 and PrintHash "$id: INPUT", %arg;
     $debug  and print "$id: Getting list of files $getPage\n";
 
     if ( $getPage =~ /\.(gz|bz2|lzma|zip|tar|jar|iso)$/ )
@@ -5335,6 +5378,8 @@ sub UrlHttpSearchNewest ( % )
 
     if ( $thisPage )
     {
+	$debug  and print "$id: THISPAGE START $file\n";
+
 	$getFile  = $file;
 
 	my %hash  = UrlHttPageParse $content, $versionRegexp;
@@ -5362,6 +5407,8 @@ sub UrlHttpSearchNewest ( % )
 
 	    $getFile = $urls[0];
 	    $file    = $getFile;
+
+	    $debug  and  print "$id: thispage changed file [$file]";
 	}
 
 	$debug  and print "$id: THISPAGE file [$file] "
@@ -5371,7 +5418,7 @@ sub UrlHttpSearchNewest ( % )
 
 	if ( @keys )
 	{
-	    $debug  and  print "$id: <page> if-case\n";
+	    $debug  and  print "$id: THISPAGE if KEYS file [$file]\n";
 
 	    @files = MakeLatestFiles $file, keys %hash ;
 
@@ -5388,7 +5435,7 @@ sub UrlHttpSearchNewest ( % )
 	    }
 	    else
 	    {
-		$debug  and  print "$id: Latest files > 1\n";
+		$debug  and  print "$id: THISPAGE Latest files > 1\n";
 		@list = ( LatestVersion $file, [@urls, @files] ) ;
 
 		# @list > 1  and  $file = '';
@@ -5400,7 +5447,7 @@ sub UrlHttpSearchNewest ( % )
 	    #   version information,
 
 	    $debug  and
-		print "$id: EXAMINE latest URL model[$file] list[@urls]\n";
+		print "$id: EXAMINE latest URL model [$file] list [@urls]\n";
 
 	    @list = ( LatestVersion $file, \@urls ) if @urls ;
 	    # $file = '';
@@ -5414,25 +5461,22 @@ sub UrlHttpSearchNewest ( % )
 	    $verb > 2  and
 	    warn "$id: Can't parse precise latest version location [@urls] ";
 
-	    #  Select from these URLs in the FileListFilter
-
 	    @list = @urls;
 	}
     }
     else
     {
-	$debug  and  print "$id: NOT <page> else\n";
+	$debug  and  print "$id: NOT THISPAGE else statement\n";
 	@list   = UrlHttpDirParse $head . $content, "clean";
-	# $file   = '';
     }
 
-
     EXIT:
+    @list = FileListFilter  regexp => $regexp,
+			    regexpno => $regexpNo,
+			    getfile => $getFile,
+			    list => [@list];
 
-    @list = FileListFilter $regexp, $regexpNo, $getFile, @list;
-
-
-    $debug  and  print "$id: RETURN [@list]";
+    $debug  and  print "$id: RET", join("\n", @list), "\n";
 
     @list;
 }

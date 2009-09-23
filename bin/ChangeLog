@@ -1,3 +1,11 @@
+2009-09-23  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (Help::LIST OF DIRECTIVES::new): Improve documentation.
+	(Help::LIST OF DIRECTIVES::page): Improve documentation.
+	(Help::LIST OF DIRECTIVES::pregexp): New.
+	(ListUnique): New.
+	(FileListFilter): Change to hash notation.
+
 2009-09-22  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (UrlHttp): Comment out '-->' which announce
