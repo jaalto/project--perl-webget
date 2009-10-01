@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.0923.1001';
+    $VERSION = '2009.1001.1016';
 
 # ****************************************************************************
 #
@@ -763,11 +763,18 @@ The regexp must return submatch 2 for the version number.
 
 AN EXAMPLE
 
-Search for newer files. Examine page
+Search for newer files from a HTTP directory listing. Examine page
 http://www.example.com/download/dir for model C<package-1.1.tar.gz>
 and find a newer file. E.g. C<package-4.7.tar.gz> would be downloaded.
 
     http://www.example.com/download/dir/package-1.1.tar.gz new:
+
+AN EXAMPLE
+
+Search for newer files from the content of the page. The directive
+B<file:> acts as a model for filenames to pay attention to.
+
+    http://www.example.com/project/download.html new: pregexp:tar.gz file:package-1.1.tar.gz
 
 AN EXAMPLE
 
@@ -4532,12 +4539,14 @@ sub UrlHttGetPerl ( $ )
     my $id  = "$LIB.UrlHttpGetPerl";
     my $url = shift;
 
+    # http://www.useragentstring.com/pages/Firefox/
+    my $agent = "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090913 Firefox/3.5.3";
     my $ua = new LWP::UserAgent;
 
     $debug  and  print "$id: GET $url ...\n";
 
     my $request = new HTTP::Request( 'GET' => $url );
-    $request->user_agent( "Opera/9.70 (Linux i686)");
+    $request->user_agent($agent);
 
     my $obj     = $ua->request($request);
     my $stat    = $obj->is_success;
