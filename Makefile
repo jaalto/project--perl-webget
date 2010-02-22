@@ -131,7 +131,7 @@ install-bin:
 		$(INSTALL_BIN) $$f $(BINDIR)/$$dest; \
 	done
 
-install-doc: html txt
+install-doc:
 	# Rule install-doc - Install documentation
 	$(INSTALL_BIN) -d $(DOCDIR)
 	$(INSTALL_DATA) $(INSTALL_DOC_OBJS) $(DOCDIR)
