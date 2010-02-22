@@ -23,7 +23,7 @@ ifneq (,)
 This makefile requires GNU Make.
 endif
 
-PACKAGE		= perl-webget
+PACKAGE		= pwget
 DESTDIR		=
 prefix		= /usr/local
 exec_prefix	= $(prefix)
