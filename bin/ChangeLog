@@ -1,3 +1,9 @@
+2010-02-22 Mon  Jari Aalto  <jari.aalto@cante.net>
+
+	* pwget.pl (HandleCommandLineArgs): Change command
+	line options to follow GNU standards: -v, --version; not
+	-v|--version; all long options names are in lowercase.
+
 2009-10-01  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (UrlHttGetPerl): Set User-Agent to Firefox 3.5.3

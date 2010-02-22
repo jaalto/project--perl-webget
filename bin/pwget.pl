@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2009.1001.1016';
+    $VERSION = '2010.0222.1753';
 
 # ****************************************************************************
 #
@@ -180,7 +180,7 @@ pwget - Perl Web URL fetch program
 
 =over 4
 
-=item B<-C|--Create-paths>
+=item B<-C, --create-paths>
 
 Create paths that do not exist in C<lcd:> directives.
 
@@ -189,7 +189,7 @@ program. With this option, local directories are created as needed making
 it possible to re-create the exact structure as it is in configuration
 file.
 
-=item B<-c|--config FILE>
+=item B<-c, --config FILE>
 
 This option can be given multiple times. All configurations are read.
 
@@ -206,7 +206,7 @@ like doing:
     cd DIRECTORY
     pwget http://example.com/index.html
 
-=item B<--extract -e>
+=item B<-e, --extract>
 
 Unpack any files after retrieving them. The command to unpack typical
 archive files are defined in a program. Make sure these programs are
@@ -219,11 +219,11 @@ where these programs come standard. Refer to section SEE ALSO.
   .bz2 => bzip2
   .zip => unzip
 
-=item B<-F|--Firewall FIREWALL>
+=item B<-F, --firewall FIREWALL>
 
 Use FIREWALL when accessing files via ftp:// protocol.
 
-=item B<-m|--mirror SITE>
+=item B<-m, --mirror SITE>
 
 If URL points to Sourcefoge download area, use mirror SITE for downloading.
 Alternatively the full full URL can include the mirror information. And
@@ -231,7 +231,7 @@ example:
 
     --mirror kent http://downloads.sourceforge.net/foo/foo-1.0.0.tar.gz
 
-=item B<-n|--new>
+=item B<-n, --new>
 
 Get newest file. This applies to datafiles, which do not have extension
 .asp or .html. When new releases are announced, the version
@@ -265,39 +265,37 @@ combine B<--no-lcd> with B<--no-save>
 
 Ignore C<x:> directives in configuration file.
 
-=item B<-O|--Output DIR>
+=item B<-O, --output DIR>
 
 Before retrieving any files, chdir to DIR.
 
-=item B<-o|--overwrite>
+=item B<-o, --overwrite>
 
 Allow overwriting existing files when retrieving URLs.
 Combine this with B<--skip-version> if you periodically update files.
 
-=item B<--Proxy PROXY>
+=item B<--proxy PROXY>
 
 Use PROXY server for HTTP. (See B<--Firewall> for FTP.). The port number is
 optional in the call:
 
-    --Proxy example.com.proxy.com
-    --Proxy http://example.com.proxy.com
-    --Proxy example.com.proxy.com:8080
-    --Proxy example.com.proxy.com:8080/
+    --proxy http://example.com.proxy.com
+    --proxy example.com.proxy.com:8080
 
-=item B<-p|--prefix PREFIX>
+=item B<-p, --prefix PREFIX>
 
 Add PREFIX to all retrieved files.
 
-=item B<-P|--Postfix POSTFIX >
+=item B<-P, --postfix POSTFIX >
 
 Add POSTFIX to all retrieved files.
 
-=item B<-D|--prefix-date>
+=item B<-D, --prefix-date>
 
 Add iso8601 ":YYYY-MM-DD" prefix to all retrived files.
 This is added before possible B<--prefix-www> or B<--prefix>.
 
-=item B<-W|--prefix-www>
+=item B<-W, --prefix-www>
 
 Usually the files are stored with the same name as in the URL dir, but
 if you retrieve files that have identical names you can store each
@@ -306,12 +304,12 @@ page separately so that the file name is prefixed by the site name.
     http://example.com/page.html    --> example.com::page.html
     http://example2.com/page.html   --> example2.com::page.html
 
-=item B<-r|--regexp REGEXP>
+=item B<-r, --regexp REGEXP>
 
 Retrieve URLs matching REGEXP from configuration file. This cancels
 B<--Tag> options in the command line.
 
-=item B<-R|--Regexp REGEXP>
+=item B<-R, --regexp REGEXP>
 
 Retrieve file matching at the destination URL site. This is like "Connect
 to the URL and get all files matching REGEXP". Here all gzip compressed
@@ -319,7 +317,7 @@ files are found form HTTP server directory:
 
     pwget -v -R "\.gz" http://example.com/archive/
 
-=item B<-A|--Regexp-content REGEXP>
+=item B<-A, --regexp-content REGEXP>
 
 Analyze the content of the file and match REGEXP. Only if the regexp
 matches the file content, then download file. This option will make
@@ -361,7 +359,7 @@ This option does not make much sense without additional option B<--new>
 
 If you want to reload versioned file again, add option B<--overwrite>.
 
-=item B<-T|--Tag NAME [NAME] ...>
+=item B<-T, --tag NAME [NAME] ...>
 
 Search tag NAME from the config file and download only entries defined
 under that tag. Refer to B<--config FILE> option description. You can give
@@ -374,12 +372,12 @@ does not make sense and the concequencies are undefined.
 
 =over 4
 
-=item B<-d|--debug [LEVEL]>
+=item B<-d, --debug [LEVEL]>
 
 Turn on debug with positive LEVEL number. Zero means no debug.
 This option turns on B<--verbose> too.
 
-=item B<-h|--help>
+=item B<-h, --help>
 
 Print help page in text.
 
@@ -394,19 +392,19 @@ c<nroff -man> in order to read it.
 
 Print help page.
 
-=item B<-s|--selftest>
+=item B<-s, --selftest>
 
 Run some internal tests. For maintainer or developer only.
 
-=item B<-t|--test|--dry-run>
+=item B<-t, --test, --dry-run>
 
 Run in test mode.
 
-=item B<-v|--verbose [NUMBER]>
+=item B<-v, --verbose [NUMBER]>
 
 Print verbose messages.
 
-=item B<-V|--Version>
+=item B<-V, --version>
 
 Print version information.
 
@@ -1321,23 +1319,19 @@ sub HandleCommandLineArgs ()
 
     GetOptions      # Getopt::Long
     (
-          "Version"         => \$version
+          "V|version"         => \$version
 
-        , "A|Regexp-content=s"  => \$CONTENT_REGEXP
-        , "Create-paths"    => \$LCD_CREATE
+        , "A|regexp-content=s"  => \$CONTENT_REGEXP
+        , "C|create-paths"    => \$LCD_CREATE
         , "D|prefix-date"   => \$PREFIX_DATE
-        , "Firewall=s"      => \$FIREWALL
-        , "Output:s"        => \$OUT_DIR
-        , "Postfix:s"       => \$POSTFIX
-        , "Proxy=s"         => \$PROXY
-        , "R|Regexp=s"      => \$SITE_REGEXP
-        , "Tag=s"           => \@TAG_LIST
+        , "R|regexp=s"      => \$SITE_REGEXP
         , "W|prefix-www"    => \$PREFIX_WWW
         , "chdir=s"         => \$chdir
         , "c|config:s"      => \@CFG_FILE
         , "dry-run"         => \$test
         , "d|debug:i"       => \$debug
         , "extract"         => \$EXTRACT
+        , "firewall=s"      => \$FIREWALL
         , "help-html"       => \$helpHTML
         , "help-man"        => \$helpMan
         , "h|help"          => \$help
@@ -1346,13 +1340,17 @@ sub HandleCommandLineArgs ()
         , "no-lcd"          => \$NO_LCD
         , "no-save"         => \$NO_SAVE
         , "n|new"           => \$CHECK_NEWEST
+        , "output:s"        => \$OUT_DIR
         , "overwrite"       => \$OVERWRITE
+        , "postfix:s"       => \$POSTFIX
         , "prefix:s"        => \$PREFIX
-        , "regexp=s"        => \$URL_REGEXP
+        , "proxy=s"         => \$PROXY
+        , "regexp=s"      => \$URL_REGEXP
         , "selftest"        => \$selfTest
         , "skip-version"    => \$SKIP_VERSION
         , "sleep:i"         => \$SLEEP_SECONDS
         , "stdout"          => \$STDOUT
+        , "tag=s"           => \@TAG_LIST
         , "test"            => \$test
         , "verbose:i"       => \$verb
 
