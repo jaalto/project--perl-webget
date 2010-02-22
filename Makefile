@@ -114,7 +114,7 @@ html: doc/manual/$(PACKAGE).html
 txt: doc/manual/$(PACKAGE).txt
 
 # Rule: doc - Generate or update all documentation
-doc: man doc/conversion/index.html
+doc: man html txt
 
 perl-test:
 	# perl-test - Check syntax
