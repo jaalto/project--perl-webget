@@ -72,7 +72,7 @@ INSTALL_DATA	= $(INSTALL) -m 644
 INSTALL_SUID	= $(INSTALL) -m 4755
 
 DIST_DIR	= ../build-area
-DATE		= `date +"%Y%m%d"`
+DATE		= `date +"%Y%.m%d"`
 VERSION		= $(DATE)
 RELEASE		= $(PACKAGE)-$(VERSION)
 
@@ -94,7 +94,7 @@ help:
 # Rule: clean - remove temporary files
 clean:
 	# clean
-	-rm -f *[#~] *.\#*
+	-rm -f *[#~] *.\#* \
 	*.x~~ pod*.tmp
 
 distclean: clean
