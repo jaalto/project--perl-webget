@@ -1,20 +1,18 @@
-Pwget - A Perl derivation of wget
----------------------------------
+INSTALL: Pwget - A Perl derivation of wget
+------------------------------------------
 
 System wide install
 
         Run makefile with appropriate parameters. The program is
-        installed without any file extension.
+        installed without any file extension. An example:
 
-            make DESTDIR= prefix=/usr/local install
+            make [-n] DESTDIR= prefix=/usr/local install
 
 Manual install:
 
-        1. Copy bin/*.pl somewhere along $PATH or use
-
-             make DESTDIR=$HOME prefix=/usr install
-
-        2. Look into doc/examples/ and apply ideas how to write your
-           own configuration file (optional; not required)
+        1. Copy bin/*.pl somewhere along $PATH
+	2. Copy bin/*.1 somewhere along $MANPATH
+        3. Look into doc/examples/ and apply ideas how to write
+           configuration files (optional; not required)
 
 End of file
