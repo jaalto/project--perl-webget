@@ -72,7 +72,7 @@ INSTALL_DATA	= $(INSTALL) -m 644
 INSTALL_SUID	= $(INSTALL) -m 4755
 
 DIST_DIR	= ../build-area
-DATE		= `date +"%Y%.m%d"`
+DATE		= `date +"%Y.%m%d"`
 VERSION		= $(DATE)
 RELEASE		= $(PACKAGE)-$(VERSION)
 
@@ -175,7 +175,7 @@ install-test:
 	find tmp | sort
 
 # Rule: test - Run install test to tmp/ directory
-test: perl-test install-test
+test: perl-test
 
 .PHONY: clean distclean realclean
 .PHONY: install install-bin install-man
