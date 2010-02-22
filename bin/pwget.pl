@@ -35,7 +35,7 @@
 #       wget(1).
 
 use strict;
-use 5.004;
+# use 5.004;
 
 #       A U T O L O A D
 #
@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2010.0222.1753';
+    $VERSION = '2010.0222.2056';
 
 # ****************************************************************************
 #
