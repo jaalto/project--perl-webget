@@ -92,22 +92,26 @@ distclean: clean
 realclean: clean
 
 bin/$(PACKAGE).1: $(PL_SCRIPT)
-	$(PERL) $< --help-man > $<
+	$(PERL) $< --help-man > $@
 	@-rm -f *.x~~ pod*.tmp
 
 doc/manual/$(PACKAGE).html: $(PL_SCRIPT)
-	$(PERL) $< --help-html > $<
+	$(PERL) $< --help-html > $@
 	@-rm -f *.x~~ pod*.tmp
 
 doc/manual/$(PACKAGE).txt: $(PL_SCRIPT)
-	$(PERL) $< --help > $<
+	$(PERL) $< --help > $@
 	@-rm -f *.x~~ pod*.tmp
 
 doc/conversion/index.html: doc/conversion/index.txt
 	perl -S t2html.pl --Auto-detect --Out --print-url $<
 
-# Rule: man - Generate or update manual pages documentation
-man: bin/$(PACKAGE).1 doc/manual/$(PACKAGE).html  doc/manual/$(PACKAGE).txt
+# Rule: man - Generate or update manual page
+man: bin/$(PACKAGE).1
+
+html: doc/manual/$(PACKAGE).html
+
+txt: doc/manual/$(PACKAGE).txt
 
 # Rule: doc - Generate or update all documentation
 doc: man doc/conversion/index.html
@@ -127,14 +131,14 @@ install-bin:
 		$(INSTALL_BIN) $$f $(BINDIR)/$$dest; \
 	done
 
-install-doc:
+install-doc: html txt
 	# Rule install-doc - Install documentation
 	$(INSTALL_BIN) -d $(DOCDIR)
 	$(INSTALL_DATA) $(INSTALL_DOC_OBJS) $(DOCDIR)
 	$(TAR) -C doc $(TAR_OPT_NO) --create --file=- .  | \
 	$(TAR) -C $(DOCDIR) --extract --file=-
 
-install-man:
+install-man: man
 	# install-man - Install manual pages
 	$(INSTALL_BIN) -d $(MANDIR1)
 	$(INSTALL_DATA) $(INSTALL_OBJS_MAN) $(MANDIR1)
