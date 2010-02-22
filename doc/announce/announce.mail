@@ -19,13 +19,14 @@ Hi
 
 Where is the list used?
 
-    The list is actually a configuration file for a utilityktool
-    `pwget.pl' which can automatically retrieve and update new files.
+    The list is actually a configuration file for a utility `pwget.pl'
+    which can automatically retrieve and update files based on the
+    rules.
 
-    With the stored information utillity can download lisp packages
-    around the globe and build a site-lisp/net/users and
+    With the stored information the utillity can download lisp
+    packages around the globe and build a site-lisp/net/users and
     site-lisp/net/packages hierarchies on local disk.
 
-Who are on the list?
+Who or what projects are tracked?
 
-    See
+    See http://git.savannah.gnu.org/cgit/perl-webget.git/tree/doc/examples/emacs.conf
