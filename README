@@ -17,7 +17,7 @@ Important files
     INSTALL         Install instructions
     bin/ChangeLog   Project change records
 
-Project contacts
+Project details
 
     Homepage
       http://freshmeat.net/projects/perlwebget
@@ -28,8 +28,13 @@ Project contacts
     Source code repository
       See freshmeat page
 
+    Depends
+      Perl (any version), uses standard libraries.
+      t2html for generating documentation [2]
+
 References
 
     [1] http://www.gnu.org/software/wget
+    [2] http://freshmeat.net/projects/perl-text2html
 
 End of file
