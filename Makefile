@@ -82,6 +82,11 @@ INSTALL_BIN_S_OBJS	= $(PL_SCRIPT)
 all:
 	@echo "Nothing to compile. See INSTALL"
 
+# Rule: help - display Makefile rules
+help:
+	grep "^# Rule:" Makefile | sort
+
+# Rule: clean - remove temporary files
 clean:
 	# clean
 	-rm -f *[#~] *.\#*
@@ -116,11 +121,10 @@ txt: doc/manual/$(PACKAGE).txt
 # Rule: doc - Generate or update all documentation
 doc: man html txt
 
+# Rule: perl-test - Check program syntax
 perl-test:
 	# perl-test - Check syntax
 	perl -cw $(PL_SCRIPT)
-
-test: perl-test
 
 install-bin:
 	# install-bin - Install programs
@@ -143,6 +147,7 @@ install-man: man
 	$(INSTALL_BIN) -d $(MANDIR1)
 	$(INSTALL_DATA) $(INSTALL_OBJS_MAN) $(MANDIR1)
 
+# Rule: install - Standard install
 install: install-bin install-man install-doc
 
 # Rule install-test - for Maintainer only
@@ -151,6 +156,7 @@ install-test:
 	make DESTDIR=`pwd`/tmp prefix=/usr install
 	find tmp | sort
 
+# Rule: test - Run install test to tmp/ directory
 test: perl-test install-test
 
 .PHONY: clean distclean realclean
