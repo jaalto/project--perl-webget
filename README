@@ -1,10 +1,10 @@
 Pwget - A Perl derivation of wget
 ---------------------------------
 
-Pwget is similar to wget, but it can use categorized
-configuration files, analyze Web pages, and "search" for download
-links as you instruct. Instead of absolute links, it contains
-heuristics to track newer versions of files.
+Pwget is similar to wget[1] but it can use categorized configuration
+files, analyze Web pages, and "search" for download links as
+instructed. Instead of absolute links, it contains heuristics to track
+newer versions of files.
 
     bin/            The program and system manual page (*.1)
     doc/            Documentation
@@ -25,5 +25,9 @@ Project contacts
 
     Source code repository
       See freshmeat page
+
+References
+
+    [1] http://www.gnu.org/software/wget
 
 End of file
