@@ -6,24 +6,24 @@
 #
 #   License
 #
-#       This program is free software; you can redistribute it and/or modify
-#       it under the terms of the GNU General Public License as published by
-#       the Free Software Foundation; either version 2 of the License, or
-#       (at your option) any later version.
+#	This program is free software; you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation; either version 2 of the License, or
+#	(at your option) any later version.
 #
-#       This program is distributed in the hope that it will be useful,
-#       but WITHOUT ANY WARRANTY; without even the implied warranty of
-#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#       GNU General Public License for more details.
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#	GNU General Public License for more details.
 #
-#       You should have received a copy of the GNU General Public License
-#       along with this program. If not, see <http://www.gnu.org/licenses/>.
+#	You should have received a copy of the GNU General Public License
+#	along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ifneq (,)
 This makefile requires GNU Make.
 endif
 
-PACKAGE		= pwget
+PACKAGE		= perl-webget
 DESTDIR		=
 prefix		= /usr/local
 exec_prefix	= $(prefix)
@@ -71,8 +71,13 @@ INSTALL_BIN	= $(INSTALL) -m 755
 INSTALL_DATA	= $(INSTALL) -m 644
 INSTALL_SUID	= $(INSTALL) -m 4755
 
+DIST_DIR	= ../build-area
+DATE		= `date +"%Y%m%d"`
+VERSION		= $(DATE)
+RELEASE		= $(PACKAGE)-$(VERSION)
+
 BIN		= $(PACKAGE)
-PL_SCRIPT 	= bin/$(BIN).pl
+PL_SCRIPT	= bin/$(BIN).pl
 
 INSTALL_OBJS		= $(BIN)
 INSTALL_DOC_OBJS	= COPYING README
@@ -95,6 +100,19 @@ clean:
 distclean: clean
 
 realclean: clean
+
+dist-git:
+	rm -f $(DIST_DIR)/$(RELEASE)*
+
+	git archive --format=tar --prefix=$(RELEASE)/ master | \
+	gzip --best > $(DIST_DIR)/$(RELEASE).tar.gz
+
+	chmod 644 $(DIST_DIR)/$(RELEASE).tar.gz
+
+	tar -tvf $(DIST_DIR)/$(RELEASE).tar.gz | sort -k 5
+	ls -la $(DIST_DIR)/$(RELEASE).tar.gz
+
+dist: dist-git
 
 bin/$(PACKAGE).1: $(PL_SCRIPT)
 	$(PERL) $< --help-man > $@
@@ -139,7 +157,7 @@ install-doc:
 	# Rule install-doc - Install documentation
 	$(INSTALL_BIN) -d $(DOCDIR)
 	$(INSTALL_DATA) $(INSTALL_DOC_OBJS) $(DOCDIR)
-	$(TAR) -C doc $(TAR_OPT_NO) --create --file=- .  | \
+	$(TAR) -C doc $(TAR_OPT_NO) --create --file=- .	 | \
 	$(TAR) -C $(DOCDIR) --extract --file=-
 
 install-man: man
@@ -162,5 +180,6 @@ test: perl-test install-test
 .PHONY: clean distclean realclean
 .PHONY: install install-bin install-man
 .PHONY: all man doc test install-test perl-test
+.PHONY: dist dist-git
 
 # End of file
