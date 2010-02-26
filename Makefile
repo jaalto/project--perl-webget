@@ -25,7 +25,7 @@ endif
 
 PACKAGE		= pwget
 DESTDIR		=
-prefix		= /usr/local
+Dprefix		= /usr/local
 exec_prefix	= $(prefix)
 man_prefix	= $(prefix)/share
 mandir		= $(man_prefix)/man
@@ -33,7 +33,7 @@ bindir		= $(exec_prefix)/bin
 sharedir	= $(prefix)/share
 
 BINDIR		= $(DESTDIR)$(bindir)
-DOCDIR		= $(DESTDIR)$(sharedir)/doc
+DOCDIR		= $(DESTDIR)$(sharedir)/doc/$(PACKAGE)
 LOCALEDIR	= $(DESTDIR)$(sharedir)/locale
 SHAREDIR	= $(DESTDIR)$(sharedir)/$(PACKAGE)
 LIBDIR		= $(DESTDIR)$(prefix)/lib/$(PACKAGE)
