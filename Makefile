@@ -80,7 +80,8 @@ INSTALL_OBJS_DOC   = README COPYING
 INSTALL_OBJS_MAN   = bin/*.1
 
 all:
-	@echo "Nothing to compile. See INSTALL"
+	@echo "Nothing to compile."
+	@echo "Try 'make help' or 'make -n DESTDIR= prefix=/usr/local install'"
 
 # Rule: help - display Makefile rules
 help:
