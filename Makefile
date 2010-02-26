@@ -25,7 +25,7 @@ endif
 
 PACKAGE		= pwget
 DESTDIR		=
-prefix		= /usr/local
+prefix		= /usr
 exec_prefix	= $(prefix)
 man_prefix	= $(prefix)/share
 mandir		= $(man_prefix)/man
