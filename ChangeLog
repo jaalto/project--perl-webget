@@ -1,8 +1,11 @@
 2010-02-26 Fri  Jari Aalto  <jari.aalto@cante.net>
 
 	* Makefile (install-bin): Correct variable name.
+	(dist-ls, ls): new.
 
 	* bin/pwget.pl (Help): fix typo.
+
+	RELEASE: release/2010.0226 git/613dd34
 
 2010-02-22 Mon  Jari Aalto  <jari.aalto@cante.net>
 
