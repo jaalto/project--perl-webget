@@ -2,7 +2,8 @@
 
 	* Makefile (install-bin): Correct variable name.
 	(dist-ls, ls): new.
-	(test): run perl-test.
+	(test): run perl-test
+	(all): improve displayed text.
 
 	* bin/pwget.pl (Help): fix typo.
 
