@@ -107,7 +107,14 @@ dist-git:
 	tar -tvf $(DIST_DIR)/$(RELEASE).tar.gz | sort -k 5
 	ls -la $(DIST_DIR)/$(RELEASE).tar.gz
 
+# Rule: dist - [maintainer] release from Git repository
 dist: dist-git
+
+dist-ls:
+	@ls -1tr $(DIST_DIR)/$(PACKAGE)*
+
+# Rule: dist - [maintainer] list of release files
+ls: dist-ls
 
 bin/$(PACKAGE).1: $(PL_SCRIPT)
 	$(PERL) $< --help-man > $@
@@ -178,6 +185,6 @@ test: perl-test
 .PHONY: clean distclean realclean
 .PHONY: install install-bin install-man
 .PHONY: all man doc test install-test perl-test
-.PHONY: dist dist-git
+.PHONY: dist dist-git dist-ls ls
 
 # End of file
