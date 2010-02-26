@@ -84,7 +84,7 @@ use Net::FTP;
     #   The following variable is updated by developer's Emacs setup
     #   whenever this file is saved
 
-    $VERSION = '2010.0222.2056';
+    $VERSION = '2010.0226.1015';
 
 # ****************************************************************************
 #
@@ -644,7 +644,7 @@ near each directive.
 
 All the directives must in the same line where the URL is. The programs
 scans lines and determines all options given in line for the URL.
-Directives can be overriden by command line options.
+Directives can be overridden by command line options.
 
 =over 4
 

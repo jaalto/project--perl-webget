@@ -25,7 +25,7 @@ endif
 
 PACKAGE		= pwget
 DESTDIR		=
-prefix		= /usr
+prefix		= /usr/local
 exec_prefix	= $(prefix)
 man_prefix	= $(prefix)/share
 mandir		= $(man_prefix)/man
@@ -46,10 +46,6 @@ MANDIR1		= $(MANDIR)/man1
 MANDIR5		= $(MANDIR)/man5
 MANDIR6		= $(MANDIR)/man6
 MANDIR8		= $(MANDIR)/man8
-
-INSTALL_OBJS_BIN   = bin/$(PACKAGE)
-INSTALL_OBJS_DOC   = README COPYING doc/
-INSTALL_OBJS_MAN   = bin/*.1
 
 TAR		= tar
 TAR_OPT_NO	= --exclude='.build'	 \
@@ -79,10 +75,9 @@ RELEASE		= $(PACKAGE)-$(VERSION)
 BIN		= $(PACKAGE)
 PL_SCRIPT	= bin/$(BIN).pl
 
-INSTALL_OBJS		= $(BIN)
-INSTALL_DOC_OBJS	= COPYING README
-INSTALL_MAN1_OBJS	= bin/*.1
-INSTALL_BIN_S_OBJS	= $(PL_SCRIPT)
+INSTALL_OBJS_BIN   = $(PL_SCRIPT)
+INSTALL_OBJS_DOC   = README COPYING
+INSTALL_OBJS_MAN   = bin/*.1
 
 all:
 	@echo "Nothing to compile. See INSTALL"
@@ -144,26 +139,29 @@ perl-test:
 	# perl-test - Check syntax
 	perl -cw $(PL_SCRIPT)
 
-install-bin:
-	# install-bin - Install programs
-	$(INSTALL_BIN) -d $(BINDIR)
-	for f in $(INSTALL_OBJS_bin); \
-	do \
-		dest=$$(basename $$f | sed -e 's/.pl//' -e 's/.py//' ); \
-		$(INSTALL_BIN) $$f $(BINDIR)/$$dest; \
-	done
-
 install-doc:
 	# Rule install-doc - Install documentation
 	$(INSTALL_BIN) -d $(DOCDIR)
-	$(INSTALL_DATA) $(INSTALL_DOC_OBJS) $(DOCDIR)
-	$(TAR) -C doc $(TAR_OPT_NO) --create --file=- .	 | \
+
+	[ ! "$(INSTALL_OBJS_DOC)" ] || \
+		$(INSTALL_DATA) $(INSTALL_OBJS_DOC) $(DOCDIR)
+
+	$(TAR) -C doc $(TAR_OPT_NO) --create --file=- . | \
 	$(TAR) -C $(DOCDIR) --extract --file=-
 
 install-man: man
 	# install-man - Install manual pages
 	$(INSTALL_BIN) -d $(MANDIR1)
 	$(INSTALL_DATA) $(INSTALL_OBJS_MAN) $(MANDIR1)
+
+install-bin:
+	# install-bin - Install programs
+	$(INSTALL_BIN) -d $(BINDIR)
+	for f in $(INSTALL_OBJS_BIN); \
+	do \
+		dest=$$(basename $$f | sed -e 's/.pl//' -e 's/.py//' ); \
+		$(INSTALL_BIN) $$f $(BINDIR)/$$dest; \
+	done
 
 # Rule: install - Standard install
 install: install-bin install-man install-doc

@@ -1,3 +1,9 @@
+2010-02-26 Fri  Jari Aalto  <jari.aalto@cante.net>
+
+	* Makefile (install-bin): Correct variable name.
+
+	* bin/pwget.pl (Help): fix typo.
+
 2010-02-22 Mon  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (HandleCommandLineArgs): Change command

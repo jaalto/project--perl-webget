@@ -124,7 +124,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PWGET 1"
-.TH PWGET 1 "2010-02-22" "perl v5.10.1" "Perl pwget URL fetch utility"
+.TH PWGET 1 "2010-02-26" "perl v5.10.1" "Perl pwget URL fetch utility"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -144,16 +144,16 @@ pwget \- Perl Web URL fetch program
 .IX Header "OPTIONS"
 .SS "General options"
 .IX Subsection "General options"
-.IP "\fB\-C|\-\-Create\-paths\fR" 4
-.IX Item "-C|--Create-paths"
+.IP "\fB\-C, \-\-create\-paths\fR" 4
+.IX Item "-C, --create-paths"
 Create paths that do not exist in \f(CW\*(C`lcd:\*(C'\fR directives.
 .Sp
 By default, any \s-1LCD\s0 directive to non-existing directory will interrupt
 program. With this option, local directories are created as needed making
 it possible to re-create the exact structure as it is in configuration
 file.
-.IP "\fB\-c|\-\-config \s-1FILE\s0\fR" 4
-.IX Item "-c|--config FILE"
+.IP "\fB\-c, \-\-config \s-1FILE\s0\fR" 4
+.IX Item "-c, --config FILE"
 This option can be given multiple times. All configurations are read.
 .Sp
 Read URLs from configuration file. If no configuration file is given, file
@@ -169,8 +169,8 @@ like doing:
 \&    cd DIRECTORY
 \&    pwget http://example.com/index.html
 .Ve
-.IP "\fB\-\-extract \-e\fR" 4
-.IX Item "--extract -e"
+.IP "\fB\-e, \-\-extract\fR" 4
+.IX Item "-e, --extract"
 Unpack any files after retrieving them. The command to unpack typical
 archive files are defined in a program. Make sure these programs are
 along path. Win32 users are encouraged to install the Cygwin utilities
@@ -183,11 +183,11 @@ where these programs come standard. Refer to section \s-1SEE\s0 \s-1ALSO\s0.
 \&  .bz2 => bzip2
 \&  .zip => unzip
 .Ve
-.IP "\fB\-F|\-\-Firewall \s-1FIREWALL\s0\fR" 4
-.IX Item "-F|--Firewall FIREWALL"
+.IP "\fB\-F, \-\-firewall \s-1FIREWALL\s0\fR" 4
+.IX Item "-F, --firewall FIREWALL"
 Use \s-1FIREWALL\s0 when accessing files via ftp:// protocol.
-.IP "\fB\-m|\-\-mirror \s-1SITE\s0\fR" 4
-.IX Item "-m|--mirror SITE"
+.IP "\fB\-m, \-\-mirror \s-1SITE\s0\fR" 4
+.IX Item "-m, --mirror SITE"
 If \s-1URL\s0 points to Sourcefoge download area, use mirror \s-1SITE\s0 for downloading.
 Alternatively the full full \s-1URL\s0 can include the mirror information. And
 example:
@@ -195,8 +195,8 @@ example:
 .Vb 1
 \&    \-\-mirror kent http://downloads.sourceforge.net/foo/foo\-1.0.0.tar.gz
 .Ve
-.IP "\fB\-n|\-\-new\fR" 4
-.IX Item "-n|--new"
+.IP "\fB\-n, \-\-new\fR" 4
+.IX Item "-n, --new"
 Get newest file. This applies to datafiles, which do not have extension
 \&.asp or .html. When new releases are announced, the version
 number in filename usually tells which is the current one so getting
@@ -227,36 +227,34 @@ combine \fB\-\-no\-lcd\fR with \fB\-\-no\-save\fR
 .IP "\fB\-\-no\-extract\fR" 4
 .IX Item "--no-extract"
 Ignore \f(CW\*(C`x:\*(C'\fR directives in configuration file.
-.IP "\fB\-O|\-\-Output \s-1DIR\s0\fR" 4
-.IX Item "-O|--Output DIR"
+.IP "\fB\-O, \-\-output \s-1DIR\s0\fR" 4
+.IX Item "-O, --output DIR"
 Before retrieving any files, chdir to \s-1DIR\s0.
-.IP "\fB\-o|\-\-overwrite\fR" 4
-.IX Item "-o|--overwrite"
+.IP "\fB\-o, \-\-overwrite\fR" 4
+.IX Item "-o, --overwrite"
 Allow overwriting existing files when retrieving URLs.
 Combine this with \fB\-\-skip\-version\fR if you periodically update files.
-.IP "\fB\-\-Proxy \s-1PROXY\s0\fR" 4
-.IX Item "--Proxy PROXY"
+.IP "\fB\-\-proxy \s-1PROXY\s0\fR" 4
+.IX Item "--proxy PROXY"
 Use \s-1PROXY\s0 server for \s-1HTTP\s0. (See \fB\-\-Firewall\fR for \s-1FTP\s0.). The port number is
 optional in the call:
 .Sp
-.Vb 4
-\&    \-\-Proxy example.com.proxy.com
-\&    \-\-Proxy http://example.com.proxy.com
-\&    \-\-Proxy example.com.proxy.com:8080
-\&    \-\-Proxy example.com.proxy.com:8080/
+.Vb 2
+\&    \-\-proxy http://example.com.proxy.com
+\&    \-\-proxy example.com.proxy.com:8080
 .Ve
-.IP "\fB\-p|\-\-prefix \s-1PREFIX\s0\fR" 4
-.IX Item "-p|--prefix PREFIX"
+.IP "\fB\-p, \-\-prefix \s-1PREFIX\s0\fR" 4
+.IX Item "-p, --prefix PREFIX"
 Add \s-1PREFIX\s0 to all retrieved files.
-.IP "\fB\-P|\-\-Postfix \s-1POSTFIX\s0 \fR" 4
-.IX Item "-P|--Postfix POSTFIX "
+.IP "\fB\-P, \-\-postfix \s-1POSTFIX\s0 \fR" 4
+.IX Item "-P, --postfix POSTFIX "
 Add \s-1POSTFIX\s0 to all retrieved files.
-.IP "\fB\-D|\-\-prefix\-date\fR" 4
-.IX Item "-D|--prefix-date"
+.IP "\fB\-D, \-\-prefix\-date\fR" 4
+.IX Item "-D, --prefix-date"
 Add iso8601 \*(L":YYYY\-MM\-DD\*(R" prefix to all retrived files.
 This is added before possible \fB\-\-prefix\-www\fR or \fB\-\-prefix\fR.
-.IP "\fB\-W|\-\-prefix\-www\fR" 4
-.IX Item "-W|--prefix-www"
+.IP "\fB\-W, \-\-prefix\-www\fR" 4
+.IX Item "-W, --prefix-www"
 Usually the files are stored with the same name as in the \s-1URL\s0 dir, but
 if you retrieve files that have identical names you can store each
 page separately so that the file name is prefixed by the site name.
@@ -265,12 +263,12 @@ page separately so that the file name is prefixed by the site name.
 \&    http://example.com/page.html    \-\-> example.com::page.html
 \&    http://example2.com/page.html   \-\-> example2.com::page.html
 .Ve
-.IP "\fB\-r|\-\-regexp \s-1REGEXP\s0\fR" 4
-.IX Item "-r|--regexp REGEXP"
+.IP "\fB\-r, \-\-regexp \s-1REGEXP\s0\fR" 4
+.IX Item "-r, --regexp REGEXP"
 Retrieve URLs matching \s-1REGEXP\s0 from configuration file. This cancels
 \&\fB\-\-Tag\fR options in the command line.
-.IP "\fB\-R|\-\-Regexp \s-1REGEXP\s0\fR" 4
-.IX Item "-R|--Regexp REGEXP"
+.IP "\fB\-R, \-\-regexp \s-1REGEXP\s0\fR" 4
+.IX Item "-R, --regexp REGEXP"
 Retrieve file matching at the destination \s-1URL\s0 site. This is like \*(L"Connect
 to the \s-1URL\s0 and get all files matching \s-1REGEXP\s0\*(R". Here all gzip compressed
 files are found form \s-1HTTP\s0 server directory:
@@ -278,8 +276,8 @@ files are found form \s-1HTTP\s0 server directory:
 .Vb 1
 \&    pwget \-v \-R "\e.gz" http://example.com/archive/
 .Ve
-.IP "\fB\-A|\-\-Regexp\-content \s-1REGEXP\s0\fR" 4
-.IX Item "-A|--Regexp-content REGEXP"
+.IP "\fB\-A, \-\-regexp\-content \s-1REGEXP\s0\fR" 4
+.IX Item "-A, --regexp-content REGEXP"
 Analyze the content of the file and match \s-1REGEXP\s0. Only if the regexp
 matches the file content, then download file. This option will make
 downloads slow, because the file is read into memory as a single line
@@ -320,20 +318,20 @@ you may want to load those kits again, but skip versioned files. In short:
 This option does not make much sense without additional option \fB\-\-new\fR
 .Sp
 If you want to reload versioned file again, add option \fB\-\-overwrite\fR.
-.IP "\fB\-T|\-\-Tag \s-1NAME\s0 [\s-1NAME\s0] ...\fR" 4
-.IX Item "-T|--Tag NAME [NAME] ..."
+.IP "\fB\-T, \-\-tag \s-1NAME\s0 [\s-1NAME\s0] ...\fR" 4
+.IX Item "-T, --tag NAME [NAME] ..."
 Search tag \s-1NAME\s0 from the config file and download only entries defined
 under that tag. Refer to \fB\-\-config \s-1FILE\s0\fR option description. You can give
 Multiple \fB\-\-Tag\fR switches. Combining this option with \fB\-\-regexp\fR
 does not make sense and the concequencies are undefined.
 .SS "Miscellaneous options"
 .IX Subsection "Miscellaneous options"
-.IP "\fB\-d|\-\-debug [\s-1LEVEL\s0]\fR" 4
-.IX Item "-d|--debug [LEVEL]"
+.IP "\fB\-d, \-\-debug [\s-1LEVEL\s0]\fR" 4
+.IX Item "-d, --debug [LEVEL]"
 Turn on debug with positive \s-1LEVEL\s0 number. Zero means no debug.
 This option turns on \fB\-\-verbose\fR too.
-.IP "\fB\-h|\-\-help\fR" 4
-.IX Item "-h|--help"
+.IP "\fB\-h, \-\-help\fR" 4
+.IX Item "-h, --help"
 Print help page in text.
 .IP "\fB\-\-help\-html\fR" 4
 .IX Item "--help-html"
@@ -344,17 +342,17 @@ Print help page in Unix manual page format. You want to feed this output to
 c<nroff \-man> in order to read it.
 .Sp
 Print help page.
-.IP "\fB\-s|\-\-selftest\fR" 4
-.IX Item "-s|--selftest"
+.IP "\fB\-s, \-\-selftest\fR" 4
+.IX Item "-s, --selftest"
 Run some internal tests. For maintainer or developer only.
-.IP "\fB\-t|\-\-test|\-\-dry\-run\fR" 4
-.IX Item "-t|--test|--dry-run"
+.IP "\fB\-t, \-\-test, \-\-dry\-run\fR" 4
+.IX Item "-t, --test, --dry-run"
 Run in test mode.
-.IP "\fB\-v|\-\-verbose [\s-1NUMBER\s0]\fR" 4
-.IX Item "-v|--verbose [NUMBER]"
+.IP "\fB\-v, \-\-verbose [\s-1NUMBER\s0]\fR" 4
+.IX Item "-v, --verbose [NUMBER]"
 Print verbose messages.
-.IP "\fB\-V|\-\-Version\fR" 4
-.IX Item "-V|--Version"
+.IP "\fB\-V, \-\-version\fR" 4
+.IX Item "-V, --version"
 Print version information.
 .SH "README"
 .IX Header "README"
@@ -612,7 +610,7 @@ near each directive.
 .IX Header "LIST OF DIRECTIVES IN CONFIGURATION FILE"
 All the directives must in the same line where the \s-1URL\s0 is. The programs
 scans lines and determines all options given in line for the \s-1URL\s0.
-Directives can be overriden by command line options.
+Directives can be overridden by command line options.
 .IP "\fBcnv:CONVERSION\fR" 4
 .IX Item "cnv:CONVERSION"
 Currently only \fBconv:text\fR is available.
