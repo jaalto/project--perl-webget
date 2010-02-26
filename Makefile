@@ -146,6 +146,7 @@ perl-test:
 	# perl-test - Check syntax
 	perl -cw $(PL_SCRIPT)
 
+# Rule: test - Run tests
 test: perl-test
 
 install-doc:
