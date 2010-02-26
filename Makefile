@@ -146,6 +146,8 @@ perl-test:
 	# perl-test - Check syntax
 	perl -cw $(PL_SCRIPT)
 
+test: perl-test
+
 install-doc:
 	# Rule install-doc - Install documentation
 	$(INSTALL_BIN) -d $(DOCDIR)
@@ -173,14 +175,11 @@ install-bin:
 # Rule: install - Standard install
 install: install-bin install-man install-doc
 
-# Rule install-test - for Maintainer only
+# Rule: install-test - for Maintainer only
 install-test:
 	rm -rf tmp
 	make DESTDIR=`pwd`/tmp prefix=/usr install
 	find tmp | sort
-
-# Rule: test - Run install test to tmp/ directory
-test: perl-test
 
 .PHONY: clean distclean realclean
 .PHONY: install install-bin install-man
