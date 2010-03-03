@@ -1,46 +1,31 @@
 #!/usr/bin/perl
-# -*- mode: perl; -*-
 #
-#  pwget -- batch download files possibly with configuration file
+#   pwget -- batch download files possibly with configuration file
 #
-#  File id
+#   Copyright
 #
 #       Copyright (C) 1996-2010 Jari Aalto
 #
-#	This program is free software; you can redistribute it and/or
-#	modify it under the terms of the GNU General Public License as
-#	published by the Free Software Foundation; either version 2 of the
-#	License, or (at your option) any later version
+#   License
 #
-#	This program is distributed in the hope that it will be useful, but
-#	WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-#	General Public License for more details ar
-#	<http://www.gnu.org/copyleft/gpl.html>.
+#       This program is free software; you can redistribute it and/or modify
+#       it under the terms of the GNU General Public License as published by
+#       the Free Software Foundation; either version 2 of the License, or
+#       (at your option) any later version.
 #
-#   Introduction
+#       This program is distributed in the hope that it will be useful,
+#       but WITHOUT ANY WARRANTY; without even the implied warranty of
+#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#       GNU General Public License for more details.
 #
-#       Please start this perl script with options
+#       You should have received a copy of the GNU General Public License
+#       along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-#           --help      to get the help page
+#   Documentation
 #
-#   Description
-#
-#       If you retrieve latest versions of certain program blocks
-#       periodically, this is the Perl script for you. Run from cron job
-#       or once a week to upload newest versions of files around the net.
-#
-#       _Note:_ This is simple file by file copier and does not offer
-#       any date comparing or recursive features like found from C-program
-#       wget(1).
+#       To read manual, start this program with option: --help
 
 use strict;
-# use 5.004;
-
-#       A U T O L O A D
-#
-#       The => operator quotes only words, and File::Basename is not
-#       Perl "word"
 
 use autouse 'Carp'          => qw( croak carp cluck confess );
 use autouse 'Text::Tabs'    => qw( expand );
@@ -75,16 +60,14 @@ IMPORT:
 use LWP::UserAgent;
 use Net::FTP;
 
-    use vars qw ( $VERSION );
+use vars qw ( $VERSION );
 
-    #   This is for use of Makefile.PL and ExtUtils::MakeMaker
-    #   So that it puts the tardist number in format YYYY.MMDD
-    #   The REAL version number is defined later
+#   This is for use of Makefile.PL and ExtUtils::MakeMaker
+#
+#   The following variable is updated by Emacs setup whenever
+#   this file is saved.
 
-    #   The following variable is updated by developer's Emacs setup
-    #   whenever this file is saved
-
-    $VERSION = '2010.0226.1015';
+$VERSION = '2010.0301.0926';
 
 # ****************************************************************************
 #
@@ -108,6 +91,7 @@ sub Initialize ()
     (
         $PROGNAME
         $LIB
+	$LICENSE
         $CONTACT
         $URL
         $WIN32
@@ -117,7 +101,8 @@ sub Initialize ()
     $LIB        = basename $PROGRAM_NAME;
     $PROGNAME   = $LIB;
 
-    $CONTACT     = "";
+    $LICENSE	= "GPL-2+";
+    $CONTACT     = "Jari Aalto";
     $URL         = "http://freshmeat.net/projects/perl-webget";
 
     $WIN32    = 1   if  $OSNAME =~ /win32/i;
@@ -173,6 +158,62 @@ pwget - Perl Web URL fetch program
     pwget --verbose --overwrite http://example.com/
     pwget --verbose --overwrite --Output ~/dir/ http://example.com/
     pwget --new --overwrite http://example.com/kit-1.1.tar.gz
+
+=head1 DESCRIPTION
+
+Automate periodic downloads of files and packages.
+
+If you retrieve latest versions of certain program blocks
+periodically, this is the Perl script for you. Run from cron job or
+once a week to upload newest versions of files around the net. Note:
+
+=head2 Wget and this program
+
+At this point you may wonder, where would you need this perl program
+when wget(1) C-program has been the standard for ages. Well, 1) Perl
+is cross platform and more easily extendable 2) You can record file
+download criterias to a configuration file and use perl regular
+epxressions to select downloads 3) the program can anlyze web-pages
+and "search" for the download only links as instructed 4) last but not
+least, it can track newest packages whose name has changed since last
+downlaod. There are heuristics to determine the newest file or package
+according to file name skeleton defined in configuration.
+
+This program does not replace pwget(1) because it does not offer as
+many options as wget, like recursive downloads and date comparing. Use
+wget for ad hoc downloads and this utility for files that change (new
+releases of archives) or which you monitor periodically.
+
+=head2 Short introduction
+
+This small utility makes it possible to keep a list of URLs in a
+configuration file and periodically retrieve those pages or files with
+simple commands. This utility is best suited for small batch jobs to
+download e.g. most recent versions of software files. If you use an URL
+that is already on disk, be sure to supply option B<--overwrite> to allow
+overwriting existing files.
+
+While you can run this program from command line to retrieve individual
+files, program has been designed to use separate configuration file via
+B<--config> option. In the configuration file you can control the
+downloading with separate directives like C<save:> which tells to save the
+file under different name. The simplest way to retreive the latest version
+of a kit from FTP site is:
+
+    pwget --new --overwite --verbose \
+       http://www.example.com/kit-1.00.tar.gz
+
+Do not worry about the filename "kit-1.00.tar.gz". The latest version, say,
+kit-3.08.tar.gz will be retrieved. The option B<--new> instructs to find
+newer version than the provided URL.
+
+If the URL ends to slash, then directory list at the remote machine
+is stored to file:
+
+    !path!000root-file
+
+The content of this file can be either index.html or the directory listing
+depending on the used http or ftp protocol.
 
 =head1 OPTIONS
 
@@ -409,57 +450,6 @@ Print verbose messages.
 Print version information.
 
 =back
-
-=head1 README
-
-Automate periodic downloads of files and packages.
-
-=head2 Wget and this program
-
-At this point you may wonder, where would you need this perl program when
-wget(1) C-program has been the standard for ages. Well, 1) Perl is cross
-platform and more easily extendable 2) You can record file download
-criterias to configuration files and use perl regular epxressions to select
-downloads 3) the program can anlyze web-pages and "search" for the download
-only links as instructed 4) last but not least, it can track newest
-packages whose name has changed since last downlaod. There is heuristics to
-determine the newest file or package according to file name skeleton
-defined in configuration.
-
-This program does not replace pwget(1) because it does not offer as many
-options as wget, like recursive downloads. Use wget for ad hoc downloads
-and this utility for files that you monitor periodically.
-
-=head2 Short introduction
-
-This small utility makes it possible to keep a list of URLs in a
-configuration file and periodically retrieve those pages or files with
-simple commands. This utility is best suited for small batch jobs to
-download e.g. most recent versions of software files. If you use an URL
-that is already on disk, be sure to supply option B<--overwrite> to allow
-overwriting existing files.
-
-While you can run this program from command line to retrieve individual
-files, program has been designed to use separate configuration file via
-B<--config> option. In the configuration file you can control the
-downloading with separate directives like C<save:> which tells to save the
-file under different name. The simplest way to retreive the latest version
-of a kit from FTP site is:
-
-    pwget --new --overwite --verbose \
-       http://www.example.com/kit-1.00.tar.gz
-
-Do not worry about the filename "kit-1.00.tar.gz". The latest version, say,
-kit-3.08.tar.gz will be retrieved. The option B<--new> instructs to find
-newer version than the provided URL.
-
-If the URL ends to slash, then directory list at the remote machine
-is stored to file:
-
-    !path!000root-file
-
-The content of this file can be either index.html or the directory listing
-depending on the used http or ftp protocol.
 
 =head1 EXAMPLES
 
@@ -720,8 +710,11 @@ VERSION may not be handled correctly. Contact the developer and inform
 him about the de facto standard so that files can be retrieved
 more intelligently.
 
-I<NOTE:> In order the B<new:> directive to know what kind of files to look for, it needs a file tamplate. You can use a direct link to some filename. Here the
-location "http://www.example.com/downloads" is examined and the filename template used is took as "file-1.1.tar.gz" to search for files that might be newer, like "file-9.1.10.tar.gz":
+I<NOTE:> In order the B<new:> directive to know what kind of files to
+look for, it needs a file tamplate. You can use a direct link to some
+filename. Here the location "http://www.example.com/downloads" is
+examined and the filename template used is took as "file-1.1.tar.gz"
+to search for files that might be newer, like "file-9.1.10.tar.gz":
 
   http://www.example.com/downloads/file-1.1.tar.gz new:
 
@@ -1078,6 +1071,13 @@ Double check the configuration file's line.
 
 =back
 
+=head1 BUGS
+
+The program was initially designed to read options from one line. It
+is unfortunately not possible to change the program to read
+configuration file directives from multiple lines, e.g. by using
+backslashes (\) to indicate contuatinued line.
+
 =head1 ENVIRONMENT
 
 Variable C<PWGET_CFG> can point to the root configuration file. The
@@ -1088,21 +1088,11 @@ configuration file is read at startup if it exists.
 
 =head1 SEE ALSO
 
-C program wget(1) http://www.ccp14.ac.uk/mirror/wget.htm and
-from the the Libwww Perl library you find scripts
-lwp-download(1) lwp-mirror(1) lwp-request(1) lwp-rget(1)
-
-Win32 Cygwin unix utilities at http://www.cygwin.com/
-
-=head1 AVAILABILITY
-
-Latest version of this file is at Project homepage at
-http://freshmeat.net/projects/perl-webget
-
-=head1 SCRIPT CATEGORIES
-
-CPAN/Administrative
-CPAN/Web
+lwp-download(1)
+lwp-mirror(1)
+lwp-request(1)
+lwp-rget(1)
+wget(1)
 
 =head1 PREREQUISITES
 
@@ -1122,15 +1112,13 @@ is used. Otherwise these modules are not loaded.
 C<Crypt::SSLeay>
 This module is loaded only if HTTPS scheme is encountered.
 
-=head1 OSNAMES
-
-C<any>
-
 =head1 AUTHOR
 
-Copyright (C) 1996-2010 Jari Aalto. This program is free software; you
-can redistribute it and/or modify it under the same terms of Gnu
-General Public License v2 or any later version.
+Copyright (C) Jari Aalto
+
+This program is free software; you can redistribute and/or modify
+program under the terms of GNU General Public license either version 2
+of the License, or (at your option) any later version.
 
 =cut
 
@@ -1374,7 +1362,7 @@ sub HandleCommandLineArgs ()
     $debug and $verb == 0  and $verb = 1;
     $debug > 2             and $verb = 10;
 
-    $version    and die "$VERSION $PROGNAME $CONTACT $URL\n";
+    $version    and die "$VERSION $PROGNAME $CONTACT $LICENSE $URL\n";
     $helpHTML   and Help( undef, -html );
     $helpMan    and Help( undef, -man );
     $help       and Help();
