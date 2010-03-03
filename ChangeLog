@@ -1,3 +1,24 @@
+2010-03-03 Wed  Jari Aalto  <jari.aalto@cante.net>
+
+	* Makefile (install-bin): Fix variable use with '$$'.
+
+	* README: (Depends): update.
+
+2010-03-01 Mon  Jari Aalto  <jari.aalto@cante.net>
+
+	* Makefile (install-bin): Correct sed regexps.
+	(dist-snapshot): New.
+	(clean): remove tmp/ from install-test.
+
+	* README (README): Adjust depends section.
+
+	* bin/pwget.pl: (Initialize): Add LICENSE variable. Displayed
+	with option --version.
+	(top level): update Copyright template.
+	(help): Move section DESCRIPTION to the beginning, before OPTIONS,
+	according to POSIX manual page standard. Remove topics that have
+	no relevance (e.g. OSNAMES).
+
 2010-02-26 Fri  Jari Aalto  <jari.aalto@cante.net>
 
 	* Makefile (install-bin): Correct variable name.
