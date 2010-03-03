@@ -29,8 +29,16 @@ Project details
       See freshmeat page
 
     Depends
-      Perl (any version), uses standard libraries.
-      t2html for generating documentation [2]
+      Perl (any version).
+
+      External Perl CPAN libraries:
+
+	   LWP::UserAgent
+	   Net::FTP
+
+      wget(1) for Sourceforge downloads [1].
+
+      t2html for generating documentation [2] from scratch (optional).
 
 References
 
