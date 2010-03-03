@@ -25,7 +25,7 @@ endif
 
 PACKAGE		= pwget
 DESTDIR		=
-Dprefix		= /usr/local
+prefix		= /usr
 exec_prefix	= $(prefix)
 man_prefix	= $(prefix)/share
 mandir		= $(man_prefix)/man
@@ -93,6 +93,8 @@ clean:
 	-rm -f *[#~] *.\#* \
 	*.x~~ pod*.tmp
 
+	rm -rf tmp
+
 distclean: clean
 
 realclean: clean
@@ -107,6 +109,11 @@ dist-git:
 
 	tar -tvf $(DIST_DIR)/$(RELEASE).tar.gz | sort -k 5
 	ls -la $(DIST_DIR)/$(RELEASE).tar.gz
+
+# The "gt" is maintainer's program frontend to Git
+# Rule: dist-snapshot - [maintainer] release snapshot from Git repository
+dist-snapshot:
+	@echo gt tar -q -z -p $(PACKAGE) -c -D master
 
 # Rule: dist - [maintainer] release from Git repository
 dist: dist-git
@@ -146,6 +153,7 @@ doc: man html txt
 perl-test:
 	# perl-test - Check syntax
 	perl -cw $(PL_SCRIPT)
+	podchecker $(PL_SCRIPT)
 
 # Rule: test - Run tests
 test: perl-test
@@ -170,7 +178,7 @@ install-bin:
 	$(INSTALL_BIN) -d $(BINDIR)
 	for f in $(INSTALL_OBJS_BIN); \
 	do \
-		dest=$$(basename $$f | sed -e 's/.pl//' -e 's/.py//' ); \
+		dest=$$(basename $$f | sed -e 's/\.pl$$//' -e 's/\.py$$//' ); \
 		$(INSTALL_BIN) $$f $(BINDIR)/$$dest; \
 	done
 
