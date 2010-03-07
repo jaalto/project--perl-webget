@@ -125,15 +125,15 @@ dist-ls:
 ls: dist-ls
 
 bin/$(PACKAGE).1: $(PL_SCRIPT)
-	$(PERL) $< --help-man > $@
+	perl $(PERL) $< --help-man > $@
 	@-rm -f *.x~~ pod*.tmp
 
 doc/manual/$(PACKAGE).html: $(PL_SCRIPT)
-	$(PERL) $< --help-html > $@
+	perl $(PERL) $< --help-html > $@
 	@-rm -f *.x~~ pod*.tmp
 
 doc/manual/$(PACKAGE).txt: $(PL_SCRIPT)
-	$(PERL) $< --help > $@
+	perl $(PERL) $< --help > $@
 	@-rm -f *.x~~ pod*.tmp
 
 doc/conversion/index.html: doc/conversion/index.txt

@@ -4,6 +4,9 @@
 	Add Debian dependencies.
 
 	* Makefile (dist-snap): Was 'dist-snapshot'.
+	(doc/manual/$(PACKAGE).txt): Use perl parser.
+	(doc/manual/$(PACKAGE).html): Use perl parser.
+	(bin/$(PACKAGE).1): Use perl parser.
 
 	* bin/pwget.pl
 	(top level): Better distiction of Standard perl modules
