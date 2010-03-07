@@ -124,7 +124,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PWGET 1"
-.TH PWGET 1 "2010-02-26" "perl v5.10.1" "Perl pwget URL fetch utility"
+.TH PWGET 1 "2010-03-07" "perl v5.10.1" "Perl pwget URL fetch utility"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -140,10 +140,81 @@ pwget \- Perl Web URL fetch program
 \&    pwget \-\-verbose \-\-overwrite \-\-Output ~/dir/ http://example.com/
 \&    pwget \-\-new \-\-overwrite http://example.com/kit\-1.1.tar.gz
 .Ve
+.SH "DESCRIPTION"
+.IX Header "DESCRIPTION"
+Automate periodic downloads of files and packages.
+.PP
+If you retrieve latest versions of certain program blocks
+periodically, this is the Perl script for you. Run from cron job or
+once a week to upload newest versions of files around the net. Note:
+.SS "Wget and this program"
+.IX Subsection "Wget and this program"
+At this point you may wonder, where would you need this perl program
+when \fIwget\fR\|(1) C\-program has been the standard for ages. Well, 1) Perl
+is cross platform and more easily extendable 2) You can record file
+download criterias to a configuration file and use perl regular
+epxressions to select downloads 3) the program can anlyze web-pages
+and \*(L"search\*(R" for the download only links as instructed 4) last but not
+least, it can track newest packages whose name has changed since last
+downlaod. There are heuristics to determine the newest file or package
+according to file name skeleton defined in configuration.
+.PP
+This program does not replace \fIpwget\fR\|(1) because it does not offer as
+many options as wget, like recursive downloads and date comparing. Use
+wget for ad hoc downloads and this utility for files that change (new
+releases of archives) or which you monitor periodically.
+.SS "Short introduction"
+.IX Subsection "Short introduction"
+This small utility makes it possible to keep a list of URLs in a
+configuration file and periodically retrieve those pages or files with
+simple commands. This utility is best suited for small batch jobs to
+download e.g. most recent versions of software files. If you use an \s-1URL\s0
+that is already on disk, be sure to supply option \fB\-\-overwrite\fR to allow
+overwriting existing files.
+.PP
+While you can run this program from command line to retrieve individual
+files, program has been designed to use separate configuration file via
+\&\fB\-\-config\fR option. In the configuration file you can control the
+downloading with separate directives like \f(CW\*(C`save:\*(C'\fR which tells to save the
+file under different name. The simplest way to retreive the latest version
+of a kit from \s-1FTP\s0 site is:
+.PP
+.Vb 2
+\&    pwget \-\-new \-\-overwite \-\-verbose \e
+\&       http://www.example.com/kit\-1.00.tar.gz
+.Ve
+.PP
+Do not worry about the filename \*(L"kit\-1.00.tar.gz\*(R". The latest version, say,
+kit\-3.08.tar.gz will be retrieved. The option \fB\-\-new\fR instructs to find
+newer version than the provided \s-1URL\s0.
+.PP
+If the \s-1URL\s0 ends to slash, then directory list at the remote machine
+is stored to file:
+.PP
+.Vb 1
+\&    !path!000root\-file
+.Ve
+.PP
+The content of this file can be either index.html or the directory listing
+depending on the used http or ftp protocol.
 .SH "OPTIONS"
 .IX Header "OPTIONS"
 .SS "General options"
 .IX Subsection "General options"
+.IP "\fB\-A, \-\-regexp\-content \s-1REGEXP\s0\fR" 4
+.IX Item "-A, --regexp-content REGEXP"
+Analyze the content of the file and match \s-1REGEXP\s0. Only if the regexp
+matches the file content, then download file. This option will make
+downloads slow, because the file is read into memory as a single line
+and then a match is searched against the content.
+.Sp
+For example to download Emacs lisp file (.el) written by Mr. Foo in
+case insensitive manner:
+.Sp
+.Vb 2
+\&    pwget \-v \-R \*(Aq\e.el$\*(Aq \-A "(?i)Author: Mr. Foo" \e
+\&      http://www.emacswiki.org/elisp/index.html
+.Ve
 .IP "\fB\-C, \-\-create\-paths\fR" 4
 .IX Item "-C, --create-paths"
 Create paths that do not exist in \f(CW\*(C`lcd:\*(C'\fR directives.
@@ -265,10 +336,6 @@ page separately so that the file name is prefixed by the site name.
 .Ve
 .IP "\fB\-r, \-\-regexp \s-1REGEXP\s0\fR" 4
 .IX Item "-r, --regexp REGEXP"
-Retrieve URLs matching \s-1REGEXP\s0 from configuration file. This cancels
-\&\fB\-\-Tag\fR options in the command line.
-.IP "\fB\-R, \-\-regexp \s-1REGEXP\s0\fR" 4
-.IX Item "-R, --regexp REGEXP"
 Retrieve file matching at the destination \s-1URL\s0 site. This is like \*(L"Connect
 to the \s-1URL\s0 and get all files matching \s-1REGEXP\s0\*(R". Here all gzip compressed
 files are found form \s-1HTTP\s0 server directory:
@@ -276,20 +343,10 @@ files are found form \s-1HTTP\s0 server directory:
 .Vb 1
 \&    pwget \-v \-R "\e.gz" http://example.com/archive/
 .Ve
-.IP "\fB\-A, \-\-regexp\-content \s-1REGEXP\s0\fR" 4
-.IX Item "-A, --regexp-content REGEXP"
-Analyze the content of the file and match \s-1REGEXP\s0. Only if the regexp
-matches the file content, then download file. This option will make
-downloads slow, because the file is read into memory as a single line
-and then a match is searched against the content.
-.Sp
-For example to download Emacs lisp file (.el) written by Mr. Foo in
-case insensitive manner:
-.Sp
-.Vb 2
-\&    pwget \-v \-R \*(Aq\e.el$\*(Aq \-A "(?i)Author: Mr. Foo" \e
-\&      http://www.emacswiki.org/elisp/index.html
-.Ve
+.IP "\fB\-R, \-\-config\-regexp \s-1REGEXP\s0\fR" 4
+.IX Item "-R, --config-regexp REGEXP"
+Retrieve URLs matching \s-1REGEXP\s0 from configuration file. This cancels
+\&\fB\-\-Tag\fR options in the command line.
 .IP "\fB\-\-sleep \s-1SECONDS\s0\fR" 4
 .IX Item "--sleep SECONDS"
 Sleep \s-1SECONDS\s0 before next \s-1URL\s0 request. When using regexp based
@@ -354,58 +411,6 @@ Print verbose messages.
 .IP "\fB\-V, \-\-version\fR" 4
 .IX Item "-V, --version"
 Print version information.
-.SH "README"
-.IX Header "README"
-Automate periodic downloads of files and packages.
-.SS "Wget and this program"
-.IX Subsection "Wget and this program"
-At this point you may wonder, where would you need this perl program when
-\&\fIwget\fR\|(1) C\-program has been the standard for ages. Well, 1) Perl is cross
-platform and more easily extendable 2) You can record file download
-criterias to configuration files and use perl regular epxressions to select
-downloads 3) the program can anlyze web-pages and \*(L"search\*(R" for the download
-only links as instructed 4) last but not least, it can track newest
-packages whose name has changed since last downlaod. There is heuristics to
-determine the newest file or package according to file name skeleton
-defined in configuration.
-.PP
-This program does not replace \fIpwget\fR\|(1) because it does not offer as many
-options as wget, like recursive downloads. Use wget for ad hoc downloads
-and this utility for files that you monitor periodically.
-.SS "Short introduction"
-.IX Subsection "Short introduction"
-This small utility makes it possible to keep a list of URLs in a
-configuration file and periodically retrieve those pages or files with
-simple commands. This utility is best suited for small batch jobs to
-download e.g. most recent versions of software files. If you use an \s-1URL\s0
-that is already on disk, be sure to supply option \fB\-\-overwrite\fR to allow
-overwriting existing files.
-.PP
-While you can run this program from command line to retrieve individual
-files, program has been designed to use separate configuration file via
-\&\fB\-\-config\fR option. In the configuration file you can control the
-downloading with separate directives like \f(CW\*(C`save:\*(C'\fR which tells to save the
-file under different name. The simplest way to retreive the latest version
-of a kit from \s-1FTP\s0 site is:
-.PP
-.Vb 2
-\&    pwget \-\-new \-\-overwite \-\-verbose \e
-\&       http://www.example.com/kit\-1.00.tar.gz
-.Ve
-.PP
-Do not worry about the filename \*(L"kit\-1.00.tar.gz\*(R". The latest version, say,
-kit\-3.08.tar.gz will be retrieved. The option \fB\-\-new\fR instructs to find
-newer version than the provided \s-1URL\s0.
-.PP
-If the \s-1URL\s0 ends to slash, then directory list at the remote machine
-is stored to file:
-.PP
-.Vb 1
-\&    !path!000root\-file
-.Ve
-.PP
-The content of this file can be either index.html or the directory listing
-depending on the used http or ftp protocol.
 .SH "EXAMPLES"
 .IX Header "EXAMPLES"
 Get files from site:
@@ -414,10 +419,16 @@ Get files from site:
 \&    pwget http://www.example.com/dir/package.tar.gz ..
 .Ve
 .PP
+Display copyright file for package \s-1GNU\s0 make from Debian pages:
+.PP
+.Vb 1
+\&    pwget \-\-stdout \-\-regexp \*(Aqcopyright$\*(Aq http://packages.debian.org/unstable/make
+.Ve
+.PP
 Get all mailing list archive files that match \*(L"gz\*(R":
 .PP
 .Vb 1
-\&    pwget \-R gz  http://example.com/mailing\-list/archive/download/
+\&    pwget \-\-regexp gz  http://example.com/mailing\-list/archive/download/
 .Ve
 .PP
 Read a directory and store it to filename \s-1YYYY\-MM\-DD::\s0!dir!000root\-file.
@@ -686,8 +697,11 @@ Files that have some alphabetic version indicator at the end of
 him about the de facto standard so that files can be retrieved
 more intelligently.
 .Sp
-\&\fI\s-1NOTE:\s0\fR In order the \fBnew:\fR directive to know what kind of files to look for, it needs a file tamplate. You can use a direct link to some filename. Here the
-location \*(L"http://www.example.com/downloads\*(R" is examined and the filename template used is took as \*(L"file\-1.1.tar.gz\*(R" to search for files that might be newer, like \*(L"file\-9.1.10.tar.gz\*(R":
+\&\fI\s-1NOTE:\s0\fR In order the \fBnew:\fR directive to know what kind of files to
+look for, it needs a file tamplate. You can use a direct link to some
+filename. Here the location \*(L"http://www.example.com/downloads\*(R" is
+examined and the filename template used is took as \*(L"file\-1.1.tar.gz\*(R"
+to search for files that might be newer, like \*(L"file\-9.1.10.tar.gz\*(R":
 .Sp
 .Vb 1
 \&  http://www.example.com/downloads/file\-1.1.tar.gz new:
@@ -1072,6 +1086,22 @@ a regexp for a site is too lose or too tight.
 .IX Item "ERROR {URL-HERE} Bad file descriptor"
 This is \*(L"file not found error\*(R". You have written the filename incorrectly.
 Double check the configuration file's line.
+.SH "BUGS"
+.IX Header "BUGS"
+\&\f(CW\*(C`Sourceforge note\*(C'\fR: To download archive files from Sourceforge
+requires some trickery because of the redirections and load balancers
+the site uses. The Sourceforge page have also undergone many changes
+during their existence. Due to these changes there exists an ugly hack
+in the program to use \fIwget\fR\|(1) to get certain infomation from the site.
+This could have been implemented in pure Perl, but as of now the
+developer hasn't had time to remove the \fIwget\fR\|(1) dependency. No doubt,
+this is an ironic situation to use \fIwget\fR\|(1). You you have Perl skills,
+go ahead and look at \fIUrlHttGet()\fR. \fIUrlHttGetWget()\fR and sen patches.
+.PP
+The program was initially designed to read options from one line. It
+is unfortunately not possible to change the program to read
+configuration file directives from multiple lines, e.g. by using
+backslashes (\e) to indicate contuatinued line.
 .SH "ENVIRONMENT"
 .IX Header "ENVIRONMENT"
 Variable \f(CW\*(C`PWGET_CFG\*(C'\fR can point to the root configuration file. The
@@ -1083,19 +1113,11 @@ configuration file is read at startup if it exists.
 .Ve
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
-C program \fIwget\fR\|(1) http://www.ccp14.ac.uk/mirror/wget.htm and
-from the the Libwww Perl library you find scripts
-\&\fIlwp\-download\fR\|(1) \fIlwp\-mirror\fR\|(1) \fIlwp\-request\fR\|(1) \fIlwp\-rget\fR\|(1)
-.PP
-Win32 Cygwin unix utilities at http://www.cygwin.com/
-.SH "AVAILABILITY"
-.IX Header "AVAILABILITY"
-Latest version of this file is at Project homepage at
-http://freshmeat.net/projects/perl\-webget
-.SH "SCRIPT CATEGORIES"
-.IX Header "SCRIPT CATEGORIES"
-CPAN/Administrative
-CPAN/Web
+\&\fIlwp\-download\fR\|(1)
+\&\fIlwp\-mirror\fR\|(1)
+\&\fIlwp\-request\fR\|(1)
+\&\fIlwp\-rget\fR\|(1)
+\&\fIwget\fR\|(1)
 .SH "PREREQUISITES"
 .IX Header "PREREQUISITES"
 \&\f(CW\*(C`LWP::UserAgent\*(C'\fR
@@ -1112,11 +1134,10 @@ is used. Otherwise these modules are not loaded.
 .PP
 \&\f(CW\*(C`Crypt::SSLeay\*(C'\fR
 This module is loaded only if \s-1HTTPS\s0 scheme is encountered.
-.SH "OSNAMES"
-.IX Header "OSNAMES"
-\&\f(CW\*(C`any\*(C'\fR
 .SH "AUTHOR"
 .IX Header "AUTHOR"
-Copyright (C) 1996\-2010 Jari Aalto. This program is free software; you
-can redistribute it and/or modify it under the same terms of Gnu
-General Public License v2 or any later version.
+Copyright (C) Jari Aalto
+.PP
+This program is free software; you can redistribute and/or modify
+program under the terms of \s-1GNU\s0 General Public license either version 2
+of the License, or (at your option) any later version.
