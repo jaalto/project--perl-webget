@@ -1,12 +1,19 @@
 2010-03-07 Sun  Jari Aalto  <jari.aalto@cante.net>
 
+	* README: (Depends): Net::FTP is a standard Perl module in 5.10-
+	Add Debian dependencies.
+
 	* Makefile (dist-snap): Was 'dist-snapshot'.
 
-	* bin/pwget.pl (HandleCommandLineArgs): Better error message
+	* bin/pwget.pl
+	(top level): Better distiction of Standard perl modules
+	and CPAN. Move Net::FTP to standard Perl section (5.10).
+	(HandleCommandLineArgs): Better error message
 	if --regexp were used to match --config file.
 	(HandleCommandLineArgs): Chnage conflicting --regexp options
 	to --regexp (remote URL) and --config-regexp.
 	(Help::EXAMPLE): Add --stdout example.
+	(Help::BUGS): Document wget(1) dependency.
 
 2010-03-03 Wed  Jari Aalto  <jari.aalto@cante.net>
 

@@ -25,6 +25,12 @@
 #
 #       To read manual, start this program with option: --help
 
+# ****************************************************************************
+#
+#   Standard perl modules
+#
+# ****************************************************************************
+
 use strict;
 
 use autouse 'Carp'          => qw( croak carp cluck confess );
@@ -34,13 +40,12 @@ use autouse 'File::Path'    => qw( mkpath rmtree );
 use autouse 'Pod::Html'     => qw( pod2html );
 #use autouse 'Pod::Text'     => qw( pod2text );
 
-#   Standard perl modules
-
 use Cwd;
 use Env;
 use English;
 use File::Basename;
 use Getopt::Long;
+use Net::FTP;
 
 IMPORT:
 {
@@ -55,11 +60,6 @@ IMPORT:
     );
 }
 
-#   Modules from CPAN
-
-use LWP::UserAgent;
-use Net::FTP;
-
 use vars qw ( $VERSION );
 
 #   This is for use of Makefile.PL and ExtUtils::MakeMaker
@@ -67,7 +67,15 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2010.0307.1201';
+$VERSION = '2010.0307.1239';
+
+# ****************************************************************************
+#
+#   Modules from CPAN
+#
+# ****************************************************************************
+
+use LWP::UserAgent;
 
 # ****************************************************************************
 #
@@ -1076,6 +1084,16 @@ Double check the configuration file's line.
 =back
 
 =head1 BUGS
+
+C<Sourceforge note>: To download archive files from Sourceforge
+requires some trickery because of the redirections and load balancers
+the site uses. The Sourceforge page have also undergone many changes
+during their existence. Due to these changes there exists an ugly hack
+in the program to use wget(1) to get certain infomation from the site.
+This could have been implemented in pure Perl, but as of now the
+developer hasn't had time to remove the wget(1) dependency. No doubt,
+this is an ironic situation to use wget(1). You you have Perl skills,
+go ahead and look at UrlHttGet(). UrlHttGetWget() and sen patches.
 
 The program was initially designed to read options from one line. It
 is unfortunately not possible to change the program to read
@@ -4580,12 +4598,12 @@ sub UrlHttGet ( $ )
 
     $debug  and  print "$id: INPUT: $url\n";
 
-    #  Sourceforge is tricky, it automatically ries to start
-    #  download and pure Perl method won't work. We need to get
-    #  page content only, not start the file download.
+    #  Sourceforge is tricky, it automatically tries to start download
+    #  and pure Perl method doesn't do it. We need to get page content
+    #  only, not to start the file download.
     #
-    #  FIXME: if there is a way to do this with LWP::UserAgent.
-    #  please let me know.
+    #  FIXME: if there is a way to do this with LWP::UserAgent, please
+    #  let me know and this wget(1) dependency is gladly removed.
 
     if ( m,(?:sourceforge|sf)\.net.*/download, )
     {
