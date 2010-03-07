@@ -31,10 +31,13 @@ Project details
     Depends
       Perl (any version).
 
+      Standard Perl libraries:
+
+	   Net::FTP		[Debian package: perl-modules]
+
       External Perl CPAN libraries:
 
-	   LWP::UserAgent
-	   Net::FTP
+	   LWP::UserAgent	[Debian package: libwww-perl]
 
       wget(1) for Sourceforge downloads [1].
 
