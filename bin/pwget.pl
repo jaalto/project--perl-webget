@@ -67,7 +67,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2010.0301.0926';
+$VERSION = '2010.0307.1201';
 
 # ****************************************************************************
 #
@@ -221,6 +221,19 @@ depending on the used http or ftp protocol.
 
 =over 4
 
+=item B<-A, --regexp-content REGEXP>
+
+Analyze the content of the file and match REGEXP. Only if the regexp
+matches the file content, then download file. This option will make
+downloads slow, because the file is read into memory as a single line
+and then a match is searched against the content.
+
+For example to download Emacs lisp file (.el) written by Mr. Foo in
+case insensitive manner:
+
+    pwget -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
+      http://www.emacswiki.org/elisp/index.html
+
 =item B<-C, --create-paths>
 
 Create paths that do not exist in C<lcd:> directives.
@@ -347,29 +360,16 @@ page separately so that the file name is prefixed by the site name.
 
 =item B<-r, --regexp REGEXP>
 
-Retrieve URLs matching REGEXP from configuration file. This cancels
-B<--Tag> options in the command line.
-
-=item B<-R, --regexp REGEXP>
-
 Retrieve file matching at the destination URL site. This is like "Connect
 to the URL and get all files matching REGEXP". Here all gzip compressed
 files are found form HTTP server directory:
 
     pwget -v -R "\.gz" http://example.com/archive/
 
-=item B<-A, --regexp-content REGEXP>
+=item B<-R, --config-regexp REGEXP>
 
-Analyze the content of the file and match REGEXP. Only if the regexp
-matches the file content, then download file. This option will make
-downloads slow, because the file is read into memory as a single line
-and then a match is searched against the content.
-
-For example to download Emacs lisp file (.el) written by Mr. Foo in
-case insensitive manner:
-
-    pwget -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
-      http://www.emacswiki.org/elisp/index.html
+Retrieve URLs matching REGEXP from configuration file. This cancels
+B<--Tag> options in the command line.
 
 =item B<--sleep SECONDS>
 
@@ -457,9 +457,13 @@ Get files from site:
 
     pwget http://www.example.com/dir/package.tar.gz ..
 
+Display copyright file for package GNU make from Debian pages:
+
+    pwget --stdout --regexp 'copyright$' http://packages.debian.org/unstable/make
+
 Get all mailing list archive files that match "gz":
 
-    pwget -R gz  http://example.com/mailing-list/archive/download/
+    pwget --regexp gz  http://example.com/mailing-list/archive/download/
 
 Read a directory and store it to filename YYYY-MM-DD::!dir!000root-file.
 
@@ -1308,16 +1312,13 @@ sub HandleCommandLineArgs ()
     GetOptions      # Getopt::Long
     (
           "V|version"         => \$version
-
         , "A|regexp-content=s"  => \$CONTENT_REGEXP
-        , "C|create-paths"    => \$LCD_CREATE
-        , "D|prefix-date"   => \$PREFIX_DATE
-        , "R|regexp=s"      => \$SITE_REGEXP
-        , "W|prefix-www"    => \$PREFIX_WWW
         , "chdir=s"         => \$chdir
         , "c|config:s"      => \@CFG_FILE
+        , "C|create-paths"  => \$LCD_CREATE
         , "dry-run"         => \$test
         , "d|debug:i"       => \$debug
+        , "D|prefix-date"   => \$PREFIX_DATE
         , "extract"         => \$EXTRACT
         , "firewall=s"      => \$FIREWALL
         , "help-html"       => \$helpHTML
@@ -1333,7 +1334,8 @@ sub HandleCommandLineArgs ()
         , "postfix:s"       => \$POSTFIX
         , "prefix:s"        => \$PREFIX
         , "proxy=s"         => \$PROXY
-        , "regexp=s"      => \$URL_REGEXP
+        , "r|regexp=s"      => \$SITE_REGEXP
+        , "R|config-regexp=s" => \$URL_REGEXP
         , "selftest"        => \$selfTest
         , "skip-version"    => \$SKIP_VERSION
         , "sleep:i"         => \$SLEEP_SECONDS
@@ -1341,7 +1343,7 @@ sub HandleCommandLineArgs ()
         , "tag=s"           => \@TAG_LIST
         , "test"            => \$test
         , "verbose:i"       => \$verb
-
+        , "W|prefix-www"    => \$PREFIX_WWW
     );
 
     if ( defined $debug )
@@ -1441,7 +1443,8 @@ sub HandleCommandLineArgs ()
 
         unless ( -r $file )
         {
-            die "$id: PWGET_CFG is not readable [$file]";
+            die "$id: PWGET_CFG is not readable [$file]"
+		. " for regexp match 'URL_REGEXP'";
         }
 
         $verb  and  print "$id: Using default config file $file\n";

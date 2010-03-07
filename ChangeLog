@@ -1,3 +1,11 @@
+2010-03-07 Sun  Jari Aalto  <jari.aalto@cante.net>
+
+	* bin/pwget.pl (HandleCommandLineArgs): Better error message
+	if --regexp were used to match --config file.
+	(HandleCommandLineArgs): Chnage conflicting --regexp options
+	to --regexp (remote URL) and --config-regexp.
+	(Help::EXAMPLE): Add --stdout example.
+
 2010-03-03 Wed  Jari Aalto  <jari.aalto@cante.net>
 
 	* Makefile (install-bin): Fix variable use with '$$'.
