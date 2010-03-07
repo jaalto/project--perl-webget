@@ -1,5 +1,7 @@
 2010-03-07 Sun  Jari Aalto  <jari.aalto@cante.net>
 
+	* Makefile (dist-snap): Was 'dist-snapshot'.
+
 	* bin/pwget.pl (HandleCommandLineArgs): Better error message
 	if --regexp were used to match --config file.
 	(HandleCommandLineArgs): Chnage conflicting --regexp options
