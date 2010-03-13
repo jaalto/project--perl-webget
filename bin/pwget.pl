@@ -27,6 +27,21 @@
 
 # ****************************************************************************
 #
+#   Globals
+#
+# ****************************************************************************
+
+use vars qw ( $VERSION );
+
+#   This is for use of Makefile.PL and ExtUtils::MakeMaker
+#
+#   The following variable is updated by Emacs setup whenever
+#   this file is saved.
+
+$VERSION = '2010.0313.1629';
+
+# ****************************************************************************
+#
 #   Standard perl modules
 #
 # ****************************************************************************
@@ -60,15 +75,6 @@ IMPORT:
     );
 }
 
-use vars qw ( $VERSION );
-
-#   This is for use of Makefile.PL and ExtUtils::MakeMaker
-#
-#   The following variable is updated by Emacs setup whenever
-#   this file is saved.
-
-$VERSION = '2010.0307.1239';
-
 # ****************************************************************************
 #
 #   Modules from CPAN
@@ -100,7 +106,7 @@ sub Initialize ()
         $PROGNAME
         $LIB
 	$LICENSE
-        $CONTACT
+        $AUTHOR
         $URL
         $WIN32
         $CYGWIN_PERL
@@ -110,8 +116,8 @@ sub Initialize ()
     $PROGNAME   = $LIB;
 
     $LICENSE	= "GPL-2+";
-    $CONTACT     = "Jari Aalto";
-    $URL         = "http://freshmeat.net/projects/perl-webget";
+    $AUTHOR     = "Jari Aalto";
+    $URL        = "http://freshmeat.net/projects/perl-webget";
 
     $WIN32    = 1   if  $OSNAME =~ /win32/i;
 
@@ -1253,6 +1259,38 @@ sub PathConvertSmart ($)
     $ARG;
 }
 
+# ****************************************************************************
+#
+#   DESCRIPTION
+#
+#       Return version string
+#
+#   INPUT PARAMETERS
+#
+#       none
+#
+#   RETURN VALUES
+#
+#       string
+#
+# ****************************************************************************
+
+sub Version ()
+{
+    "$VERSION";
+}
+
+sub VersionInfo ()
+{
+    Version() . " $AUTHOR $LICENSE $URL"
+}
+
+sub VersionPrint ()
+{
+    print( VersionInfo() . "\n");
+    exit 0;
+}
+
 # ************************************************************** &args *******
 #
 #   DESCRIPTION
@@ -1382,10 +1420,10 @@ sub HandleCommandLineArgs ()
     $debug and $verb == 0  and $verb = 1;
     $debug > 2             and $verb = 10;
 
-    $version    and die "$VERSION $PROGNAME $CONTACT $LICENSE $URL\n";
-    $helpHTML   and Help( undef, -html );
-    $helpMan    and Help( undef, -man );
-    $help       and Help();
+    $version    and  VersionPrint();
+    $helpHTML   and  Help( undef, -html );
+    $helpMan    and  Help( undef, -man );
+    $help       and  Help();
 
     $selfTest   and SelfTest();
 
