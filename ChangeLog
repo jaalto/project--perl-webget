@@ -1,3 +1,7 @@
+2010-03-24 Wed  Jari Aalto  <jari.aalto@cante.net>
+
+	* README (at the end): add Copyright and License.
+
 2010-03-07 Sun  Jari Aalto  <jari.aalto@cante.net>
 
 	* README: (Depends): Net::FTP is a standard Perl module in 5.10-
