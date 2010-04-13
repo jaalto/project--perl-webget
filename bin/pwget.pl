@@ -25,6 +25,9 @@
 #
 #       To read manual, start this program with option: --help
 
+# "Named Capture Buffers" are used
+use 5.10;
+
 # ****************************************************************************
 #
 #   Globals
