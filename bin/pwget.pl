@@ -1165,8 +1165,8 @@ sub Help (;$ $)
     }
     elsif ( $type eq -man )
     {
-        eval "use Pod::Man";
-        $EVAL_ERROR  and  die "$id: Cannot generate Man $EVAL_ERROR";
+	eval "use Pod::Man"
+	    or "$id: Cannot generate Man: $EVAL_ERROR";
 
         # Other option: name, section, release
         #
