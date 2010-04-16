@@ -1,6 +1,8 @@
 2010-04-17 Thu  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (Help): Change word 'kit' to 'package.
+	Remove option categories and arrange all options
+	alphabetically.
 
 2010-04-15 Thu  Jari Aalto  <jari.aalto@cante.net>
 

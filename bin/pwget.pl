@@ -234,10 +234,6 @@ depending on the used http or ftp protocol.
 
 =head1 OPTIONS
 
-=head2 General options
-
-=over 4
-
 =item B<-A, --regexp-content REGEXP>
 
 Analyze the content of the file and match REGEXP. Only if the regexp
@@ -277,6 +273,11 @@ like doing:
     cd DIRECTORY
     pwget http://example.com/index.html
 
+=item B<-d, --debug [LEVEL]>
+
+Turn on debug with positive LEVEL number. Zero means no debug.
+This option turns on B<--verbose> too.
+
 =item B<-e, --extract>
 
 Unpack any files after retrieving them. The command to unpack typical
@@ -293,6 +294,21 @@ where these programs come standard. Refer to section SEE ALSO.
 =item B<-F, --firewall FIREWALL>
 
 Use FIREWALL when accessing files via ftp:// protocol.
+
+=item B<-h, --help>
+
+Print help page in text.
+
+=item B<--help-html>
+
+Print help page in HTML.
+
+=item B<--help-man>
+
+Print help page in Unix manual page format. You want to feed this output to
+c<nroff -man> in order to read it.
+
+Print help page.
 
 =item B<-m, --mirror SITE>
 
@@ -388,6 +404,10 @@ files are found form HTTP server directory:
 Retrieve URLs matching REGEXP from configuration file. This cancels
 B<--Tag> options in the command line.
 
+=item B<-s, --selftest>
+
+Run some internal tests. For maintainer or developer only.
+
 =item B<--sleep SECONDS>
 
 Sleep SECONDS before next URL request. When using regexp based
@@ -417,46 +437,16 @@ This option does not make much sense without additional option B<--new>
 
 If you want to reload versioned file again, add option B<--overwrite>.
 
+=item B<-t, --test, --dry-run>
+
+Run in test mode.
+
 =item B<-T, --tag NAME [NAME] ...>
 
 Search tag NAME from the config file and download only entries defined
 under that tag. Refer to B<--config FILE> option description. You can give
 Multiple B<--Tag> switches. Combining this option with B<--regexp>
 does not make sense and the concequencies are undefined.
-
-=back
-
-=head2 Miscellaneous options
-
-=over 4
-
-=item B<-d, --debug [LEVEL]>
-
-Turn on debug with positive LEVEL number. Zero means no debug.
-This option turns on B<--verbose> too.
-
-=item B<-h, --help>
-
-Print help page in text.
-
-=item B<--help-html>
-
-Print help page in HTML.
-
-=item B<--help-man>
-
-Print help page in Unix manual page format. You want to feed this output to
-c<nroff -man> in order to read it.
-
-Print help page.
-
-=item B<-s, --selftest>
-
-Run some internal tests. For maintainer or developer only.
-
-=item B<-t, --test, --dry-run>
-
-Run in test mode.
 
 =item B<-v, --verbose [NUMBER]>
 
