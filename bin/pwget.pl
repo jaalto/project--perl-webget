@@ -174,7 +174,7 @@ pwget - Perl Web URL fetch program
     pwget --config $HOME/config/pwget.conf --Tag linux --Tag emacs ..
     pwget --verbose --overwrite http://example.com/
     pwget --verbose --overwrite --Output ~/dir/ http://example.com/
-    pwget --new --overwrite http://example.com/kit-1.1.tar.gz
+    pwget --new --overwrite http://example.com/package-1.1.tar.gz
 
 =head1 DESCRIPTION
 
@@ -215,14 +215,14 @@ files, program has been designed to use separate configuration file via
 B<--config> option. In the configuration file you can control the
 downloading with separate directives like C<save:> which tells to save the
 file under different name. The simplest way to retreive the latest version
-of a kit from FTP site is:
+of apackage from a FTP site is:
 
     pwget --new --overwite --verbose \
-       http://www.example.com/kit-1.00.tar.gz
+       http://www.example.com/package-1.00.tar.gz
 
-Do not worry about the filename "kit-1.00.tar.gz". The latest version, say,
-kit-3.08.tar.gz will be retrieved. The option B<--new> instructs to find
-newer version than the provided URL.
+Do not worry about the filename C<package-1.00.tar.gz>. The latest
+version, say, C<package-3.08.tar.gz> will be retrieved. The option
+B<--new> instructs to find newer version than the provided URL.
 
 If the URL ends to slash, then directory list at the remote machine
 is stored to file:
@@ -405,14 +405,14 @@ Retrieve URL and write to stdout.
 Do not download files that have version number and which already exists on
 disk. Suppose you have these files and you use option B<--skip-version>:
 
-    kit.tar.gz
+    package.tar.gz
     file-1.1.tar.gz
 
 Only file.txt is retrieved, because file-1.1.tar.gz contains version number
 and the file has not changed since last retrieval. The idea is, that in
 every release the number in in distribution increases, but there may be
 distributions which do not contain version number. In regular intervals
-you may want to load those kits again, but skip versioned files. In short:
+you may want to load those packages again, but skip versioned files. In short:
 This option does not make much sense without additional option B<--new>
 
 If you want to reload versioned file again, add option B<--overwrite>.
@@ -486,7 +486,7 @@ Read a directory and store it to filename YYYY-MM-DD::!dir!000root-file.
 
     pwget --prefix-date --overwrite --verbose http://www.example.com/dir/
 
-To update newest version of the kit, but only if there is none at disk
+To update newest version of the package, but only if there is none at disk
 already. The B<--new> option instructs to find newer packages and the
 filename is only used as a skeleton for files to look for:
 
@@ -507,10 +507,10 @@ To add date and WWW site prefix to the filenames:
 
     --> YYYY-MM-DD::www.example.com::file.pl
 
-Get all updated files under default cnfiguration file's tag KITS:
+Get all updated files under cnfiguration file's tag updates:
 
-    pwget --verbose --overwrite --skip-version --new --Tag kits
-    pwget -v -o -s -n -T kits
+    pwget --verbose --overwrite --skip-version --new --Tag updates
+    pwget -v -o -s -n -T updates
 
 Get files as they read in the configuration file to the current directory,
 ignoring any C<lcd:> and C<save:> directives:
@@ -635,9 +635,9 @@ near each directive.
 
         ftp://ftp.com/dir/file.txt.gz save:xx-file.txt.gz login:foo pass:passwd x:
 
-        lcd: $HOME/download-kit
+        lcd: $HOME/download/package
 
-        ftp://ftp.com/dir/kit-1.1.tar.gz new:
+        ftp://ftp.com/dir/package-1.1.tar.gz new:
 
       tag2: package-x
 
@@ -1071,7 +1071,7 @@ archive second time, after some period of time, would display
 This is not a serious error, because the archive was already on disk and
 tar did not overwrite previous files. It might be good to inform the
 archive maintainer, that the files have wrong permissions. It is customary
-to expect that distributed kits have writable flag set for all files.
+to expect that distributed packages have writable flag set for all files.
 
 =back
 
@@ -1092,7 +1092,7 @@ Double check the configuration file's line.
 
 =back
 
-=head1 BUGS
+=head1 BUGS AND LIMITATIONS
 
 C<Sourceforge note>: To download archive files from Sourceforge
 requires some trickery because of the redirections and load balancers
@@ -1117,6 +1117,33 @@ configuration file is read at startup if it exists.
     export PWGET_CFG=$HOME/conf/pwget.conf     # /bin/hash syntax
     setenv PWGET_CFG $HOME/conf/pwget.conf     # /bin/csh syntax
 
+=head1 EXIT STATUS
+
+Not defined.
+
+=head1 DEPENDENCIES
+
+External utilities:
+
+    wget(1)   only needed for Sourceforge.net downloads
+              see BUGS AND LIMITATIONS
+
+Non-core Perl modules from CPAN:
+
+    LWP::UserAgent
+    Net::FTP
+
+The following modules are loaded in run-time only if directive
+B<cnv:text> is used. Otherwise these modules are not loaded:
+
+    HTML::Parse
+    HTML::TextFormat
+    HTML::FormatText
+
+This module is loaded in run-time only if HTTPS scheme is used:
+
+    Crypt::SSLeay
+
 =head1 SEE ALSO
 
 lwp-download(1)
@@ -1125,27 +1152,13 @@ lwp-request(1)
 lwp-rget(1)
 wget(1)
 
-=head1 PREREQUISITES
-
-C<LWP::UserAgent>
-C<Net::FTP>
-C<wget(1)>   only needed for Sourceforge.net downloads
-
-=head1 COREQUISITES
-
-C<HTML::Parse>
-C<HTML::TextFormat>
-C<HTML::FormatText>
-
-These modules are dynamically loaded only if directive B<cnv:text>
-is used. Otherwise these modules are not loaded.
-
-C<Crypt::SSLeay>
-This module is loaded only if HTTPS scheme is encountered.
-
 =head1 AUTHOR
 
-Copyright (C) Jari Aalto
+Jari Aalto
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 1996-2010 Jari Aalto
 
 This program is free software; you can redistribute and/or modify
 program under the terms of GNU General Public license either version 2
