@@ -1364,7 +1364,6 @@ sub HandleCommandLineArgs ()
 
     Getopt::Long::config( qw
     (
-        require_order
         no_ignore_case
         no_ignore_case_always
     ));
@@ -4428,7 +4427,7 @@ sub UrlFtp ( % )
         unless ( $ftp->get($getFile, $saveFile) )
         {
             warn  "$id: ** [ERROR] SingleFile [$getFile] $ERRNO\n"
-                  , "\tMaybe you have invalid line? [$origLine]"
+                  , "\tMaybe the URL on the line is invalid? [$origLine]"
                   ;
         }
         else
