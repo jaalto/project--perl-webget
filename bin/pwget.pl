@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2010.1012.1757';
+$VERSION = '2010.1012.1810';
 
 # ****************************************************************************
 #
@@ -233,6 +233,8 @@ The content of this file can be either index.html or the directory listing
 depending on the used http or ftp protocol.
 
 =head1 OPTIONS
+
+=over 4
 
 =item B<-A, --regexp-content REGEXP>
 
