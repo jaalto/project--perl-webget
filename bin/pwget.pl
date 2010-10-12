@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2010.0313.1629';
+$VERSION = '2010.1012.1757';
 
 # ****************************************************************************
 #
@@ -780,7 +780,7 @@ B<file:> acts as a model for filenames to pay attention to.
 
 AN EXAMPLE
 
-Use directive B<rename:> to chnage the filename before soring it on
+Use directive B<rename:> to change the filename before soring it on
 disk. Here, the version number is attached to the actila filename:
 
     file.txt-1.1
@@ -911,7 +911,7 @@ eval() of code:
     The code must return $ARG which is used for file name
 
 For example, if page contains links to .html files that are in fact
-text files, following statement would chnage the file extensions:
+text files, following statement would change the file extensions:
 
     http://example.com/dir/ page:find pregexp:\.html rename:s/html/txt/
 

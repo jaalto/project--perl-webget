@@ -1,3 +1,7 @@
+2010-10-12 Tue  Jari Aalto  <jari.aalto@cante.net>
+
+	* bin/pwget.pl (HELP): Correct spelling.
+
 2010-05-01 Sat  Jari Aalto  <jari.aalto@cante.net>
 
 	* pwget.pl (HandleCommandLineArgs): Remove
