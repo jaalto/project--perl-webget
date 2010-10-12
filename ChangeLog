@@ -6,6 +6,7 @@
 
 	* bin/pwget.pl (HELP): Correct spelling.
 	  (HELP::head1 OPTIONS): add missing '=over 4'.
+	  (Help): Correct load of module Pod::Man.
 
 2010-05-01 Sat  Jari Aalto  <jari.aalto@cante.net>
 

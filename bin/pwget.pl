@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2010.1012.1810';
+$VERSION = '2010.1012.1829';
 
 # ****************************************************************************
 #
@@ -1170,7 +1170,7 @@ sub Help (;$ $)
     }
     elsif ( $type eq -man )
     {
-	eval "use Pod::Man"
+	eval { require Pod::Man; 1 }
 	    or die "$id: Cannot generate Man: $EVAL_ERROR";
 
         # Other option: name, section, release
