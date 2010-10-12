@@ -1,6 +1,11 @@
 2010-10-12 Tue  Jari Aalto  <jari.aalto@cante.net>
 
+	* Makefile (PERL): New.
+	(doc/manual/index.txt): Change from 'pwget.txt'.
+	(doc/manual/index.html): Change from 'pwget.html'.
+
 	* bin/pwget.pl (HELP): Correct spelling.
+	  (HELP::head1 OPTIONS): add missing '=over 4'.
 
 2010-05-01 Sat  Jari Aalto  <jari.aalto@cante.net>
 
