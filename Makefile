@@ -72,6 +72,7 @@ DATE		= `date +"%Y.%m%d"`
 VERSION		= $(DATE)
 RELEASE		= $(PACKAGE)-$(VERSION)
 
+PERL		= perl
 BIN		= $(PACKAGE)
 PL_SCRIPT	= bin/$(BIN).pl
 
@@ -125,15 +126,15 @@ dist-ls:
 ls: dist-ls
 
 bin/$(PACKAGE).1: $(PL_SCRIPT)
-	perl $(PERL) $< --help-man > $@
+	$(PERL) $< --help-man > $@
 	@-rm -f *.x~~ pod*.tmp
 
 doc/manual/$(PACKAGE).html: $(PL_SCRIPT)
-	perl $(PERL) $< --help-html > $@
+	$(PERL) $< --help-html > $@
 	@-rm -f *.x~~ pod*.tmp
 
 doc/manual/$(PACKAGE).txt: $(PL_SCRIPT)
-	perl $(PERL) $< --help > $@
+	$(PERL) $< --help > $@
 	@-rm -f *.x~~ pod*.tmp
 
 doc/conversion/index.html: doc/conversion/index.txt
