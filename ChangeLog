@@ -1,3 +1,11 @@
+2010-10-31 Sun  Jari Aalto  <jari.aalto@cante.net>
+
+	* bin/pwget.pl
+	(--Tag): replace all occurrences with --tag.
+	(HandleCommandLineArgs): Make -t and -v options non-ambiguous.
+	(HELP::--regexp): Correct short option capitalization
+	in example. Add caveat: currently works only for http:// URLs.
+
 2010-10-12 Tue  Jari Aalto  <jari.aalto@cante.net>
 
 	* Makefile (PERL): New.

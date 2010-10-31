@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2010.1012.1829';
+$VERSION = '2010.1031.1630';
 
 # ****************************************************************************
 #
@@ -171,7 +171,7 @@ pwget - Perl Web URL fetch program
 =head1 SYNOPSIS
 
     pwget http://example.com/ [URL ...]
-    pwget --config $HOME/config/pwget.conf --Tag linux --Tag emacs ..
+    pwget --config $HOME/config/pwget.conf --tag linux --tag emacs ..
     pwget --verbose --overwrite http://example.com/
     pwget --verbose --overwrite --Output ~/dir/ http://example.com/
     pwget --new --overwrite http://example.com/package-1.1.tar.gz
@@ -246,7 +246,7 @@ and then a match is searched against the content.
 For example to download Emacs lisp file (.el) written by Mr. Foo in
 case insensitive manner:
 
-    pwget -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
+    pwget -v -r '\.el$' -A "(?i)Author: Mr. Foo" \
       http://www.emacswiki.org/elisp/index.html
 
 =item B<-C, --create-paths>
@@ -399,12 +399,14 @@ Retrieve file matching at the destination URL site. This is like "Connect
 to the URL and get all files matching REGEXP". Here all gzip compressed
 files are found form HTTP server directory:
 
-    pwget -v -R "\.gz" http://example.com/archive/
+    pwget -v -r "\.gz" http://example.com/archive/
+
+Caveat: currently works only for http:// URLs.
 
 =item B<-R, --config-regexp REGEXP>
 
 Retrieve URLs matching REGEXP from configuration file. This cancels
-B<--Tag> options in the command line.
+B<--tag> options in the command line.
 
 =item B<-s, --selftest>
 
@@ -447,7 +449,7 @@ Run in test mode.
 
 Search tag NAME from the config file and download only entries defined
 under that tag. Refer to B<--config FILE> option description. You can give
-Multiple B<--Tag> switches. Combining this option with B<--regexp>
+Multiple B<--tag> switches. Combining this option with B<--regexp>
 does not make sense and the concequencies are undefined.
 
 =item B<-v, --verbose [NUMBER]>
@@ -501,7 +503,7 @@ To add date and WWW site prefix to the filenames:
 
 Get all updated files under cnfiguration file's tag updates:
 
-    pwget --verbose --overwrite --skip-version --new --Tag updates
+    pwget --verbose --overwrite --skip-version --new --tag updates
     pwget -v -o -s -n -T updates
 
 Get files as they read in the configuration file to the current directory,
@@ -975,13 +977,13 @@ Save file under this name to local disk.
 
 =item B<tagN:NAME>
 
-Downloads can be grouped under C<tagN> so that e.g. option B<--Tag1> would
+Downloads can be grouped under C<tagN> so that e.g. option B<--tag1> would
 start downloading files from that point on until next C<tag1> is found.
 There are currently unlimited number of tag levels: tag1, tag2 and tag3, so
 that you can arrange your downlods hierarchially in the configuration file.
 For example to download all Linux files rhat you monitor, you would give
-option B<--Tag linux>. To download only the NT Emacs latest binary, you
-would give option B<--Tag emacs-nt>. Notice that you do not give the
+option B<--tag linux>. To download only the NT Emacs latest binary, you
+would give option B<--tag emacs-nt>. Notice that you do not give the
 C<level> in the option, program will find it out from the configuration
 file after the tag name matches.
 
@@ -1374,8 +1376,7 @@ sub HandleCommandLineArgs ()
 
     GetOptions      # Getopt::Long
     (
-          "V|version"         => \$version
-        , "A|regexp-content=s"  => \$CONTENT_REGEXP
+          "A|regexp-content=s"  => \$CONTENT_REGEXP
         , "chdir=s"         => \$chdir
         , "c|config:s"      => \@CFG_FILE
         , "C|create-paths"  => \$LCD_CREATE
@@ -1403,9 +1404,10 @@ sub HandleCommandLineArgs ()
         , "skip-version"    => \$SKIP_VERSION
         , "sleep:i"         => \$SLEEP_SECONDS
         , "stdout"          => \$STDOUT
-        , "tag=s"           => \@TAG_LIST
-        , "test"            => \$test
-        , "verbose:i"       => \$verb
+        , "t|tag=s"         => \@TAG_LIST
+        , "T|test"          => \$test
+        , "v|verbose:i"     => \$verb
+        , "V|version"       => \$version
         , "W|prefix-www"    => \$PREFIX_WWW
     );
 
@@ -1453,7 +1455,7 @@ sub HandleCommandLineArgs ()
 
     if ( defined $URL_REGEXP  and  @TAG_LIST )
     {
-        die "You can't use both --Tag and --regexp options.";
+        die "You can't use both --tag and --regexp options.";
     }
 
     if ( defined $PROXY )
@@ -1483,7 +1485,7 @@ sub HandleCommandLineArgs ()
 
         if ( grep /^-/ , @TAG_LIST )
         {
-            die "$id: You have option in TAG_LIST: @TAG_LIST\n";
+            die "$id: --tag option argument was an option: @TAG_LIST\n";
         }
 
         $TAG_REGEXP = '\btag(\d+):\s*(\S+)';
@@ -6774,7 +6776,7 @@ sub Main ($ $)
         if ( @CFG_FILE == 0 )
         {
             print "$id: Nothing to do. Use config file or give URL? ",
-                  "Did you mean --Tag for [@ARGV]?\n"
+                  "Did you mean --tag for [@ARGV]?\n"
                   ;
         }
     }
