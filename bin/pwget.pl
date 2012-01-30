@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2012.0130.0541';
+$VERSION = '2012.0130.1152';
 
 # ****************************************************************************
 #
@@ -5836,7 +5836,7 @@ sub UrlHttp ( % )
     my $mirror                  = $arg{mirror}        || '';
 
     my $find = $thisPage eq -find ? 1 : 0;
-$debug = 10;
+
     # ......................................................... code ...
 
     if ( $debug )
