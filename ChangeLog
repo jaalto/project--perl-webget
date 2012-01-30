@@ -1,3 +1,7 @@
+2012-01-30 Mon  Jari Aalto  <jari.aalto@cante.net>
+
+	* bin/pwget.pl (LatestVersion): Improve internal error message.
+
 2010-10-31 Sun  Jari Aalto  <jari.aalto@cante.net>
 
 	* bin/pwget.pl

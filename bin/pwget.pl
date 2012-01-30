@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2010.1031.1630';
+$VERSION = '2012.0130.0454';
 
 # ****************************************************************************
 #
@@ -3853,14 +3853,14 @@ EOF
 $id: Internal error, Run with --debug on to pinpoint the details.
 
      Cannot find anything suitable for download. This may be due to
-     non-matching file regexp: that is or <regexp:> is too limiting or
+     non-matching file <regexp:> or <regexp:> is too limiting or
      <no-regexp:> filtered everything. If you used <new:>, it may
      be possible that the heuristics could not determine what were the
-     links to examine; in that case, please let the program know what
+     links to examine. In that case, please let the program know what
      kind of file it should search by providing template directive
-     <file:archive-YYYYMMDD.tar.gz>
+     <file:NAME-VERSION.tar.gz>.
 
-     check also that the <new:> file extension looks the same as what
+     Check also that the <new:> file extension looks the same as what
      <pregexp:> found from the page.
      [$CURRENT_TAG_LINE]
 EOF
