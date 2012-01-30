@@ -124,7 +124,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PWGET 1"
-.TH PWGET 1 "2010-10-12" "perl v5.10.1" "Perl pwget URL fetch utility"
+.TH PWGET 1 "2012-01-30" "perl v5.10.1" "Perl pwget URL fetch utility"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -135,7 +135,7 @@ pwget \- Perl Web URL fetch program
 .IX Header "SYNOPSIS"
 .Vb 5
 \&    pwget http://example.com/ [URL ...]
-\&    pwget \-\-config $HOME/config/pwget.conf \-\-Tag linux \-\-Tag emacs ..
+\&    pwget \-\-config $HOME/config/pwget.conf \-\-tag linux \-\-tag emacs ..
 \&    pwget \-\-verbose \-\-overwrite http://example.com/
 \&    pwget \-\-verbose \-\-overwrite \-\-Output ~/dir/ http://example.com/
 \&    pwget \-\-new \-\-overwrite http://example.com/package\-1.1.tar.gz
@@ -210,7 +210,7 @@ For example to download Emacs lisp file (.el) written by Mr. Foo in
 case insensitive manner:
 .Sp
 .Vb 2
-\&    pwget \-v \-R \*(Aq\e.el$\*(Aq \-A "(?i)Author: Mr. Foo" \e
+\&    pwget \-v \-r \*(Aq\e.el$\*(Aq \-A "(?i)Author: Mr. Foo" \e
 \&      http://www.emacswiki.org/elisp/index.html
 .Ve
 .IP "\fB\-C, \-\-create\-paths\fR" 4
@@ -355,12 +355,14 @@ to the \s-1URL\s0 and get all files matching \s-1REGEXP\s0\*(R". Here all gzip c
 files are found form \s-1HTTP\s0 server directory:
 .Sp
 .Vb 1
-\&    pwget \-v \-R "\e.gz" http://example.com/archive/
+\&    pwget \-v \-r "\e.gz" http://example.com/archive/
 .Ve
+.Sp
+Caveat: currently works only for http:// URLs.
 .IP "\fB\-R, \-\-config\-regexp \s-1REGEXP\s0\fR" 4
 .IX Item "-R, --config-regexp REGEXP"
 Retrieve URLs matching \s-1REGEXP\s0 from configuration file. This cancels
-\&\fB\-\-Tag\fR options in the command line.
+\&\fB\-\-tag\fR options in the command line.
 .IP "\fB\-s, \-\-selftest\fR" 4
 .IX Item "-s, --selftest"
 Run some internal tests. For maintainer or developer only.
@@ -399,7 +401,7 @@ Run in test mode.
 .IX Item "-T, --tag NAME [NAME] ..."
 Search tag \s-1NAME\s0 from the config file and download only entries defined
 under that tag. Refer to \fB\-\-config \s-1FILE\s0\fR option description. You can give
-Multiple \fB\-\-Tag\fR switches. Combining this option with \fB\-\-regexp\fR
+Multiple \fB\-\-tag\fR switches. Combining this option with \fB\-\-regexp\fR
 does not make sense and the concequencies are undefined.
 .IP "\fB\-v, \-\-verbose [\s-1NUMBER\s0]\fR" 4
 .IX Item "-v, --verbose [NUMBER]"
@@ -463,7 +465,7 @@ To add date and \s-1WWW\s0 site prefix to the filenames:
 Get all updated files under cnfiguration file's tag updates:
 .PP
 .Vb 2
-\&    pwget \-\-verbose \-\-overwrite \-\-skip\-version \-\-new \-\-Tag updates
+\&    pwget \-\-verbose \-\-overwrite \-\-skip\-version \-\-new \-\-tag updates
 \&    pwget \-v \-o \-s \-n \-T updates
 .Ve
 .PP
@@ -973,13 +975,13 @@ site which match \s-1REGEXP\s0.
 Save file under this name to local disk.
 .IP "\fBtagN:NAME\fR" 4
 .IX Item "tagN:NAME"
-Downloads can be grouped under \f(CW\*(C`tagN\*(C'\fR so that e.g. option \fB\-\-Tag1\fR would
+Downloads can be grouped under \f(CW\*(C`tagN\*(C'\fR so that e.g. option \fB\-\-tag1\fR would
 start downloading files from that point on until next \f(CW\*(C`tag1\*(C'\fR is found.
 There are currently unlimited number of tag levels: tag1, tag2 and tag3, so
 that you can arrange your downlods hierarchially in the configuration file.
 For example to download all Linux files rhat you monitor, you would give
-option \fB\-\-Tag linux\fR. To download only the \s-1NT\s0 Emacs latest binary, you
-would give option \fB\-\-Tag emacs-nt\fR. Notice that you do not give the
+option \fB\-\-tag linux\fR. To download only the \s-1NT\s0 Emacs latest binary, you
+would give option \fB\-\-tag emacs-nt\fR. Notice that you do not give the
 \&\f(CW\*(C`level\*(C'\fR in the option, program will find it out from the configuration
 file after the tag name matches.
 .Sp
