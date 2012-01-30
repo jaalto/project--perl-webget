@@ -4,7 +4,7 @@
 #
 #   Copyright
 #
-#       Copyright (C) 1996-2010 Jari Aalto
+#       Copyright (C) 1996-2012 Jari Aalto
 #
 #   License
 #
@@ -1152,7 +1152,7 @@ Jari Aalto
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 1996-2010 Jari Aalto
+Copyright (C) 1996-2012 Jari Aalto
 
 This program is free software; you can redistribute and/or modify
 program under the terms of GNU General Public license either version 2
