@@ -120,7 +120,7 @@ sub Initialize ()
 
     $LICENSE	= "GPL-2+";
     $AUTHOR     = "Jari Aalto";
-    $URL        = "http://freecode.net/projects/perl-webget";
+    $URL        = "http://freecode.com/projects/perl-webget";
 
     $WIN32    = 1   if  $OSNAME =~ /win32/i;
 
@@ -6232,7 +6232,7 @@ sub SelfTest ()
 
     @files = qw
     (
-        http://freecode.net
+        http://freecode.com
         http://newsletters.osdn.com
         http://ads.osdn.com/?ad_id=2435&amp;alloc_id=5907&amp;op=click
         http://sourceforge.net

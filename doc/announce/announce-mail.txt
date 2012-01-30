@@ -9,7 +9,7 @@ Subject: ANNOUNCE: Lisp Developer tracking system
     around the globe.
 
         pwget - Perl webget Project
-        http://freecode.net/projects/perlwebget
+        http://freecode.com/projects/perlwebget
 
     Now, what does that has to do with Emacs Lisp? The utility
     includes a configuration files that contain few records of URLs of
