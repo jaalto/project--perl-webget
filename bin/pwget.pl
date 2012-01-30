@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2012.0130.0454';
+$VERSION = '2012.0130.0541';
 
 # ****************************************************************************
 #
@@ -3681,12 +3681,12 @@ sub LatestVersion ( $ $ )
 
 	#  NOTE: Sourceforge is on format <URL>/file.tar.gz/download
 
-        my $post = "$rest(\$|[&?][a-z]|\\/download)";
+        my $post = qr/\Q$rest\E/i . '($|[&?][a-z]|/download)';
 
         $debug and print "$id: ORIGINAL ARG '$ARG'"
 		   . " INITIAL PFX: [$pfx]"
-		   . " MIDDLE: [$version] re /$ver/"
-		   . " POSTFIX: [$rest] re /$post/"
+		   . " MIDDLE: [$version] regexp /$ver/"
+		   . " POSTFIX: [$rest] regexp /$post/"
 		   . "\n"
 		   ;
 
@@ -3704,7 +3704,7 @@ sub LatestVersion ( $ $ )
             #   has extension "2$"
 
             unless (  ( ( /\.[a-z]+[^-.]+$/ and /$pfx.*$post/)
-                         or /$pfx/ )
+                        or /$pfx/ )
                       and  /$regexp/o
                    )
             {
@@ -3715,7 +3715,8 @@ sub LatestVersion ( $ $ )
             unless ( /$pfx.*$post/ )
             {
                 $debug > 1  and  print "$id: REJECTED no ",
-				 "prefix '$pfx' postfix '$post'",
+				 "prefix '$pfx'",
+		                 "postfix '$post'",
 				 "\t$ARG\n"
 				 ;
                 next;
@@ -5835,7 +5836,7 @@ sub UrlHttp ( % )
     my $mirror                  = $arg{mirror}        || '';
 
     my $find = $thisPage eq -find ? 1 : 0;
-
+$debug = 10;
     # ......................................................... code ...
 
     if ( $debug )
@@ -6509,7 +6510,7 @@ sub Main ($ $)
 
             if ( $EVAL_ERROR )
             {
-                warn "http needs Crypt::SSLeay.pm [$EVAL_ERROR]";
+                warn "HTTPS requires Crypt::SSLeay.pm [$EVAL_ERROR]";
                 next;
             }
         }

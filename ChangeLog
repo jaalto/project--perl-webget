@@ -1,6 +1,10 @@
 2012-01-30 Mon  Jari Aalto  <jari.aalto@cante.net>
 
 	* bin/pwget.pl (LatestVersion): Improve internal error message.
+	(Main): Improve HTTPS Crypt::SSLeay.pm message.
+	(LatestVersion): use qr() and \E..\Q to quote $post part of
+	found file name. Like in Debian archive:
+	+dfsg.orig.tar => \+dfsg\.orig\.tar
 
 2010-10-31 Sun  Jari Aalto  <jari.aalto@cante.net>
 
