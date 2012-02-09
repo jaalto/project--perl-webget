@@ -1,5 +1,7 @@
 2012-02-09 Thu  Jari Aalto  <jari.aalto@cante.net>
 
+	* doc/examples/emacs.conf: Update old name to pwget.
+
 	* bin/pwget.pl (Boot): Add dheck against empty command line args.
 	(UrlHttGetWget): Remove which(1). Use --long options in wget(1).
 
