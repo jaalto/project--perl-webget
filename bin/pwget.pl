@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2012.0130.0541';
+$VERSION = '2012.0209.1403';
 
 # ****************************************************************************
 #
@@ -7035,6 +7035,12 @@ sub Boot ()
     # ......................................................... args ...
 
     $debug > 2  and  PrintHash "$id: begin ENV", %ENV;
+
+    unless ( @ARGV )
+    {
+	warn "$id: Nothing to do. No command line arguments. See -h\n";
+	return 0;
+    }
 
     #   Convert any command line arguments as if they would appear
     #   in configuration file:
