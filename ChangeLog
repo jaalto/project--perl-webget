@@ -428,7 +428,7 @@
 
         * mywebget-emacs.conf: 1.33 (triggs-mark): New.
 
-2004-04-01 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
+2004-04-01 Thu  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl (sub LatestVersion): 1.67 Didn't parse packages
         names with embedded numbers. like4this-1.1.tar.gz; Fixed.
@@ -442,7 +442,7 @@
         (bibletools): Added from Sourceforge.
         (elisp-other): jtags, jdc-el added from sourceforge.
 
-2004-03-31 Wed  Jari Aalto  <jari aalto A T poboxes dt com>
+2004-03-31 Wed  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl: 1.64 (top level): REmoved extra newlines.
         Code beatifying session.
@@ -456,23 +456,23 @@
         mixmacter.el.
         (elisp-other): Added SF project 'table' by Takaaki Ota.
 
-2004-02-08 Sun  Jari Aalto  <jari aalto A T poboxes dt com>
+2004-02-08 Sun  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.28 (matsushita-akihisa): Added
         URL http://www.bookshelf.jp/elc/
 
-2004-02-03 Tue  Jari Aalto  <jari aalto A T poboxes dt com>
+2004-02-03 Tue  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: (berndl-klaus) 1.28 Added alternative tag
         `cygwin-mount'.
         (wright-francis): Added alternative tag `w32-symlinks'.
 
-2004-01-25 Sun  Jari Aalto  <jari aalto A T poboxes dt com>
+2004-01-25 Sun  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.27 (monnier-stefan): Removed /rum.cs.yale.edu
         FTP URL link. Not accessible.
 
-2004-01-24 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+2004-01-24 Sat  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.27 (elisp-other): Removed NTEmacs faq
         downloads epop and gnuserv. They are obsolete.
@@ -481,7 +481,7 @@
         is included in Emacs. Fixed.
         (pearson-dave): URL updated.
 
-2003-09-01 Mon  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-09-01 Mon  Jari Aalto  <jari.aalto@cante.net>
 
         [RELEASED 2003.0901 to sourceforge]
 
@@ -491,22 +491,22 @@
         are now --Help-html and --Help-man
         (Help): 1.60 Exit 0, not 1. Needed for Makefile.
 
-2003-08-11 Mon  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-08-11 Mon  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.26 (php-mode): Added sourceforge project.
         It does not use CVS.
 
-2003-08-10 Sun  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-08-10 Sun  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.26 (zenirc): New
 
-2003-08-09  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-08-09  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: (breton-peter): Added tag3 'pbreton'
         (oconnor-edward): New.
         (linkov-juri): New.
 
-2003-08-08  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-08-08  Jari Aalto  <jari.aalto@cante.net>
 
         Copyright statement year updated to all files.
 
@@ -514,22 +514,22 @@
         tag3 'deego'.
         (schroeder-alex): additional tag3 'kensanata'
 
-2003-08-04 Mon  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-08-04 Mon  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl (Getopt::Long): 1.59 Corrected --verbose and --debug
         option to accept no arguments and still activating the
         option.
 
-2003-08-01 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-08-01 Fri  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.22 (mccrossan-fraser): New.
 
-2003-07-03 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-07-03 Thu  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.21 (sepulveda-rafael): New.
         (kapur-nevin): regexp-no:gnus-grepmail|msn.el, too old.
 
-2003-06-26 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-06-26 Thu  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.21 do not download `bibfind', It's not
         Kyle's.
@@ -543,7 +543,7 @@
         cvs-packages/sourceforge/cedet/speedbar/rpm.el. Renamed to rpm2.el
         (rush-david): regexp-no:surl
 
-2003-06-17 Tue  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-06-17 Tue  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl (sub UrlHttpDownload): 1.56 Added debug calls.
         (LWP::UserAgent;): 1.56 Incorrectly passed $file if <new:> was
@@ -553,7 +553,7 @@
         1.56 Changed few calls from $debug to $debug > 1 and $debu > 2 to
         reduce debug display in lower settings.
 
-2003-06-10 Tue  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-06-10 Tue  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.19
         (englen-stephen): Added ell.el download. Was at section
@@ -566,7 +566,7 @@
         (UrlHttpSearchNewest): Added $ua `die' check.
         (UrlHttpSearchPage): Added $ua `die' check.
 
-2003-06-08 Sun  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-06-08 Sun  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.18
         (akimichi-tatsukawa): New. EmacsWiki download
@@ -598,13 +598,13 @@
         (Main): Code logic fixes. Separate my-definitions moved to the
         point of usage.
 
-2003-06-07 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-06-07 Sat  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl (UrlHttp): 1.52 Added filtering out
         duplicate files in FILE LIST with temporary hash.
         (UrlHttpParseHref): Added support for HTML tag BASE.
 
-2003-06-06 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-06-06 Fri  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.15 (gorrell-harley): footnote.el clashes
         with Emacs and XEmacs footnote.el. Is now saved as jhg-footnotee.el
@@ -614,7 +614,7 @@
         in `Clearing FILE:'. Was @list > 0, is now @list > 1. This bug
         caused save: directive never to take place.
 
-2003-06-04 Wed  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-06-04 Wed  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.15
         -- All `elisp-users' URLs checked.
@@ -629,46 +629,46 @@
         (goel-deepak): Updated all URLs
         (kemp-steve): URLs No longer available. Commented out.
 
-2003-06-03 Tue  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-06-03 Tue  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.14 (gorrell-harley). Harley Gorrell
         <harley@panix.com> sent url update OLD:
         http://www.hgsc.bcm.tmc.edu/~harley/elisp/ NEW:
         http://www.mahalito.net/~harley/elisp/
 
-2003-05-23 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-05-23 Fri  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.14 (ponce-david): Added print
         statement that the the files are available at SF project 'emhacks'
 
-2003-05-18  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-05-18  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: (wright-francis) Commented out
         downloading package woman.el. Included in Emacs.
 
-2003-02-08 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+2003-02-08 Sat  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl (sub Main): 1.50 Added https support. Needs
         to load module Crypt::SSLeay dynamically.
 
-2002-12-22  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-12-22  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl (FileExists): Added check for complex URLs
         download.php?file=this.tar.gz => file=this.tar.gz
         * pwget.pl (FileNameFix): Smarter filename fix code.
 
-2002-12-13  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-12-13  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf (jde): Changed
         jde.sunsite.dk => jdee.sunsite.dk. Changed
         jde-beta.zip => jde-latest.zip.
 
-2002-12-11  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-12-11  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl (UrlHttp): Added extra check for `not $new'.
         must not clear the $file variable model.
 
-2002-08-31 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-08-31 Sat  Jari Aalto  <jari.aalto@cante.net>
 
         * admin.bashrc (function sfperlwebget_ask ()): 1.3 New.
         (function sfperlwebget_release_check ()): 1.3 New.
@@ -677,13 +677,13 @@
         (function sfperlwebgetdoc ()): 1.3 Generate mywebget.1
         and not pwget.pl.1 unix manual page.
 
-2002-08-29 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-08-29 Thu  Jari Aalto  <jari.aalto@cante.net>
 
         mywebget-emacs.conf: (rodgers-kevin):
         Added `print' commands to direct people to search igrep.el
         wtih google. The gnu.emacs.sources carries the latest version.
 
-2002-08-22 Thu  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-08-22 Thu  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.11
         Massive cleanup. Run Emacs tinypath.el
@@ -725,11 +725,11 @@
         (hirose-yuuji): Ignore id3.el
         (idlwave): Removed, included in latest Emacs.
 
-2002-08-14 ke  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-08-14 ke  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs-vars.conf: 1.2 Fixes.
 
-2002-08-14  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-08-14  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.10 Documentation cleaned in
         comments.
@@ -737,14 +737,14 @@
         * mywebget-emacs-vars.conf: 1.2  Documentation cleaned in
         comments.
 
-2002-08-13  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-08-13  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf:
         (waider-ronan): New.
         ($EUSR/friedman-noah): Emacs 21.2 already has packages
         whitespace, type-break. Added to no-regexp.
 
-2002-08-12  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-08-12  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: (barzilay-eli): Fixed URL.
         (curtin-matt): New. Added <print:>
@@ -760,7 +760,7 @@
 
         * mywebget-emacs.conf: (lord-philip): URL Updated.
 
-2002-08-06  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-08-06  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf:
         (galbraith-peter): Debian URL renowed. Temporary problem
@@ -769,7 +769,7 @@
         ftp://ftp.phys.ocean.dal.ca/users/rhogee/elisp/
         which no longer contains Peter's files.
 
-2002-08-04 Sun  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-08-04 Sun  Jari Aalto  <jari.aalto@cante.net>
 
         * admin.bashrc (function sfperlwebgetdoc ()): New.
         (function sfperlwebgetcmd ()): New.
@@ -817,7 +817,7 @@
         (urban-reini): removed. No known addresses.
         (vaidheeswarran-rajesh): P4 project moved to sourceforge.
 
-2002-08-03 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-08-03 Sat  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl (LatestVersion): Support CDex packaging
         numbers: cdex_150b6_enu.exe. Didn't recognize `b6' ending.
@@ -836,7 +836,7 @@
         (x-symbol): Site moved to sourceforge project 'x-symbol'
         (w3): Removed. latest code is in GNU savannah CVS.
 
-2002-07-22  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-07-22  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl (UrlHttp):
         Filter out FRAGMENTs that are not part of the file names. This
@@ -846,31 +846,31 @@
         =>
         http://localhost/index.html
 
-2002-07-12  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-07-12  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: (hirose-yuuji): URLs updated.
         (theberge-jean): All URLs fixed.
         (yavner-jonathan): All URLs fixed.
         (dirson-yann): All URLs fixed.
 
-2002-07-06  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-07-06  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: (galbraith-peter)
         Added DEbian development packages.
         (ramakrishnan) New member added.
 
-2002-02-13 Wed  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-02-13 Wed  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.4 (zundel-detlev)
         URL address updated.
 
-2002-01-19 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-01-19 Sat  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 1.2 (walters-colin): Added checkout for
         `ibuf-macs.el' hat is required by latest ibuffer.
         (jde-docindex): New. by Kevin Burton.
 
-2002-01-14 Mon  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-01-14 Mon  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl: (sub FileExists): 1.41 New. If you download
         a file.txt.gz  and instruct to extract it, it will become
@@ -885,7 +885,7 @@
         (Net::FTP->new): 1.41 Better overwrite checking with
         FileExists() and FileSimpleCompressed().
 
-2002-01-12 Sat  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-01-12 Sat  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 2.31
         (volker-franz): New files.
@@ -898,12 +898,12 @@
         is called.
         (Getopt::Long): 1.40 Added --chdir option.
 
-2002-01-11 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-01-11 Fri  Jari Aalto  <jari.aalto@cante.net>
 
         * mywebget-emacs.conf: 2.31 (eudc): Rmeoved.
         Available from sourceforge.
 
-2002-01-04 Fri  Jari Aalto  <jari aalto A T poboxes dt com>
+2002-01-04 Fri  Jari Aalto  <jari.aalto@cante.net>
 
         * pwget.pl (Initialize): 1.36 Change incorrect environment
         variable MYMYWEBGET_PL_CFG into MYWEBGET_PL_CFG
