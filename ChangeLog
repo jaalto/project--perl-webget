@@ -861,12 +861,12 @@
 
 2002-02-13 Wed  Jari Aalto  <jari.aalto@cante.net>
 
-        * mywebget-emacs.conf: 1.4 (zundel-detlev)
+        * mywebget-emacs.conf: (zundel-detlev)
         URL address updated.
 
 2002-01-19 Sat  Jari Aalto  <jari.aalto@cante.net>
 
-        * mywebget-emacs.conf: 1.2 (walters-colin): Added checkout for
+        * mywebget-emacs.conf: (walters-colin): Added checkout for
         `ibuf-macs.el' hat is required by latest ibuffer.
         (jde-docindex): New. by Kevin Burton.
 
@@ -876,34 +876,34 @@
         a file.txt.gz  and instruct to extract it, it will become
         file.txt. We can't therefore check the existence of
         file.txt.gz, but file.txt as well.
-        (sub Main): 1.41 Send `unpack' information to HTTP and
+        (sub Main): Send `unpack' information to HTTP and
         FTP handlers.
-        (Getopt::Long): 1.41 set $verb to 10 if DEBUG on.
+        (Getopt::Long): set $verb to 10 if DEBUG on.
         (sub FileSimpleCompressed): 1.41 New.
-        (sub UrlHttp): 1.41 Better overwrite checking with
+        (sub UrlHttp): Better overwrite checking with
         FileExists() and FileSimpleCompressed().
-        (Net::FTP->new): 1.41 Better overwrite checking with
+        (Net::FTP->new): Better overwrite checking with
         FileExists() and FileSimpleCompressed().
 
 2002-01-12 Sat  Jari Aalto  <jari.aalto@cante.net>
 
-        * mywebget-emacs.conf: 2.31
+        * mywebget-emacs.conf:
         (volker-franz): New files.
         (yamaoka-katsumi): New files and packages.
         (mmm-mode): Removed. project is now at sourceforge under
         the same name.
 
-        * pwget.pl (Filter): 1.39 Added Pre-Filter
+        * pwget.pl (Filter): Added Pre-Filter
         Which removes unwanted files before the LatestVersion
         is called.
-        (Getopt::Long): 1.40 Added --chdir option.
+        (Getopt::Long): Added --chdir option.
 
 2002-01-11 Fri  Jari Aalto  <jari.aalto@cante.net>
 
-        * mywebget-emacs.conf: 2.31 (eudc): Rmeoved.
+        * mywebget-emacs.conf: (eudc): Rmeoved.
         Available from sourceforge.
 
 2002-01-04 Fri  Jari Aalto  <jari.aalto@cante.net>
 
-        * pwget.pl (Initialize): 1.36 Change incorrect environment
+        * pwget.pl (Initialize): Change incorrect environment
         variable MYMYWEBGET_PL_CFG into MYWEBGET_PL_CFG
