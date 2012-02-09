@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2012.0209.1403';
+$VERSION = '2012.0209.1411';
 
 # ****************************************************************************
 #
@@ -4567,7 +4567,7 @@ sub UrlHttGetWget ( $ )
 
     $debug  and  print "$id: GET $url ...\n";
 
-    my $ret = qx(which wget > /dev/null 2>&1  &&  wget -q -O - '$url');
+    my $ret = qx(wget --quiet --output-document=- '$url' 2> /dev/null);
 
     return $ret;
 }

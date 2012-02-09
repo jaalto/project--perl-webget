@@ -1,6 +1,7 @@
 2012-02-09 Thu  Jari Aalto  <jari.aalto@cante.net>
 
 	* bin/pwget.pl (Boot): Add dheck against empty command line args.
+	(UrlHttGetWget): Remove which(1). Use --long options in wget(1).
 
 	* README (README::Depends): Require PErl 5.10+. The
 	LWP::UserAgent is included in latest Perl, so it's
