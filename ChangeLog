@@ -1,3 +1,9 @@
+2012-02-09 Thu  Jari Aalto  <jari.aalto@cante.net>
+
+	* README (README::Depends): Require PErl 5.10+. The
+	LWP::UserAgent is included in latest Perl, so it's
+	not extenal CPAN dependency any more.
+
 2012-01-30 Mon  Jari Aalto  <jari.aalto@cante.net>
 
 	* bin/pwget.pl (LatestVersion): Improve internal error message.
