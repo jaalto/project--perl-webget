@@ -3,7 +3,7 @@ NAME
 
 SYNOPSIS
         pwget http://example.com/ [URL ...]
-        pwget --config $HOME/config/pwget.conf --Tag linux --Tag emacs ..
+        pwget --config $HOME/config/pwget.conf --tag linux --tag emacs ..
         pwget --verbose --overwrite http://example.com/
         pwget --verbose --overwrite --Output ~/dir/ http://example.com/
         pwget --new --overwrite http://example.com/package-1.1.tar.gz
@@ -71,7 +71,7 @@ OPTIONS
         For example to download Emacs lisp file (.el) written by Mr. Foo in
         case insensitive manner:
 
-            pwget -v -R '\.el$' -A "(?i)Author: Mr. Foo" \
+            pwget -v -r '\.el$' -A "(?i)Author: Mr. Foo" \
               http://www.emacswiki.org/elisp/index.html
 
     -C, --create-paths
@@ -208,11 +208,13 @@ OPTIONS
         "Connect to the URL and get all files matching REGEXP". Here all
         gzip compressed files are found form HTTP server directory:
 
-            pwget -v -R "\.gz" http://example.com/archive/
+            pwget -v -r "\.gz" http://example.com/archive/
+
+        Caveat: currently works only for http:// URLs.
 
     -R, --config-regexp REGEXP
         Retrieve URLs matching REGEXP from configuration file. This cancels
-        --Tag options in the command line.
+        --tag options in the command line.
 
     -s, --selftest
         Run some internal tests. For maintainer or developer only.
@@ -251,7 +253,7 @@ OPTIONS
     -T, --tag NAME [NAME] ...
         Search tag NAME from the config file and download only entries
         defined under that tag. Refer to --config FILE option description.
-        You can give Multiple --Tag switches. Combining this option with
+        You can give Multiple --tag switches. Combining this option with
         --regexp does not make sense and the concequencies are undefined.
 
     -v, --verbose [NUMBER]
@@ -300,7 +302,7 @@ EXAMPLES
 
     Get all updated files under cnfiguration file's tag updates:
 
-        pwget --verbose --overwrite --skip-version --new --Tag updates
+        pwget --verbose --overwrite --skip-version --new --tag updates
         pwget -v -o -s -n -T updates
 
     Get files as they read in the configuration file to the current
@@ -749,13 +751,13 @@ LIST OF DIRECTIVES IN CONFIGURATION FILE
         Save file under this name to local disk.
 
     tagN:NAME
-        Downloads can be grouped under "tagN" so that e.g. option --Tag1
+        Downloads can be grouped under "tagN" so that e.g. option --tag1
         would start downloading files from that point on until next "tag1"
         is found. There are currently unlimited number of tag levels: tag1,
         tag2 and tag3, so that you can arrange your downlods hierarchially
         in the configuration file. For example to download all Linux files
-        rhat you monitor, you would give option --Tag linux. To download
-        only the NT Emacs latest binary, you would give option --Tag
+        rhat you monitor, you would give option --tag linux. To download
+        only the NT Emacs latest binary, you would give option --tag
         emacs-nt. Notice that you do not give the "level" in the option,
         program will find it out from the configuration file after the tag
         name matches.
@@ -903,7 +905,7 @@ AUTHOR
     Jari Aalto
 
 LICENSE AND COPYRIGHT
-    Copyright (C) 1996-2013 Jari Aalto
+    Copyright (C) 1996-2012 Jari Aalto
 
     This program is free software; you can redistribute and/or modify
     program under the terms of GNU General Public license either version 2

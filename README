@@ -29,18 +29,14 @@ Project details
       See freecode page
 
     Depends
-      Perl (any version).
+      Perl 5.10+
 
       Standard Perl libraries:
 
 	   Net::FTP		[Debian package: perl-modules]
-
-      External Perl CPAN libraries:
-
 	   LWP::UserAgent	[Debian package: libwww-perl]
 
       wget(1) for Sourceforge downloads [1].
-
       t2html for generating documentation [2] from scratch (optional).
 
 References
@@ -50,7 +46,7 @@ References
 
 Copyright
 
-    Copyright (C) 1996-2013 Jari Aalto
+    Copyright (C) 1996-2012 Jari Aalto
 
 License
 

@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2013.0911.1613';
+$VERSION = '2013.0911.1744';
 
 # ****************************************************************************
 #
@@ -3691,12 +3691,12 @@ sub LatestVersion ( $ $ )
 
 	#  NOTE: Sourceforge is on format <URL>/file.tar.gz/download
 
-        my $post = "$rest(\$|[&?][a-z]|\\/download)";
+        my $post = qr/\Q$rest\E/i . '($|[&?][a-z]|/download)';
 
         $debug and print "$id: ORIGINAL ARG '$ARG'"
 		   . " INITIAL PFX: [$pfx]"
-		   . " MIDDLE: [$version] re /$ver/"
-		   . " POSTFIX: [$rest] re /$post/"
+		   . " MIDDLE: [$version] regexp /$ver/"
+		   . " POSTFIX: [$rest] regexp /$post/"
 		   . "\n"
 		   ;
 
@@ -3714,7 +3714,7 @@ sub LatestVersion ( $ $ )
             #   has extension "2$"
 
             unless (  ( ( /\.[a-z]+[^-.]+$/ and /$pfx.*$post/)
-                         or /$pfx/ )
+                        or /$pfx/ )
                       and  /$regexp/o
                    )
             {
@@ -3725,7 +3725,8 @@ sub LatestVersion ( $ $ )
             unless ( /$pfx.*$post/ )
             {
                 $debug > 1  and  print "$id: REJECTED no ",
-				 "prefix '$pfx' postfix '$post'",
+				 "prefix '$pfx'",
+		                 "postfix '$post'",
 				 "\t$ARG\n"
 				 ;
                 next;
@@ -3863,14 +3864,14 @@ EOF
 $id: Internal error, Run with --debug on to pinpoint the details.
 
      Cannot find anything suitable for download. This may be due to
-     non-matching file regexp: that is or <regexp:> is too limiting or
+     non-matching file <regexp:> or <regexp:> is too limiting or
      <no-regexp:> filtered everything. If you used <new:>, it may
      be possible that the heuristics could not determine what were the
-     links to examine; in that case, please let the program know what
+     links to examine. In that case, please let the program know what
      kind of file it should search by providing template directive
-     <file:archive-YYYYMMDD.tar.gz>
+     <file:NAME-VERSION.tar.gz>.
 
-     check also that the <new:> file extension looks the same as what
+     Check also that the <new:> file extension looks the same as what
      <pregexp:> found from the page.
      [$CURRENT_TAG_LINE]
 EOF
@@ -4576,7 +4577,7 @@ sub UrlHttGetWget ( $ )
 
     $debug  and  print "$id: GET $url ...\n";
 
-    my $ret = qx(which wget > /dev/null 2>&1  &&  wget -q -O - '$url');
+    my $ret = qx(wget --quiet --output-document=- '$url' 2> /dev/null);
 
     return $ret;
 }
@@ -5845,7 +5846,7 @@ sub UrlHttp ( % )
     my $mirror                  = $arg{mirror}        || '';
 
     my $find = $thisPage eq -find ? 1 : 0;
-
+$debug = 10;
     # ......................................................... code ...
 
     if ( $debug )
@@ -6519,7 +6520,7 @@ sub Main ($ $)
 
             if ( $EVAL_ERROR )
             {
-                warn "http needs Crypt::SSLeay.pm [$EVAL_ERROR]";
+                warn "HTTPS requires Crypt::SSLeay.pm [$EVAL_ERROR]";
                 next;
             }
         }
@@ -7044,6 +7045,12 @@ sub Boot ()
     # ......................................................... args ...
 
     $debug > 2  and  PrintHash "$id: begin ENV", %ENV;
+
+    unless ( @ARGV )
+    {
+	warn "$id: Nothing to do. No command line arguments. See -h\n";
+	return 0;
+    }
 
     #   Convert any command line arguments as if they would appear
     #   in configuration file:

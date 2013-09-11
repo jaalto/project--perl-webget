@@ -4,7 +4,7 @@
 <head>
 <title>pwget - Perl Web URL fetch program</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:rurban@x-ray.at" />
 </head>
 
 <body style="background-color: white">
@@ -62,7 +62,7 @@
 <h1><a name="synopsis">SYNOPSIS</a></h1>
 <pre>
     pwget <a href="http://example.com/">http://example.com/</a> [URL ...]
-    pwget --config $HOME/config/pwget.conf --Tag linux --Tag emacs ..
+    pwget --config $HOME/config/pwget.conf --tag linux --tag emacs ..
     pwget --verbose --overwrite <a href="http://example.com/">http://example.com/</a>
     pwget --verbose --overwrite --Output ~/dir/ <a href="http://example.com/">http://example.com/</a>
     pwget --new --overwrite <a href="http://example.com/package-1.1.tar.gz">http://example.com/package-1.1.tar.gz</a></pre>
@@ -132,7 +132,7 @@ and then a match is searched against the content.</p>
 <p>For example to download Emacs lisp file (.el) written by Mr. Foo in
 case insensitive manner:</p>
 <pre>
-    pwget -v -R '\.el$' -A &quot;(?i)Author: Mr. Foo&quot; \
+    pwget -v -r '\.el$' -A &quot;(?i)Author: Mr. Foo&quot; \
       <a href="http://www.emacswiki.org/elisp/index.html">http://www.emacswiki.org/elisp/index.html</a></pre>
 </dd>
 <dt><strong><a name="c_create_paths" class="item"><strong>-C, --create-paths</strong></a></strong></dt>
@@ -301,13 +301,14 @@ page separately so that the file name is prefixed by the site name.</p>
 to the URL and get all files matching REGEXP&quot;. Here all gzip compressed
 files are found form HTTP server directory:</p>
 <pre>
-    pwget -v -R &quot;\.gz&quot; <a href="http://example.com/archive/">http://example.com/archive/</a></pre>
+    pwget -v -r &quot;\.gz&quot; <a href="http://example.com/archive/">http://example.com/archive/</a></pre>
+<p>Caveat: currently works only for http:// URLs.</p>
 </dd>
 <dt><strong><a name="r_config_regexp_regexp" class="item"><strong>-R, --config-regexp REGEXP</strong></a></strong></dt>
 
 <dd>
 <p>Retrieve URLs matching REGEXP from configuration file. This cancels
-<strong>--Tag</strong> options in the command line.</p>
+<strong>--tag</strong> options in the command line.</p>
 </dd>
 <dt><strong><a name="s_selftest" class="item"><strong>-s, --selftest</strong></a></strong></dt>
 
@@ -354,7 +355,7 @@ This option does not make much sense without additional option <strong>--new</st
 <dd>
 <p>Search tag NAME from the config file and download only entries defined
 under that tag. Refer to <strong>--config FILE</strong> option description. You can give
-Multiple <strong>--Tag</strong> switches. Combining this option with <strong>--regexp</strong>
+Multiple <strong>--tag</strong> switches. Combining this option with <strong>--regexp</strong>
 does not make sense and the concequencies are undefined.</p>
 </dd>
 <dt><strong><a name="v_verbose_number" class="item"><strong>-v, --verbose [NUMBER]</strong></a></strong></dt>
@@ -404,7 +405,7 @@ filename is only used as a skeleton for files to look for:</p>
     --&gt; YYYY-MM-DD::www.example.com::file.pl</pre>
 <p>Get all updated files under cnfiguration file's tag updates:</p>
 <pre>
-    pwget --verbose --overwrite --skip-version --new --Tag updates
+    pwget --verbose --overwrite --skip-version --new --tag updates
     pwget -v -o -s -n -T updates</pre>
 <p>Get files as they read in the configuration file to the current directory,
 ignoring any <code>lcd:</code> and <code>save:</code> directives:</p>
@@ -849,13 +850,13 @@ site which match REGEXP.</p>
 <dt><strong><a name="tagn_name" class="item"><strong>tagN:NAME</strong></a></strong></dt>
 
 <dd>
-<p>Downloads can be grouped under <code>tagN</code> so that e.g. option <strong>--Tag1</strong> would
+<p>Downloads can be grouped under <code>tagN</code> so that e.g. option <strong>--tag1</strong> would
 start downloading files from that point on until next <code>tag1</code> is found.
 There are currently unlimited number of tag levels: tag1, tag2 and tag3, so
 that you can arrange your downlods hierarchially in the configuration file.
 For example to download all Linux files rhat you monitor, you would give
-option <strong>--Tag linux</strong>. To download only the NT Emacs latest binary, you
-would give option <strong>--Tag emacs-nt</strong>. Notice that you do not give the
+option <strong>--tag linux</strong>. To download only the NT Emacs latest binary, you
+would give option <strong>--tag emacs-nt</strong>. Notice that you do not give the
 <code>level</code> in the option, program will find it out from the configuration
 file after the tag name matches.</p>
 <p>The downloading stops at next tag of the <code>same level</code>. That is, tag2 stops
@@ -1023,7 +1024,7 @@ lwp-rget(1)
 </p>
 <hr />
 <h1><a name="license_and_copyright">LICENSE AND COPYRIGHT</a></h1>
-<p>Copyright (C) 1996-2013 Jari Aalto</p>
+<p>Copyright (C) 1996-2012 Jari Aalto</p>
 <p>This program is free software; you can redistribute and/or modify
 program under the terms of GNU General Public license either version 2
 of the License, or (at your option) any later version.</p>
