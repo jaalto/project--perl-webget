@@ -7048,8 +7048,7 @@ sub Boot ()
 
     unless ( @ARGV )
     {
-	warn "$id: Nothing to do. No command line arguments. See -h\n";
-	return 0;
+	$debug > 1 && warn "$id: No plain command line arguments\n";
     }
 
     #   Convert any command line arguments as if they would appear
