@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2013.0911.1533';
+$VERSION = '2013.0911.1613';
 
 # ****************************************************************************
 #
@@ -1878,7 +1878,17 @@ sub ListUnique ( @ )
     $debug > 2 and print "$id: INPUT\n", join("\n", @ARG), "\n";
 
     my %hash;
-    @hash{ @ARG }++;
+
+    local $ARG;
+
+    # does no longer work in latest Perl:
+    # @hash{ @ARG }++;
+
+    for (@ARG)
+    {
+	$hash{$ARG} = 1;
+    }
+
     my @ret = sort keys %hash;
 
     $debug > 1 and print "$id: RET\n", join("\n", @ret), "\n";
