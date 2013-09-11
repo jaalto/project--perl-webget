@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2010.1031.1630';
+$VERSION = '2013.0911.1533';
 
 # ****************************************************************************
 #
@@ -7029,7 +7029,7 @@ sub Boot ()
     Initialize();
     HandleCommandLineArgs();
 
-    my $id = "$LIB.Start";
+    my $id = "$LIB.Boot";
 
     # ......................................................... args ...
 
