@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2012.0130.1152';
+$VERSION = '2012.0209.1411';
 
 # ****************************************************************************
 #
@@ -4567,7 +4567,7 @@ sub UrlHttGetWget ( $ )
 
     $debug  and  print "$id: GET $url ...\n";
 
-    my $ret = qx(which wget > /dev/null 2>&1  &&  wget -q -O - '$url');
+    my $ret = qx(wget --quiet --output-document=- '$url' 2> /dev/null);
 
     return $ret;
 }
@@ -5836,7 +5836,7 @@ sub UrlHttp ( % )
     my $mirror                  = $arg{mirror}        || '';
 
     my $find = $thisPage eq -find ? 1 : 0;
-
+$debug = 10;
     # ......................................................... code ...
 
     if ( $debug )
@@ -7035,6 +7035,12 @@ sub Boot ()
     # ......................................................... args ...
 
     $debug > 2  and  PrintHash "$id: begin ENV", %ENV;
+
+    unless ( @ARGV )
+    {
+	warn "$id: Nothing to do. No command line arguments. See -h\n";
+	return 0;
+    }
 
     #   Convert any command line arguments as if they would appear
     #   in configuration file:
