@@ -4,7 +4,7 @@
 #
 #   Copyright
 #
-#       Copyright (C) 1996-2014 Jari Aalto
+#       Copyright (C) 1996-2014 Jari Aalto <jari.aalto@cante.net>
 #
 #   License
 #
@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2014.0221.1932';
+$VERSION = '2014.0221.1933';
 
 # ****************************************************************************
 #
@@ -1152,7 +1152,7 @@ Jari Aalto
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 1996-2012 Jari Aalto
+Copyright (C) 1996-2013 Jari Aalto
 
 This program is free software; you can redistribute and/or modify
 program under the terms of GNU General Public license either version 2
@@ -1878,7 +1878,17 @@ sub ListUnique ( @ )
     $debug > 2 and print "$id: INPUT\n", join("\n", @ARG), "\n";
 
     my %hash;
-    @hash{ @ARG }++;
+
+    local $ARG;
+
+    # does no longer work in latest Perl:
+    # @hash{ @ARG }++;
+
+    for (@ARG)
+    {
+	$hash{$ARG} = 1;
+    }
+
     my @ret = sort keys %hash;
 
     $debug > 1 and print "$id: RET\n", join("\n", @ret), "\n";
@@ -7030,7 +7040,7 @@ sub Boot ()
     Initialize();
     HandleCommandLineArgs();
 
-    my $id = "$LIB.Start";
+    my $id = "$LIB.Boot";
 
     # ......................................................... args ...
 
@@ -7038,8 +7048,7 @@ sub Boot ()
 
     unless ( @ARGV )
     {
-	warn "$id: Nothing to do. No command line arguments. See -h\n";
-	return 0;
+	$debug > 1 && warn "$id: No plain command line arguments\n";
     }
 
     #   Convert any command line arguments as if they would appear
