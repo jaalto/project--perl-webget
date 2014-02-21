@@ -4,7 +4,7 @@
 #
 #   Copyright
 #
-#       Copyright (C) 1996-2012 Jari Aalto
+#       Copyright (C) 1996-2014 Jari Aalto
 #
 #   License
 #
@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2012.0209.1411';
+$VERSION = '2014.0221.1932';
 
 # ****************************************************************************
 #
@@ -5836,7 +5836,7 @@ sub UrlHttp ( % )
     my $mirror                  = $arg{mirror}        || '';
 
     my $find = $thisPage eq -find ? 1 : 0;
-$debug = 10;
+
     # ......................................................... code ...
 
     if ( $debug )
