@@ -43,7 +43,7 @@ DESCRIPTION
     files, program has been designed to use separate configuration file via
     --config option. In the configuration file you can control the
     downloading with separate directives like "save:" which tells to save
-    the file under different name. The simplest way to retreive the latest
+    the file under different name. The simplest way to retrieve the latest
     version of apackage from a FTP site is:
 
         pwget --new --overwite --verbose \
@@ -905,7 +905,7 @@ AUTHOR
     Jari Aalto
 
 LICENSE AND COPYRIGHT
-    Copyright (C) 1996-2012 Jari Aalto
+    Copyright (C) 1996-2013 Jari Aalto
 
     This program is free software; you can redistribute and/or modify
     program under the terms of GNU General Public license either version 2
