@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2014.0221.1933';
+$VERSION = '2014.0221.1940';
 
 # ****************************************************************************
 #
@@ -214,7 +214,7 @@ While you can run this program from command line to retrieve individual
 files, program has been designed to use separate configuration file via
 B<--config> option. In the configuration file you can control the
 downloading with separate directives like C<save:> which tells to save the
-file under different name. The simplest way to retreive the latest version
+file under different name. The simplest way to retrieve the latest version
 of apackage from a FTP site is:
 
     pwget --new --overwite --verbose \
@@ -1448,7 +1448,7 @@ sub HandleCommandLineArgs ()
         }
     }
 
-    if ( defined $URL_REGEXP  or  (defined @TAG_LIST and @TAG_LIST) )
+    if ( defined $URL_REGEXP  or  @TAG_LIST and @TAG_LIST )
     {
         $CFG_FILE_NEEDED = -yes;
     }
@@ -1478,7 +1478,7 @@ sub HandleCommandLineArgs ()
         $debug  and  print "$id: PROXY $PROXY\n";
     }
 
-    if ( defined @TAG_LIST )
+    if ( @TAG_LIST )
     {
         #   -s -t -n tag   --> whoopos....
 
@@ -3009,7 +3009,7 @@ sub FileRootDirNeedeed ( $ )
 
         unless ( $base =~ /\d/ )
         {
-            $base .= "-" . DateYYYY_MM_DD -version ;
+            $base .= "-" . DateYYYY_MM_DD(-version);
         }
 
         $ARG = $base;
