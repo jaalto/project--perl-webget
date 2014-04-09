@@ -1,3 +1,10 @@
+2014-04-09 Wed  Jari Aalto  <jari.aalto@cante.net>
+
+	* bin/pwget.pl (FileExists): Add .xz extension.
+	(FileSimpleCompressed): Add .xz extension.
+	(FileDeCompressedCmd): Add .xz support.
+	(UrlHttp): Remove internal debug variable setting.
+
 2012-02-09 Thu  Jari Aalto  <jari.aalto@cante.net>
 
 	* doc/examples/emacs.conf: Update old name to pwget.

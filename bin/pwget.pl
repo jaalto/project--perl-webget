@@ -4,7 +4,7 @@
 #
 #   Copyright
 #
-#       Copyright (C) 1996-2013 Jari Aalto
+#       Copyright (C) 1996-2014 Jari Aalto
 #
 #   License
 #
@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2013.0911.1744';
+$VERSION = '2014.0409.0644';
 
 # ****************************************************************************
 #
@@ -291,6 +291,7 @@ where these programs come standard. Refer to section SEE ALSO.
   .tgz => tar + gzip
   .gz  => gzip
   .bz2 => bzip2
+  .xz  => xz
   .zip => unzip
 
 =item B<-F, --firewall FIREWALL>
@@ -2699,6 +2700,7 @@ sub FileDeCompressedCmd ($; $)
 
     $type = '-extract'      unless defined $type;
 
+    my $opt = "--decompress --stdout";
     my $cmd;
     my $decompress;
 
@@ -2709,12 +2711,21 @@ sub FileDeCompressedCmd ($; $)
 
     if ( $type eq -extract )
     {
-        if ( /\.(tar|tgz)/ )
+        if ( /\.(tar|tgz)(.*)/ )
         {
-            /\.(gz|tgz)$/i      and  $decompress = "gzip -d -c";
-            /\.(bzip|bz2)$/i    and  $decompress = "bzip2 -d -c";
+	    my $ext = $2;
+
+            /\.(gz|tgz)$/i   and  $decompress = "gzip $opt";
+            /\.(bzip|bz2)$/i and  $decompress = "bzip2 $opt";
+            /\.(xz)$/i       and  $decompress = "xz $opt";
 
             $cmd = "$decompress $ARG | tar xvf -";
+
+	    if ( length $ext  and  not $decompress)
+	    {
+		warn "[WARN] Unknown compress extension: $ext ($ARG)";
+		$cmd = "";
+	    }
         }
         elsif ( /\.gz$/ )
         {
@@ -2735,8 +2746,9 @@ sub FileDeCompressedCmd ($; $)
         {
             SWITCH:
             {
-                /\.(gz|tgz)$/i      and  $decompress = "gzip -d -c", last;
-                /\.(bzip|bz2)$/i    and  $decompress = "bzip2 -d -c", last;
+                /\.(gz|tgz)$/i   and  $decompress = "gzip $opt", last;
+                /\.(bzip|bz2)$/i and  $decompress = "bzip2 $opt", last;
+                /\.(xz)$/i       and  $decompress = "xz $opt", last;
             }
 
             if ( defined $decompress )
@@ -2751,10 +2763,6 @@ sub FileDeCompressedCmd ($; $)
         elsif ( /\.zip$/ )
         {
             $cmd = "unzip -l $ARG";
-        }
-        elsif ( /\.(bzip|bz2)$/ )
-        {
-            $cmd = "bzip2 - $ARG";
         }
     }
 
@@ -3911,6 +3919,7 @@ sub FileSimpleCompressed ( $ )
         , '.bz2'
         , '.Z'
         , '.z'
+        , '.xz'
     );
 
     my $ret;
@@ -3984,6 +3993,7 @@ sub FileExists ( % )
         .z
         .Z
         .zip
+        .xz
     );
 
     my @suffixlist = map { my $f = $ARG; $f =~ s/\./\\./g; $f } @list;
@@ -3997,7 +4007,7 @@ sub FileExists ( % )
         my @try = ( $suffix );
         push @try, ''   if $unpack;  # '' => file itself
 
-        for my $try ( @try )            # '' => file itself
+        for my $try ( @try )
         {
             $debug  and  print "$id: trying: [$path] + [$name] + [$try]\n";
 
@@ -4501,7 +4511,7 @@ sub UrlFtp ( % )
 
                     if ( $verb > 1 )
                     {
-                        print "$id: Uncompressed file found (use --overwrite)\n";
+                        print "$id: Uncompressed file; use --overwrite\n";
                     }
                 }
                 else
@@ -5846,7 +5856,7 @@ sub UrlHttp ( % )
     my $mirror                  = $arg{mirror}        || '';
 
     my $find = $thisPage eq -find ? 1 : 0;
-$debug = 10;
+
     # ......................................................... code ...
 
     if ( $debug )
@@ -6339,6 +6349,7 @@ sub Main ($ $)
         , '\.tar$'      => "tar xvf %s"
         , '\.tgz$'      => "tar -zxvf %s"               # GNU TAR
         , '\.zip$'      => "unzip %s"
+        , '\.xz$'       => "xz -d -c %s | tar xvf -"
     );
 
     # ............................................... prepare output ...
