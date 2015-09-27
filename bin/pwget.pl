@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2014.0409.0644';
+$VERSION = '2015.0927.1715';
 
 # ****************************************************************************
 #
@@ -1449,7 +1449,7 @@ sub HandleCommandLineArgs ()
         }
     }
 
-    if ( defined $URL_REGEXP  or  (defined @TAG_LIST and @TAG_LIST) )
+    if ( defined $URL_REGEXP  or  (@TAG_LIST and @TAG_LIST) )
     {
         $CFG_FILE_NEEDED = -yes;
     }
