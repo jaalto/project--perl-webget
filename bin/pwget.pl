@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2015.0927.1715';
+$VERSION = '2015.0927.1716';
 
 # ****************************************************************************
 #
@@ -1479,7 +1479,7 @@ sub HandleCommandLineArgs ()
         $debug  and  print "$id: PROXY $PROXY\n";
     }
 
-    if ( defined @TAG_LIST )
+    if ( @TAG_LIST )
     {
         #   -s -t -n tag   --> whoopos....
 
