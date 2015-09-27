@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2015.0927.1716';
+$VERSION = '2015.0927.1718';
 
 # ****************************************************************************
 #
@@ -3017,7 +3017,7 @@ sub FileRootDirNeedeed ( $ )
 
         unless ( $base =~ /\d/ )
         {
-            $base .= "-" . DateYYYY_MM_DD -version ;
+            $base .= "-" . DateYYYY_MM_DD(-version) ;
         }
 
         $ARG = $base;
