@@ -115,6 +115,7 @@ OPTIONS
           .tgz => tar + gzip
           .gz  => gzip
           .bz2 => bzip2
+          .xz  => xz
           .zip => unzip
 
     -F, --firewall FIREWALL

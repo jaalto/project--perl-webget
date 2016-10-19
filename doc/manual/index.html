@@ -4,10 +4,10 @@
 <head>
 <title></title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
 </head>
 
-<body style="background-color: white">
+<body>
 
 
 
@@ -69,7 +69,7 @@
 
 <p>This small utility makes it possible to keep a list of URLs in a configuration file and periodically retrieve those pages or files with simple commands. This utility is best suited for small batch jobs to download e.g. most recent versions of software files. If you use an URL that is already on disk, be sure to supply option <b>--overwrite</b> to allow overwriting existing files.</p>
 
-<p>While you can run this program from command line to retrieve individual files, program has been designed to use separate configuration file via <b>--config</b> option. In the configuration file you can control the downloading with separate directives like <code>save:</code> which tells to save the file under different name. The simplest way to retrieve the latest version of apackage from a FTP site is:</p>
+<p>While you can run this program from command line to retrieve individual files, program has been designed to use separate configuration file via <b>--config</b> option. In the configuration file you can control the downloading with separate directives like <code>save:</code> which tells to save the file under different name. The simplest way to retreive the latest version of apackage from a FTP site is:</p>
 
 <pre><code>    pwget --new --overwite --verbose \
        http://www.example.com/package-1.00.tar.gz</code></pre>
@@ -139,6 +139,7 @@
   .tgz =&gt; tar + gzip
   .gz  =&gt; gzip
   .bz2 =&gt; bzip2
+  .xz  =&gt; xz
   .zip =&gt; unzip</code></pre>
 
 </dd>
