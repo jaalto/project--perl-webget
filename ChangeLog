@@ -1,3 +1,10 @@
+2014-02-21 Fri  Jari Aalto  <jari.aalto@cante.net>
+
+	* bin/pwget.pl (POD): Fix typo.
+	(FileRootDirNeedeed): Correct Perl warning
+	about missing function parens in call to DateYYYY_MM_DD().
+	(HandleCommandLineArgs): remove defined() tests from LISTs.
+
 2012-02-09 Thu  Jari Aalto  <jari.aalto@cante.net>
 
 	* doc/examples/emacs.conf: Update old name to pwget.
