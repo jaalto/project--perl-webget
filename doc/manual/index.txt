@@ -115,6 +115,7 @@ OPTIONS
           .tgz => tar + gzip
           .gz  => gzip
           .bz2 => bzip2
+          .xz  => xz
           .zip => unzip
 
     -F, --firewall FIREWALL
@@ -905,7 +906,7 @@ AUTHOR
     Jari Aalto
 
 LICENSE AND COPYRIGHT
-    Copyright (C) 1996-2012 Jari Aalto
+    Copyright (C) 1996-2013 Jari Aalto
 
     This program is free software; you can redistribute and/or modify
     program under the terms of GNU General Public license either version 2
