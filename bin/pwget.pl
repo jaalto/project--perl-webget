@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2016.1019.1334';
+$VERSION = '2016.1019.1354';
 
 # ****************************************************************************
 #
@@ -189,7 +189,7 @@ once a week to upload newest versions of files around the net. Note:
 At this point you may wonder, where would you need this perl program
 when wget(1) C-program has been the standard for ages. Well, 1) Perl
 is cross platform and more easily extendable 2) You can record file
-download criterias to a configuration file and use perl regular
+download criteria to a configuration file and use perl regular
 epxressions to select downloads 3) the program can anlyze web-pages
 and "search" for the download only links as instructed 4) last but not
 least, it can track newest packages whose name has changed since last
@@ -326,7 +326,7 @@ example:
 Get newest file. This applies to datafiles, which do not have extension
 .asp or .html. When new releases are announced, the version
 number in filename usually tells which is the current one so getting
-harcoded file with:
+hardcoded file with:
 
     pwget -o -v http://example.com/dir/program-1.3.tar.gz
 
@@ -382,7 +382,7 @@ Add POSTFIX to all retrieved files.
 
 =item B<-D, --prefix-date>
 
-Add iso8601 ":YYYY-MM-DD" prefix to all retrived files.
+Add iso8601 ":YYYY-MM-DD" prefix to all retrieved files.
 This is added before possible B<--prefix-www> or B<--prefix>.
 
 =item B<-W, --prefix-www>
@@ -538,7 +538,7 @@ At this point, variable expansions happen only in B<lcd:>. Do not try
 to use them anywhere else, like in URLs.
 
 Path variables for B<lcd:> are defined using following notation, spaces are
-not allowed in VALUE part (no directory names with spaces). Varaible names
+not allowed in VALUE part (no directory names with spaces). Variable names
 are case sensitive. Variables substitute environment variabales with the
 same name. Environment variables are immediately available.
 
@@ -922,7 +922,7 @@ text files, following statement would change the file extensions:
 
 You can also call function C<MonthToNumber($string)> if the filename
 contains written month name, like <2005-February.mbox>.The function will
-convert the name into number. Many mailing list archives can be donwloaded
+convert the name into number. Many mailing list archives can be downloaded
 cleanly this way.
 
     #  This will download SA-Exim Mailing list archives:
@@ -1032,7 +1032,7 @@ subdirectory with version information:
     package-N.NN/src/some-code.java
 
 C<IMPORTANT:> If the archive does not have a subdirectory for all files, a
-subdirectory is created and all items are unpacked under it. The defualt
+subdirectory is created and all items are unpacked under it. The default
 subdirectory name in constructed from the archive name with currect date
 stamp in format:
 
@@ -1093,7 +1093,7 @@ C<Sourceforge note>: To download archive files from Sourceforge
 requires some trickery because of the redirections and load balancers
 the site uses. The Sourceforge page have also undergone many changes
 during their existence. Due to these changes there exists an ugly hack
-in the program to use wget(1) to get certain infomation from the site.
+in the program to use wget(1) to get certain information from the site.
 This could have been implemented in pure Perl, but as of now the
 developer hasn't had time to remove the wget(1) dependency. No doubt,
 this is an ironic situation to use wget(1). You you have Perl skills,
