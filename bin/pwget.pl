@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2016.1019.1354';
+$VERSION = '2019.0505.1654';
 
 # ****************************************************************************
 #
@@ -120,7 +120,7 @@ sub Initialize ()
 
     $LICENSE	= "GPL-2+";
     $AUTHOR     = "Jari Aalto";
-    $URL        = "http://freecode.com/projects/perl-webget";
+    $URL        = "https://github.com/jaalto/project--perl-webget";
 
     $WIN32    = 1   if  $OSNAME =~ /win32/i;
 
@@ -6252,7 +6252,6 @@ sub SelfTest ()
 
     @files = qw
     (
-        http://freecode.com
         http://newsletters.osdn.com
         http://ads.osdn.com/?ad_id=2435&amp;alloc_id=5907&amp;op=click
         http://sourceforge.net

@@ -20,13 +20,13 @@ Important files
 Project details
 
     Homepage
-      http://freecode.com/projects/perlwebget
+      https://github.com/jaalto/project--perl-webget
 
     To report bugs
-      See freecode page
+      See above
 
     Source code repository
-      See freecode page
+      See above
 
     Depends
       Perl 5.10+
@@ -42,7 +42,7 @@ Project details
 References
 
     [1] http://www.gnu.org/software/wget
-    [2] http://freecode.com/projects/perl-text2html
+    [2] https://github.com/jaalto/project--perl-text2html
 
 Copyright
 
