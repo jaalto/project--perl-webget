@@ -196,10 +196,10 @@ least, it can track newest packages whose name has changed since last
 downlaod. There are heuristics to determine the newest file or package
 according to file name skeleton defined in configuration.
 
-This program does not replace pwget(1) because it does not offer as
-many options as wget, like recursive downloads and date comparing. Use
-wget for ad hoc downloads and this utility for files that change (new
-releases of archives) or which you monitor periodically.
+This program does not replace wget(1) because it does not offer
+options like recursive downloads and date comparing. Use
+this utility for files that may change (new releases of
+archives) or which you monitor periodically.
 
 =head2 Short introduction
 
