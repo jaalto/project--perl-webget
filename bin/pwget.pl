@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#! /usr/bin/perl
 #
 #   pwget -- batch download files possibly with configuration file
 #
@@ -41,7 +41,7 @@ use vars qw ( $VERSION );
 #   The following variable is updated by Emacs setup whenever
 #   this file is saved.
 
-$VERSION = '2019.0505.1654';
+$VERSION = '2025.0205.2242';
 
 # ****************************************************************************
 #
