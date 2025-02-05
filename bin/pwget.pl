@@ -4,7 +4,7 @@
 #
 #   Copyright
 #
-#       Copyright (C) 1996-2019 Jari Aalto <jari.aalto@cante.net>
+#       Copyright (C) 1996-2025 Jari Aalto <jari.aalto@cante.net>
 #
 #   License
 #
@@ -1153,7 +1153,7 @@ Jari Aalto
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 1996-2019 Jari Aalto
+Copyright (C) 1996-2025 Jari Aalto
 
 This program is free software; you can redistribute and/or modify
 program under the terms of GNU General Public license either version 2
